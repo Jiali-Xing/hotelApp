@@ -1,0 +1,115 @@
+{
+  "date": "2024-06-05T00:21:04-04:00",
+  "endReason": "normal",
+  "options": {
+    "call": "hotelproto.ReservationService/FrontendReservation",
+    "host": "0.0.0.0:50051",
+    "proto": "/home/ying/Sync/Git/hotel-proto/reservation.proto",
+    "import-paths": [
+      "/home/ying/Sync/Git/hotel-proto",
+      "."
+    ],
+    "insecure": true,
+    "load-schedule": "step",
+    "load-start": 500,
+    "load-end": 4000,
+    "load-step": 100,
+    "load-step-duration": 1000000000,
+    "load-max-duration": 0,
+    "concurrency": 50,
+    "concurrency-schedule": "const",
+    "concurrency-start": 0,
+    "concurrency-end": 0,
+    "concurrency-step": 1,
+    "concurrency-step-duration": 0,
+    "concurrency-max-duration": 0,
+    "total": 10,
+    "connections": 1,
+    "timeout": 20000000000,
+    "dial-timeout": 10000000000,
+    "binary": false,
+    "metadata": {
+      "guest_name": "John Doe",
+      "hotel_id": "H123",
+      "room_number": "11",
+      "timestamp": "{{.TimestampUnix}}"
+    },
+    "CPUs": 16
+  },
+  "count": 10,
+  "total": 20486993,
+  "average": 3389,
+  "fastest": 0,
+  "slowest": 0,
+  "rps": 488.1145807976798,
+  "errorDistribution": {
+    "rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing dial tcp 0.0.0.0:50051: connect: connection refused\"": 10
+  },
+  "statusCodeDistribution": {
+    "Unavailable": 10
+  },
+  "latencyDistribution": null,
+  "histogram": null,
+  "details": [
+    {
+      "timestamp": "2024-06-05T00:21:04.51164219-04:00",
+      "latency": 6222,
+      "error": "rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing dial tcp 0.0.0.0:50051: connect: connection refused\"",
+      "status": "Unavailable"
+    },
+    {
+      "timestamp": "2024-06-05T00:21:04.513252476-04:00",
+      "latency": 3192,
+      "error": "rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing dial tcp 0.0.0.0:50051: connect: connection refused\"",
+      "status": "Unavailable"
+    },
+    {
+      "timestamp": "2024-06-05T00:21:04.515324389-04:00",
+      "latency": 3076,
+      "error": "rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing dial tcp 0.0.0.0:50051: connect: connection refused\"",
+      "status": "Unavailable"
+    },
+    {
+      "timestamp": "2024-06-05T00:21:04.516638952-04:00",
+      "latency": 3251,
+      "error": "rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing dial tcp 0.0.0.0:50051: connect: connection refused\"",
+      "status": "Unavailable"
+    },
+    {
+      "timestamp": "2024-06-05T00:21:04.518774587-04:00",
+      "latency": 2790,
+      "error": "rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing dial tcp 0.0.0.0:50051: connect: connection refused\"",
+      "status": "Unavailable"
+    },
+    {
+      "timestamp": "2024-06-05T00:21:04.521025468-04:00",
+      "latency": 3073,
+      "error": "rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing dial tcp 0.0.0.0:50051: connect: connection refused\"",
+      "status": "Unavailable"
+    },
+    {
+      "timestamp": "2024-06-05T00:21:04.523235862-04:00",
+      "latency": 2772,
+      "error": "rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing dial tcp 0.0.0.0:50051: connect: connection refused\"",
+      "status": "Unavailable"
+    },
+    {
+      "timestamp": "2024-06-05T00:21:04.525479646-04:00",
+      "latency": 2766,
+      "error": "rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing dial tcp 0.0.0.0:50051: connect: connection refused\"",
+      "status": "Unavailable"
+    },
+    {
+      "timestamp": "2024-06-05T00:21:04.526638078-04:00",
+      "latency": 3984,
+      "error": "rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing dial tcp 0.0.0.0:50051: connect: connection refused\"",
+      "status": "Unavailable"
+    },
+    {
+      "timestamp": "2024-06-05T00:21:04.52885219-04:00",
+      "latency": 2770,
+      "error": "rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing dial tcp 0.0.0.0:50051: connect: connection refused\"",
+      "status": "Unavailable"
+    }
+  ]
+}
