@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net"
+	"os"
 	"redis_test/internal/config"
 	"redis_test/internal/hotel"
 	"redis_test/pkg/invoke"
@@ -12,8 +13,13 @@ import (
 )
 
 func main() {
+	port := os.Getenv("GRPC_PORT")
+	if port == "" {
+		port = "50054" // Default port if not specified
+	}
+
 	// Set up gRPC server
-	lis, err := net.Listen("tcp", ":50054") // Listen on a port for the search service
+	lis, err := net.Listen("tcp", ":"+port)
 	if err != nil {
 		log.Fatalf("Failed to listen: %v", err)
 	}
@@ -37,7 +43,7 @@ func main() {
 	defer profileConn.Close()
 	invoke.RegisterClient("profile", hotelpb.NewProfileServiceClient(profileConn))
 
-	log.Println("gRPC server listening on port 50054")
+	log.Println("gRPC server listening on port " + port)
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("Failed to serve: %v", err)
 	}

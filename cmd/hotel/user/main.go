@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"net"
+	"os"
 	"redis_test/internal/hotel"
 
 	hotelpb "github.com/Jiali-Xing/hotelproto"
@@ -12,8 +13,12 @@ import (
 )
 
 func main() {
+	port := os.Getenv("GRPC_PORT")
+	if port == "" {
+		port = "50053" // Default port if not specified
+	}
 	// Set up gRPC server
-	lis, err := net.Listen("tcp", ":50053")
+	lis, err := net.Listen("tcp", ":"+port)
 	if err != nil {
 		log.Fatalf("Failed to listen: %v", err)
 	}
@@ -22,7 +27,7 @@ func main() {
 	userServer := &hotel.UserServer{}
 	hotelpb.RegisterUserServiceServer(s, userServer)
 
-	log.Println("gRPC server listening on port 50053")
+	log.Println("gRPC server listening on port " + port)
 
 	// create a couple of users to start with
 	go func() {

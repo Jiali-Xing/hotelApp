@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"net"
+	"os"
 	"redis_test/internal/config"
 	"redis_test/internal/hotel"
 	"redis_test/pkg/invoke"
@@ -39,6 +40,10 @@ func (s *server) FrontendReservation(ctx context.Context, req *hotelpb.FrontendR
 }
 
 func main() {
+	port := os.Getenv("GRPC_PORT")
+	if port == "" {
+		port = "50052" // Default port if not specified
+	}
 	// Establish a gRPC connection to other services
 	userConn, err := grpc.Dial("localhost"+config.UserPort, grpc.WithInsecure())
 	if err != nil {
@@ -76,7 +81,7 @@ func main() {
 	invoke.RegisterClient("profile", hotelpb.NewProfileServiceClient(profileConn))
 
 	// Set up gRPC server
-	lis, err := net.Listen("tcp", ":50052") // Listen on a port for the frontend service
+	lis, err := net.Listen("tcp", ":"+port)
 	if err != nil {
 		log.Fatalf("Failed to listen: %v", err)
 	}
@@ -89,7 +94,7 @@ func main() {
 	hotelpb.RegisterRateServiceServer(s, hotelServer)
 	hotelpb.RegisterUserServiceServer(s, hotelServer)
 
-	log.Println("gRPC server listening on port 50052")
+	log.Println("gRPC server listening on port " + port)
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("Failed to serve: %v", err)
 	}
