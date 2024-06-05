@@ -13,16 +13,23 @@ import (
 
 func main() {
 	// Set up gRPC server
-	lis, err := net.Listen("tcp", ":50054") // Listen on a port for the search service
+	lis, err := net.Listen("tcp", ":50055") // Listen on a port for the reservation service
 	if err != nil {
 		log.Fatalf("Failed to listen: %v", err)
 	}
 
 	s := grpc.NewServer()
-	searchServer := &hotel.SearchServer{}
-	hotelpb.RegisterSearchServiceServer(s, searchServer)
+	reservationServer := &hotel.ReservationServer{}
+	hotelpb.RegisterReservationServiceServer(s, reservationServer)
 
 	// Establish connections for downstream services
+	searchConn, err := grpc.Dial("localhost"+config.SearchPort, grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("Failed to connect to search gRPC server: %v", err)
+	}
+	defer searchConn.Close()
+	invoke.RegisterClient("search", hotelpb.NewSearchServiceClient(searchConn))
+
 	rateConn, err := grpc.Dial("localhost"+config.RatePort, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect to rate gRPC server: %v", err)
@@ -37,7 +44,7 @@ func main() {
 	defer profileConn.Close()
 	invoke.RegisterClient("profile", hotelpb.NewProfileServiceClient(profileConn))
 
-	log.Println("gRPC server listening on port 50054")
+	log.Println("gRPC server listening on port 50055")
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("Failed to serve: %v", err)
 	}

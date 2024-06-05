@@ -1,92 +1,93 @@
 package main
 
 import (
-	"flag"
+	"context"
 	"log"
 	"net"
-	"redis_test/pkg/invoke"
-
+	"redis_test/internal/config"
 	"redis_test/internal/hotel"
+	"redis_test/pkg/invoke"
 
 	hotelpb "github.com/Jiali-Xing/hotelproto"
 	"google.golang.org/grpc"
 )
 
-var (
-	useSeparatePorts bool
-)
+type server struct {
+	hotelpb.UnimplementedReservationServiceServer
+	hotelpb.UnimplementedSearchServiceServer
+	hotelpb.UnimplementedProfileServiceServer
+	hotelpb.UnimplementedRateServiceServer
+	hotelpb.UnimplementedUserServiceServer
+}
 
-func init() {
-	flag.BoolVar(&useSeparatePorts, "useSeparatePorts", false, "Use separate ports for each downstream service")
-	flag.Parse()
+func (s *server) SearchHotels(ctx context.Context, req *hotelpb.SearchHotelsRequest) (*hotelpb.SearchHotelsResponse, error) {
+	hotels := hotel.SearchHotels(ctx, req.InDate, req.OutDate, req.Location)
+	resp := &hotelpb.SearchHotelsResponse{Profiles: hotels}
+	return resp, nil
+}
+
+func (s *server) StoreHotel(ctx context.Context, req *hotelpb.StoreHotelRequest) (*hotelpb.StoreHotelResponse, error) {
+	hotelId := hotel.StoreHotel(ctx, req.HotelId, req.Name, req.Phone, req.Location, int(req.Rate), int(req.Capacity), req.Info)
+	resp := &hotelpb.StoreHotelResponse{HotelId: hotelId}
+	return resp, nil
+}
+
+func (s *server) FrontendReservation(ctx context.Context, req *hotelpb.FrontendReservationRequest) (*hotelpb.FrontendReservationResponse, error) {
+	success := hotel.FrontendReservation(ctx, req.HotelId, req.InDate, req.OutDate, int(req.Rooms), req.Username, req.Password)
+	resp := &hotelpb.FrontendReservationResponse{Success: success}
+	return resp, nil
 }
 
 func main() {
-	var userPort, searchPort, reservationPort, ratePort, profilePort string
-
-	if useSeparatePorts {
-		// Define different ports for each service
-		userPort = ":50053"
-		searchPort = ":50054"
-		reservationPort = ":50055"
-		ratePort = ":50056"
-		profilePort = ":50057"
-	} else {
-		// Use the same port but different URLs (Kubernetes-like environment)
-		userPort = ":50051"
-		searchPort = ":50051"
-		reservationPort = ":50051"
-		ratePort = ":50051"
-		profilePort = ":50051"
-	}
-
-	// Establish gRPC connections
-	userConn, err := grpc.Dial("localhost"+userPort, grpc.WithInsecure())
+	// Establish a gRPC connection to other services
+	userConn, err := grpc.Dial("localhost"+config.UserPort, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect to user gRPC server: %v", err)
 	}
 	defer userConn.Close()
+	invoke.RegisterClient("user", hotelpb.NewUserServiceClient(userConn))
 
-	searchConn, err := grpc.Dial("localhost"+searchPort, grpc.WithInsecure())
+	searchConn, err := grpc.Dial("localhost"+config.SearchPort, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect to search gRPC server: %v", err)
 	}
 	defer searchConn.Close()
+	invoke.RegisterClient("search", hotelpb.NewSearchServiceClient(searchConn))
 
-	reservationConn, err := grpc.Dial("localhost"+reservationPort, grpc.WithInsecure())
+	reservationConn, err := grpc.Dial("localhost"+config.ReservationPort, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect to reservation gRPC server: %v", err)
 	}
 	defer reservationConn.Close()
+	invoke.RegisterClient("reservation", hotelpb.NewReservationServiceClient(reservationConn))
 
-	rateConn, err := grpc.Dial("localhost"+ratePort, grpc.WithInsecure())
+	rateConn, err := grpc.Dial("localhost"+config.RatePort, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect to rate gRPC server: %v", err)
 	}
 	defer rateConn.Close()
+	invoke.RegisterClient("rate", hotelpb.NewRateServiceClient(rateConn))
 
-	profileConn, err := grpc.Dial("localhost"+profilePort, grpc.WithInsecure())
+	profileConn, err := grpc.Dial("localhost"+config.ProfilePort, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect to profile gRPC server: %v", err)
 	}
 	defer profileConn.Close()
-
-	// Register gRPC clients
-	invoke.RegisterClient("user", hotelpb.NewUserServiceClient(userConn))
-	invoke.RegisterClient("search", hotelpb.NewSearchServiceClient(searchConn))
-	invoke.RegisterClient("reservation", hotelpb.NewReservationServiceClient(reservationConn))
-	invoke.RegisterClient("rate", hotelpb.NewRateServiceClient(rateConn))
 	invoke.RegisterClient("profile", hotelpb.NewProfileServiceClient(profileConn))
 
 	// Set up gRPC server
-	lis, err := net.Listen("tcp", ":50052") // Listen on a different port for the frontend server
+	lis, err := net.Listen("tcp", ":50052") // Listen on a port for the frontend service
 	if err != nil {
 		log.Fatalf("Failed to listen: %v", err)
 	}
 
 	s := grpc.NewServer()
-	hotelServer := &hotel.FrontendServer{}
+	hotelServer := &server{}
 	hotelpb.RegisterReservationServiceServer(s, hotelServer)
+	hotelpb.RegisterSearchServiceServer(s, hotelServer)
+	hotelpb.RegisterProfileServiceServer(s, hotelServer)
+	hotelpb.RegisterRateServiceServer(s, hotelServer)
+	hotelpb.RegisterUserServiceServer(s, hotelServer)
 
 	log.Println("gRPC server listening on port 50052")
 	if err := s.Serve(lis); err != nil {
