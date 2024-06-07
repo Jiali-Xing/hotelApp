@@ -14,16 +14,6 @@ spec:
       labels:
         app: {service_name}
     spec:
-      affinity:
-        podAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - {service_name}-redis
-            topologyKey: "kubernetes.io/hostname"
       containers:
       - name: {service_name}
         image: tgiannoukos/redis-test-go:latest
