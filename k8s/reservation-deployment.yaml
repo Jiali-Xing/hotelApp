@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reservation
+  labels:
+    app: reservation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reservation
+  template:
+    metadata:
+      labels:
+        app: reservation
+    spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - reservation-redis
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: reservation
+        image: tgiannoukos/redis-test-go:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 50051
+        command: ["/bin/reservation"]
+        env:
+        - name: SERVICE_NAME
+          value: "reservation"
+        - name: REDIS_ADDR
+          value: "reservation-redis:6379"
+        - name: GRPC_PORT
+          value: "50051"
+        - name: USER_SERVICE_ADDR
+          value: "user-service:50051"
+        - name: SEARCH_SERVICE_ADDR
+          value: "search-service:50051"
+        - name: RESERVATION_SERVICE_ADDR
+          value: "reservation-service:50051"
+        - name: RATE_SERVICE_ADDR
+          value: "rate-service:50051"
+        - name: PROFILE_SERVICE_ADDR
+          value: "profile-service:50051"

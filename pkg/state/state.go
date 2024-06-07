@@ -6,17 +6,36 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"os"
+	"sync"
 
 	"github.com/go-redis/redis/v8"
 )
 
+var (
+	rdb  *redis.Client
+	once sync.Once
+)
+
+func initRedisClient() {
+	once.Do(func() {
+		// Get Redis address from environment variable
+		redisAddr := os.Getenv("REDIS_ADDR")
+		if redisAddr == "" {
+			redisAddr = "localhost:6379" // Default to localhost if not set
+		}
+
+		// Initialize Redis client
+		rdb = redis.NewClient(&redis.Options{
+			Addr: redisAddr,
+		})
+	})
+}
+
 func GetState[T interface{}](ctx context.Context, key string) (T, error) {
 	var value T
 
-	// Initialize Redis client
-	rdb := redis.NewClient(&redis.Options{
-		Addr: "redis:6379", // Redis server address
-	})
+	initRedisClient()
 
 	// Retrieve state directly from Redis
 	result, err := rdb.Get(ctx, key).Result()
@@ -103,10 +122,7 @@ func GetBulkStateDefault[T interface{}](ctx context.Context, keys []string, defV
 }
 
 func SetState(ctx context.Context, key string, value interface{}) {
-	// Initialize Redis client
-	rdb := redis.NewClient(&redis.Options{
-		Addr: "redis:6379", // Redis server address
-	})
+	initRedisClient()
 
 	valueBytes, err := json.Marshal(value)
 	if err != nil {
@@ -118,7 +134,6 @@ func SetState(ctx context.Context, key string, value interface{}) {
 	if err != nil {
 		log.Panic(err)
 	}
-
 }
 
 func SetBulkState(ctx context.Context, kvs map[string]interface{}) {
