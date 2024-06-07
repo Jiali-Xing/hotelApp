@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rate-redis
+  labels:
+    app: rate-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rate-redis
+  template:
+    metadata:
+      labels:
+        app: rate-redis
+    spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - rate
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: redis
+        image: redis:latest
+        ports:
+        - containerPort: 6379

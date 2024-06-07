@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: profile
+  labels:
+    app: profile
+spec:
+  selector:
+    app: profile
+  ports:
+  - protocol: TCP
+    port: 50051
+    targetPort: 50051
+  type: LoadBalancer

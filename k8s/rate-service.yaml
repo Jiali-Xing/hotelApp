@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rate
+  labels:
+    app: rate
+spec:
+  selector:
+    app: rate
+  ports:
+  - protocol: TCP
+    port: 50051
+    targetPort: 50051
+  type: LoadBalancer

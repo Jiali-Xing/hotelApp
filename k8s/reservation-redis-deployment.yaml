@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reservation-redis
+  labels:
+    app: reservation-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reservation-redis
+  template:
+    metadata:
+      labels:
+        app: reservation-redis
+    spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - reservation
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: redis
+        image: redis:latest
+        ports:
+        - containerPort: 6379

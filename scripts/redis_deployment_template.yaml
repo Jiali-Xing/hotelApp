@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {service_name}-redis
+  labels:
+    app: {service_name}-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {service_name}-redis
+  template:
+    metadata:
+      labels:
+        app: {service_name}-redis
+    spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {service_name}
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: redis
+        image: redis:latest
+        ports:
+        - containerPort: 6379
