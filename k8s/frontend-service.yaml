@@ -12,3 +12,5 @@ spec:
     port: 50051
     targetPort: 50051
   type: LoadBalancer
+  externalIPs:
+    - 1.2.4.114

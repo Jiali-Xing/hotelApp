@@ -27,10 +27,14 @@ for service in services:
     
     with open(os.path.join(output_dir, deployment_filename), "w") as f:
         f.write(deployment_content)
-    
-    service_content = service_template.format(service_name=service)
+
+    # Generate the service YAML
+    if service == "frontend":
+        external_ip = "externalIPs:\n    - 1.2.4.114"
+    else:
+        external_ip = ""
+    service_content = service_template.format(service_name=service, external_ip=external_ip)
     service_filename = f"{service}-service.yaml"
-    
     with open(os.path.join(output_dir, service_filename), "w") as f:
         f.write(service_content)
 

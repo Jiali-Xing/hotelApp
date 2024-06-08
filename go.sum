@@ -1,5 +1,3 @@
-github.com/Jiali-Xing/hotelproto v0.0.0-20240605190957-bef47f7a3ab9 h1:sbEbpFglirPdPWkbXCDKU99CR2FrQrlMwZ2gNM3GEOM=
-github.com/Jiali-Xing/hotelproto v0.0.0-20240605190957-bef47f7a3ab9/go.mod h1:bg9XsUzP2sUVpCYUF1C1lerq0FHnojxQCpQQ+bOQHTY=
 github.com/Jiali-Xing/hotelproto v0.0.0-20240605200745-af794fd80c02 h1:N1waB/sx6rLGCJLGepnZcYlQmUDWANmdbjumIPBy9WE=
 github.com/Jiali-Xing/hotelproto v0.0.0-20240605200745-af794fd80c02/go.mod h1:bg9XsUzP2sUVpCYUF1C1lerq0FHnojxQCpQQ+bOQHTY=
 github.com/cespare/xxhash/v2 v2.2.0 h1:DC2CZ1Ep5Y4k3ZQ899DldepgrayRUGE6BBZ/cd9Cj44=

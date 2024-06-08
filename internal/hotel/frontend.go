@@ -95,6 +95,12 @@ func FrontendReservation(ctx context.Context, hotelId string, inDate string, out
 		log.Printf("Error invoking gRPC method: %v", err)
 		return false
 	}
+
+	if tokenRes == nil {
+		log.Println("Received nil response from login gRPC call")
+		return false
+	}
+
 	if tokenRes.Token != "OK" {
 		return false
 	}
