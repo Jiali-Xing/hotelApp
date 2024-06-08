@@ -14,16 +14,6 @@ spec:
       labels:
         app: rate
     spec:
-      affinity:
-        podAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - rate-redis
-            topologyKey: "kubernetes.io/hostname"
       containers:
       - name: rate
         image: tgiannoukos/redis-test-go:latest

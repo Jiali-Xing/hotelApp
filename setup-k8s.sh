@@ -1,15 +1,5 @@
 #!/bin/bash
 
-# Label nodes to identify them for specific services
-# kubectl label nodes node-1 type=user-node
-# kubectl label nodes node-2 type=search-node
-# kubectl label nodes node-3 type=reservation-node
-# kubectl label nodes node-4 type=rate-node
-# kubectl label nodes node-5 type=profile-node
-# kubectl label nodes node-6 type=frontend-node
-
-# echo "Nodes have been labeled successfully."
-
 # Apply Kubernetes YAML files for services and Redis
 kubectl apply -f k8s/frontend-deployment.yaml
 kubectl apply -f k8s/frontend-service.yaml

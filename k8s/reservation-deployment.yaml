@@ -14,16 +14,6 @@ spec:
       labels:
         app: reservation
     spec:
-      affinity:
-        podAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - reservation-redis
-            topologyKey: "kubernetes.io/hostname"
       containers:
       - name: reservation
         image: tgiannoukos/redis-test-go:latest
