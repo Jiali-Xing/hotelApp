@@ -38,6 +38,10 @@ func main() {
 
 		token := hotel.Login(ctx, "user1", "password2")
 		println(token)
+		token = hotel.Login(ctx, "user2", "password3")
+		println(token)
+		token = hotel.Login(ctx, "user1", "password1")
+		println(token)
 	}()
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("Failed to serve: %v", err)
