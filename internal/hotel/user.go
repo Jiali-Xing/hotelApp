@@ -5,6 +5,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"log"
+	"redis_test/internal/config"
 
 	"redis_test/pkg/state"
 
@@ -40,6 +41,7 @@ func RegisterUser(ctx context.Context, username string, password string) bool {
 	}
 
 	state.SetState(ctx, username, user)
+	config.DebugLog("User %s registered successfully with userId: %s and password: %s", username, userId, password)
 	return true
 }
 
@@ -51,6 +53,7 @@ func hash(str string) []byte {
 }
 
 func Login(ctx context.Context, username string, password string) string {
+	config.DebugLog("Login called with username: %s and password: %s", username, password)
 	user, err := state.GetState[User](ctx, username)
 	if err != nil {
 		log.Printf("Error getting user state: %v", err)

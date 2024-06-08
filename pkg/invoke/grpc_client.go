@@ -2,6 +2,7 @@ package invoke
 
 import (
 	"fmt"
+	"redis_test/internal/config"
 	"sync"
 
 	"google.golang.org/grpc"
@@ -18,7 +19,9 @@ func getClientConn(address string) (*grpc.ClientConn, error) {
 	var err error
 	initOnce.Do(func() {
 		conn, err = grpc.Dial(address, grpc.WithInsecure())
+		config.DebugLog("Established connection to gRPC server at address: %s", address)
 	})
+	config.DebugLog("Returning existing connection to gRPC server at address: %s", address)
 	return conn, err
 }
 
@@ -26,6 +29,7 @@ func registerClient(service string, client interface{}) {
 	mu.Lock()
 	defer mu.Unlock()
 	clients[service] = client
+	config.DebugLog("Registered client for service: %s", service)
 }
 
 func getClient(service string) (interface{}, error) {
@@ -36,6 +40,7 @@ func getClient(service string) (interface{}, error) {
 	if !exists {
 		return nil, fmt.Errorf("client not registered for service: %s", service)
 	}
+	config.DebugLog("Retrieved client for service: %s", service)
 	return client, nil
 }
 
@@ -48,5 +53,6 @@ func CloseConnection() {
 	defer mu.Unlock()
 	if conn != nil {
 		conn.Close()
+		config.DebugLog("Closed connection to gRPC server")
 	}
 }

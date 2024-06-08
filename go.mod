@@ -3,11 +3,10 @@ module redis_test
 go 1.22.3
 
 require (
-	github.com/Jiali-Xing/hotelproto v0.0.0-20240605200745-af794fd80c02
+	github.com/Jiali-Xing/hotelproto v0.0.0-20240608220325-6f6e0130d31d
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/lithammer/shortuuid v3.0.0+incompatible
 	google.golang.org/grpc v1.64.0
-	google.golang.org/protobuf v1.34.1
 )
 
 require (
@@ -18,4 +17,5 @@ require (
 	golang.org/x/sys v0.21.0 // indirect
 	golang.org/x/text v0.16.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240604185151-ef581f913117 // indirect
+	google.golang.org/protobuf v1.34.1 // indirect
 )

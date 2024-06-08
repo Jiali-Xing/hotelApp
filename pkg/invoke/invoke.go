@@ -3,6 +3,8 @@ package invoke
 import (
 	"context"
 	"fmt"
+	"redis_test/internal/config"
+	"strings"
 
 	hotelpb "github.com/Jiali-Xing/hotelproto"
 )
@@ -12,8 +14,12 @@ func Invoke[T any](ctx context.Context, app string, method string, input interfa
 
 	client, err := getClient(app)
 	if err != nil {
+		config.DebugLog("Error getting client for app %s: %v", app, err)
 		return res, err
 	}
+
+	// Convert method name to lower case to make comparison case-insensitive
+	method = strings.ToLower(method)
 
 	switch app {
 	case "user":
@@ -29,10 +35,17 @@ func Invoke[T any](ctx context.Context, app string, method string, input interfa
 			}
 			resp, err := userClient.Login(ctx, req)
 			if err != nil {
+				config.DebugLog("Error calling Login method: %v", err)
 				return res, err
 			}
+
+			if resp == nil {
+				config.DebugLog("Received nil response from login gRPC call")
+				return res, fmt.Errorf("received nil response from login gRPC call")
+			}
+			config.DebugLog("Received response from Login method: %v", resp)
 			res = any(resp).(T)
-		case "registerUser":
+		case "registeruser":
 			req, ok := input.(*hotelpb.RegisterUserRequest)
 			if !ok {
 				return res, fmt.Errorf("invalid input type for method: %s", method)
@@ -41,8 +54,16 @@ func Invoke[T any](ctx context.Context, app string, method string, input interfa
 			if err != nil {
 				return res, err
 			}
+
+			if resp == nil {
+				config.DebugLog("Received nil response from register user gRPC call")
+				return res, fmt.Errorf("received nil response from register user gRPC call")
+			}
+			config.DebugLog("Received response from RegisterUser method: %v", resp)
 			res = any(resp).(T)
 			// Add more user methods here
+		default:
+			return res, fmt.Errorf("unsupported method: %s", method)
 		}
 	case "search":
 		searchClient, ok := client.(hotelpb.SearchServiceClient)
@@ -50,7 +71,7 @@ func Invoke[T any](ctx context.Context, app string, method string, input interfa
 			return res, fmt.Errorf("invalid client type for service: %s", app)
 		}
 		switch method {
-		case "SearchHotels":
+		case "searchhotels":
 			req, ok := input.(*hotelpb.SearchHotelsRequest)
 			if !ok {
 				return res, fmt.Errorf("invalid input type for method: %s", method)
@@ -60,7 +81,7 @@ func Invoke[T any](ctx context.Context, app string, method string, input interfa
 				return res, err
 			}
 			res = any(resp).(T)
-		case "Nearby":
+		case "nearby":
 			req, ok := input.(*hotelpb.NearbyRequest)
 			if !ok {
 				return res, fmt.Errorf("invalid input type for method: %s", method)
@@ -71,6 +92,8 @@ func Invoke[T any](ctx context.Context, app string, method string, input interfa
 			}
 			res = any(resp).(T)
 			// Add more search methods here
+		default:
+			return res, fmt.Errorf("unsupported method: %s", method)
 		}
 	case "reservation":
 		reservationClient, ok := client.(hotelpb.ReservationServiceClient)
@@ -78,7 +101,7 @@ func Invoke[T any](ctx context.Context, app string, method string, input interfa
 			return res, fmt.Errorf("invalid client type for service: %s", app)
 		}
 		switch method {
-		case "FrontendReservation":
+		case "frontendreservation":
 			req, ok := input.(*hotelpb.FrontendReservationRequest)
 			if !ok {
 				return res, fmt.Errorf("invalid input type for method: %s", method)
@@ -88,7 +111,7 @@ func Invoke[T any](ctx context.Context, app string, method string, input interfa
 				return res, err
 			}
 			res = any(resp).(T)
-		case "MakeReservation":
+		case "makereservation":
 			req, ok := input.(*hotelpb.MakeReservationRequest)
 			if !ok {
 				return res, fmt.Errorf("invalid input type for method: %s", method)
@@ -98,7 +121,7 @@ func Invoke[T any](ctx context.Context, app string, method string, input interfa
 				return res, err
 			}
 			res = any(resp).(T)
-		case "CheckAvailability":
+		case "checkavailability":
 			req, ok := input.(*hotelpb.CheckAvailabilityRequest)
 			if !ok {
 				return res, fmt.Errorf("invalid input type for method: %s", method)
@@ -109,6 +132,8 @@ func Invoke[T any](ctx context.Context, app string, method string, input interfa
 			}
 			res = any(resp).(T)
 			// Add more reservation methods here
+		default:
+			return res, fmt.Errorf("unsupported method: %s", method)
 		}
 	case "rate":
 		rateClient, ok := client.(hotelpb.RateServiceClient)
@@ -116,7 +141,7 @@ func Invoke[T any](ctx context.Context, app string, method string, input interfa
 			return res, fmt.Errorf("invalid client type for service: %s", app)
 		}
 		switch method {
-		case "GetRates":
+		case "getrates":
 			req, ok := input.(*hotelpb.GetRatesRequest)
 			if !ok {
 				return res, fmt.Errorf("invalid input type for method: %s", method)
@@ -126,7 +151,7 @@ func Invoke[T any](ctx context.Context, app string, method string, input interfa
 				return res, err
 			}
 			res = any(resp).(T)
-		case "StoreRate":
+		case "storerate":
 			req, ok := input.(*hotelpb.StoreRateRequest)
 			if !ok {
 				return res, fmt.Errorf("invalid input type for method: %s", method)
@@ -137,6 +162,8 @@ func Invoke[T any](ctx context.Context, app string, method string, input interfa
 			}
 			res = any(resp).(T)
 			// Add more rate methods here
+		default:
+			return res, fmt.Errorf("unsupported method: %s", method)
 		}
 	case "profile":
 		profileClient, ok := client.(hotelpb.ProfileServiceClient)
@@ -144,7 +171,7 @@ func Invoke[T any](ctx context.Context, app string, method string, input interfa
 			return res, fmt.Errorf("invalid client type for service: %s", app)
 		}
 		switch method {
-		case "GetProfiles":
+		case "getprofiles":
 			req, ok := input.(*hotelpb.GetProfilesRequest)
 			if !ok {
 				return res, fmt.Errorf("invalid input type for method: %s", method)
@@ -154,7 +181,7 @@ func Invoke[T any](ctx context.Context, app string, method string, input interfa
 				return res, err
 			}
 			res = any(resp).(T)
-		case "StoreProfile":
+		case "storeprofile":
 			req, ok := input.(*hotelpb.StoreProfileRequest)
 			if !ok {
 				return res, fmt.Errorf("invalid input type for method: %s", method)
@@ -165,6 +192,8 @@ func Invoke[T any](ctx context.Context, app string, method string, input interfa
 			}
 			res = any(resp).(T)
 			// Add more profile methods here
+		default:
+			return res, fmt.Errorf("unsupported method: %s", method)
 		}
 	// Add more services here
 	default:
