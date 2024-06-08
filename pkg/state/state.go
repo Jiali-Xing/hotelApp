@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"redis_test/internal/config"
 	"sync"
 
 	"github.com/go-redis/redis/v8"
@@ -29,6 +30,7 @@ func initRedisClient() {
 		rdb = redis.NewClient(&redis.Options{
 			Addr: redisAddr,
 		})
+		config.DebugLog("Redis client initialized at %s", redisAddr)
 	})
 }
 
@@ -41,6 +43,7 @@ func GetState[T interface{}](ctx context.Context, key string) (T, error) {
 	result, err := rdb.Get(ctx, key).Result()
 	if err == redis.Nil {
 		// Key does not exist
+		config.DebugLog("Key not found: %s", key)
 		return value, errors.New("key not found")
 	} else if err != nil {
 		// Other Redis error
@@ -52,7 +55,7 @@ func GetState[T interface{}](ctx context.Context, key string) (T, error) {
 	if err != nil {
 		log.Panic(err)
 	}
-
+	config.DebugLog("Retrieved value for key %s", key)
 	return value, nil
 }
 

@@ -1,5 +1,7 @@
 github.com/Jiali-Xing/hotelproto v0.0.0-20240605200745-af794fd80c02 h1:N1waB/sx6rLGCJLGepnZcYlQmUDWANmdbjumIPBy9WE=
 github.com/Jiali-Xing/hotelproto v0.0.0-20240605200745-af794fd80c02/go.mod h1:bg9XsUzP2sUVpCYUF1C1lerq0FHnojxQCpQQ+bOQHTY=
+github.com/Jiali-Xing/hotelproto v0.0.0-20240608220325-6f6e0130d31d h1:s9vhIaDpqqSHuojz3LSsebOiOxY2H82q9PGfF0y5hek=
+github.com/Jiali-Xing/hotelproto v0.0.0-20240608220325-6f6e0130d31d/go.mod h1:bg9XsUzP2sUVpCYUF1C1lerq0FHnojxQCpQQ+bOQHTY=
 github.com/cespare/xxhash/v2 v2.2.0 h1:DC2CZ1Ep5Y4k3ZQ899DldepgrayRUGE6BBZ/cd9Cj44=
 github.com/cespare/xxhash/v2 v2.2.0/go.mod h1:VGX0DQ3Q6kWi7AoAeZDth3/j3BFtOZR5XLFGgcrjCOs=
 github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f h1:lO4WD4F/rVNCu3HqELle0jiPLLBs70cWOduZpkS1E78=
