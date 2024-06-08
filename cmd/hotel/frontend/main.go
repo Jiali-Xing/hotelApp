@@ -45,35 +45,35 @@ func main() {
 		port = "50052" // Default port if not specified
 	}
 	// Establish a gRPC connection to other services
-	userConn, err := grpc.Dial("localhost"+config.UserPort, grpc.WithInsecure())
+	userConn, err := grpc.Dial("user"+config.UserPort, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect to user gRPC server: %v", err)
 	}
 	defer userConn.Close()
 	invoke.RegisterClient("user", hotelpb.NewUserServiceClient(userConn))
 
-	searchConn, err := grpc.Dial("localhost"+config.SearchPort, grpc.WithInsecure())
+	searchConn, err := grpc.Dial("search"+config.SearchPort, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect to search gRPC server: %v", err)
 	}
 	defer searchConn.Close()
 	invoke.RegisterClient("search", hotelpb.NewSearchServiceClient(searchConn))
 
-	reservationConn, err := grpc.Dial("localhost"+config.ReservationPort, grpc.WithInsecure())
+	reservationConn, err := grpc.Dial("reservation"+config.ReservationPort, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect to reservation gRPC server: %v", err)
 	}
 	defer reservationConn.Close()
 	invoke.RegisterClient("reservation", hotelpb.NewReservationServiceClient(reservationConn))
 
-	rateConn, err := grpc.Dial("localhost"+config.RatePort, grpc.WithInsecure())
+	rateConn, err := grpc.Dial("rate"+config.RatePort, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect to rate gRPC server: %v", err)
 	}
 	defer rateConn.Close()
 	invoke.RegisterClient("rate", hotelpb.NewRateServiceClient(rateConn))
 
-	profileConn, err := grpc.Dial("localhost"+config.ProfilePort, grpc.WithInsecure())
+	profileConn, err := grpc.Dial("profile"+config.ProfilePort, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect to profile gRPC server: %v", err)
 	}

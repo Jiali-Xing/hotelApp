@@ -16,7 +16,7 @@ func main() {
 		port = "50057" // Default port if not specified
 	}
 	// Set up gRPC server
-	lis, err := net.Listen("tcp", "localhost:"+port)
+	lis, err := net.Listen("tcp", ":"+port)
 	if err != nil {
 		log.Fatalf("Failed to listen: %v", err)
 	}
