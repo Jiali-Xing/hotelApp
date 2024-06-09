@@ -5,7 +5,8 @@ import (
 	"log"
 	"net"
 	"os"
-	"redis_test/internal/hotel"
+
+	"github.com/Jiali-Xing/hotelApp/internal/hotel"
 
 	hotelpb "github.com/Jiali-Xing/hotelproto"
 

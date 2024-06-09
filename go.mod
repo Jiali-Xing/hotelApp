@@ -1,4 +1,4 @@
-module redis_test
+module github.com/Jiali-Xing/hotelApp
 
 go 1.22.3
 

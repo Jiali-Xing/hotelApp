@@ -3,8 +3,9 @@ package invoke
 import (
 	"context"
 	"fmt"
-	"redis_test/internal/config"
 	"strings"
+
+	"github.com/Jiali-Xing/hotelApp/internal/config"
 
 	hotelpb "github.com/Jiali-Xing/hotelproto"
 )

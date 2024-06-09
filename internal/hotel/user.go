@@ -5,9 +5,10 @@ import (
 	"context"
 	"crypto/sha256"
 	"log"
-	"redis_test/internal/config"
 
-	"redis_test/pkg/state"
+	"github.com/Jiali-Xing/hotelApp/internal/config"
+
+	"github.com/Jiali-Xing/hotelApp/pkg/state"
 
 	hotelpb "github.com/Jiali-Xing/hotelproto"
 	"github.com/lithammer/shortuuid"

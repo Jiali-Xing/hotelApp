@@ -2,8 +2,9 @@ package invoke
 
 import (
 	"fmt"
-	"redis_test/internal/config"
 	"sync"
+
+	"github.com/Jiali-Xing/hotelApp/internal/config"
 
 	"google.golang.org/grpc"
 )
