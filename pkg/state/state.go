@@ -62,9 +62,7 @@ func GetState[T interface{}](ctx context.Context, key string) (T, error) {
 
 func GetBulkState[T interface{}](ctx context.Context, keys []string) ([]T, error) {
 	// Initialize Redis client
-	rdb := redis.NewClient(&redis.Options{
-		Addr: "redis:6379", // Redis server address
-	})
+	initRedisClient()
 
 	// Retrieve multiple keys from Redis
 	items, err := rdb.MGet(ctx, keys...).Result()
@@ -94,9 +92,7 @@ func GetBulkState[T interface{}](ctx context.Context, keys []string) ([]T, error
 
 func GetBulkStateDefault[T interface{}](ctx context.Context, keys []string, defVal T) []T {
 	// Initialize Redis client
-	rdb := redis.NewClient(&redis.Options{
-		Addr: "redis:6379", // Redis server address
-	})
+	initRedisClient()
 
 	// Retrieve multiple keys from Redis
 	items, err := rdb.MGet(ctx, keys...).Result()

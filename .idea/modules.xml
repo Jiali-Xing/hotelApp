@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/github.com/Jiali-Xing/hotelApp.iml" filepath="$PROJECT_DIR$/.idea/github.com/Jiali-Xing/hotelApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/hotelApp.iml" filepath="$PROJECT_DIR$/.idea/hotelApp.iml" />
     </modules>
   </component>
 </project>
