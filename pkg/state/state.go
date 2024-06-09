@@ -7,8 +7,9 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"redis_test/internal/config"
 	"sync"
+
+	"github.com/Jiali-Xing/hotelApp/internal/config"
 
 	"github.com/go-redis/redis/v8"
 )

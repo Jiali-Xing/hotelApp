@@ -2,7 +2,8 @@ package hotel
 
 import (
 	"context"
-	"redis_test/pkg/state"
+
+	"github.com/Jiali-Xing/hotelApp/pkg/state"
 
 	hotelpb "github.com/Jiali-Xing/hotelproto"
 )

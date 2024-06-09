@@ -3,8 +3,9 @@ package hotel
 import (
 	"context"
 	"log"
-	"redis_test/pkg/invoke"
-	"redis_test/pkg/state"
+
+	"github.com/Jiali-Xing/hotelApp/pkg/invoke"
+	"github.com/Jiali-Xing/hotelApp/pkg/state"
 
 	hotelpb "github.com/Jiali-Xing/hotelproto"
 )

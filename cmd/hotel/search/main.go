@@ -4,9 +4,10 @@ import (
 	"log"
 	"net"
 	"os"
-	"redis_test/internal/config"
-	"redis_test/internal/hotel"
-	"redis_test/pkg/invoke"
+
+	"github.com/Jiali-Xing/hotelApp/internal/config"
+	"github.com/Jiali-Xing/hotelApp/internal/hotel"
+	"github.com/Jiali-Xing/hotelApp/pkg/invoke"
 
 	hotelpb "github.com/Jiali-Xing/hotelproto"
 	"google.golang.org/grpc"

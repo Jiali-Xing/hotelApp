@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"redis_test/pkg/invoke"
+	"github.com/Jiali-Xing/hotelApp/pkg/invoke"
 
 	hotelpb "github.com/Jiali-Xing/hotelproto"
 )
