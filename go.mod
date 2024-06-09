@@ -3,7 +3,7 @@ module redis_test
 go 1.22.3
 
 require (
-	github.com/Jiali-Xing/hotelproto v0.0.0-20240608220325-6f6e0130d31d
+	github.com/Jiali-Xing/hotelproto v0.0.0-20240609022535-ea9137c9f3e8
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/lithammer/shortuuid v3.0.0+incompatible
 	google.golang.org/grpc v1.64.0

@@ -14,11 +14,12 @@ import (
 )
 
 type server struct {
-	hotelpb.UnimplementedReservationServiceServer
-	hotelpb.UnimplementedSearchServiceServer
-	hotelpb.UnimplementedProfileServiceServer
-	hotelpb.UnimplementedRateServiceServer
-	hotelpb.UnimplementedUserServiceServer
+	hotelpb.UnimplementedFrontendServiceServer
+	//hotelpb.UnimplementedReservationServiceServer
+	//hotelpb.UnimplementedSearchServiceServer
+	//hotelpb.UnimplementedProfileServiceServer
+	//hotelpb.UnimplementedRateServiceServer
+	//hotelpb.UnimplementedUserServiceServer
 }
 
 func (s *server) SearchHotels(ctx context.Context, req *hotelpb.SearchHotelsRequest) (*hotelpb.SearchHotelsResponse, error) {
@@ -88,11 +89,12 @@ func main() {
 
 	s := grpc.NewServer()
 	hotelServer := &server{}
-	hotelpb.RegisterReservationServiceServer(s, hotelServer)
-	hotelpb.RegisterSearchServiceServer(s, hotelServer)
-	hotelpb.RegisterProfileServiceServer(s, hotelServer)
-	hotelpb.RegisterRateServiceServer(s, hotelServer)
-	hotelpb.RegisterUserServiceServer(s, hotelServer)
+	hotelpb.RegisterFrontendServiceServer(s, hotelServer)
+	//hotelpb.RegisterReservationServiceServer(s, hotelServer)
+	//hotelpb.RegisterSearchServiceServer(s, hotelServer)
+	//hotelpb.RegisterProfileServiceServer(s, hotelServer)
+	//hotelpb.RegisterRateServiceServer(s, hotelServer)
+	//hotelpb.RegisterUserServiceServer(s, hotelServer)
 
 	log.Println("gRPC server listening on port " + port)
 	if err := s.Serve(lis); err != nil {
