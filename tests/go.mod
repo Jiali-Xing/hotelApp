@@ -8,6 +8,7 @@ require (
 )
 
 require (
+	github.com/Jiali-Xing/hotelApp v0.0.0-20240609035612-102e40d99d24 // indirect
 	golang.org/x/net v0.26.0 // indirect
 	golang.org/x/sys v0.21.0 // indirect
 	golang.org/x/text v0.16.0 // indirect

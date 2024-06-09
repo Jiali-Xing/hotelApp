@@ -1,3 +1,5 @@
+github.com/Jiali-Xing/hotelApp v0.0.0-20240609035612-102e40d99d24 h1:BchBzLfdCUld+X6c6Zziu2a0ugPB2BFoM1tukpvDhUU=
+github.com/Jiali-Xing/hotelApp v0.0.0-20240609035612-102e40d99d24/go.mod h1:5zr9hCBNCyKHIvxn4f8SVAp6krS2d1sfFMA6IVTZm0E=
 github.com/Jiali-Xing/hotelproto v0.0.0-20240609022535-ea9137c9f3e8 h1:kaM+p918qJtWTu9WOBZq9iHZ1F0XpGMneUSQ/rDr/fk=
 github.com/Jiali-Xing/hotelproto v0.0.0-20240609022535-ea9137c9f3e8/go.mod h1:bg9XsUzP2sUVpCYUF1C1lerq0FHnojxQCpQQ+bOQHTY=
 github.com/google/go-cmp v0.6.0 h1:ofyhxvXcZhMsU5ulbFiLKl/XBFqE1GSq7atu8tAmTRI=

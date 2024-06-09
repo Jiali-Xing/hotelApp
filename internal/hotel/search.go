@@ -20,12 +20,6 @@ func (s *SearchServer) Nearby(ctx context.Context, req *hotelpb.NearbyRequest) (
 	return resp, nil
 }
 
-func (s *SearchServer) SearchHotels(ctx context.Context, req *hotelpb.SearchHotelsRequest) (*hotelpb.SearchHotelsResponse, error) {
-	profiles := SearchHotels(ctx, req.InDate, req.OutDate, req.Location)
-	resp := &hotelpb.SearchHotelsResponse{Profiles: profiles}
-	return resp, nil
-}
-
 func (s *SearchServer) StoreHotelLocation(ctx context.Context, req *hotelpb.StoreHotelLocationRequest) (*hotelpb.StoreHotelLocationResponse, error) {
 	hotelId := StoreHotelLocation(ctx, req.HotelId, req.Location)
 	resp := &hotelpb.StoreHotelLocationResponse{HotelId: hotelId}
