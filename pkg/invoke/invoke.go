@@ -71,16 +71,6 @@ func Invoke[T any](ctx context.Context, app string, method string, input interfa
 			return res, fmt.Errorf("invalid client type for service: %s", app)
 		}
 		switch method {
-		case "searchhotels":
-			req, ok := input.(*hotelpb.SearchHotelsRequest)
-			if !ok {
-				return res, fmt.Errorf("invalid input type for method: %s", method)
-			}
-			resp, err := searchClient.SearchHotels(ctx, req)
-			if err != nil {
-				return res, err
-			}
-			res = any(resp).(T)
 		case "nearby":
 			req, ok := input.(*hotelpb.NearbyRequest)
 			if !ok {
@@ -91,7 +81,16 @@ func Invoke[T any](ctx context.Context, app string, method string, input interfa
 				return res, err
 			}
 			res = any(resp).(T)
-			// Add more search methods here
+		case "storehotellocation":
+			req, ok := input.(*hotelpb.StoreHotelLocationRequest)
+			if !ok {
+				return res, fmt.Errorf("invalid input type for method: %s", method)
+			}
+			resp, err := searchClient.StoreHotelLocation(ctx, req)
+			if err != nil {
+				return res, err
+			}
+			res = any(resp).(T)
 		default:
 			return res, fmt.Errorf("unsupported method: %s", method)
 		}
@@ -101,12 +100,12 @@ func Invoke[T any](ctx context.Context, app string, method string, input interfa
 			return res, fmt.Errorf("invalid client type for service: %s", app)
 		}
 		switch method {
-		case "frontendreservation":
-			req, ok := input.(*hotelpb.FrontendReservationRequest)
+		case "addhotelavailability":
+			req, ok := input.(*hotelpb.AddHotelAvailabilityRequest)
 			if !ok {
 				return res, fmt.Errorf("invalid input type for method: %s", method)
 			}
-			resp, err := reservationClient.FrontendReservation(ctx, req)
+			resp, err := reservationClient.AddHotelAvailability(ctx, req)
 			if err != nil {
 				return res, err
 			}

@@ -25,6 +25,12 @@ func (s *SearchServer) SearchHotels(ctx context.Context, req *hotelpb.SearchHote
 	return resp, nil
 }
 
+func (s *SearchServer) StoreHotelLocation(ctx context.Context, req *hotelpb.StoreHotelLocationRequest) (*hotelpb.StoreHotelLocationResponse, error) {
+	hotelId := StoreHotelLocation(ctx, req.HotelId, req.Location)
+	resp := &hotelpb.StoreHotelLocationResponse{HotelId: hotelId}
+	return resp, nil
+}
+
 func Nearby(ctx context.Context, inDate string, outDate string, location string) []*hotelpb.Rate {
 	// Find the hotel ids in that location
 	hotelIds := getHotelIdsForLocation(ctx, location)
