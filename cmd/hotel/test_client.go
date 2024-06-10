@@ -14,7 +14,8 @@ import (
 func main() {
 	flag.Parse()
 
-	frontendConn, err := grpc.Dial("localhost:50052", grpc.WithInsecure())
+	// Establish gRPC connections to all services
+	frontendConn, err := grpc.Dial(config.FrontendAddr, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect to frontend gRPC server: %v", err)
 	}
