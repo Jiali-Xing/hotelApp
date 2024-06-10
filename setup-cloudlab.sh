@@ -29,19 +29,27 @@ download_and_untar_ghz() {
     fi
 }
 
+# Add GitHub to known hosts
+ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+
+
+# Function to clone repository with SSH key verification handled
+clone_repo() {
+    local repo=$1
+    if check_dir_exists ${repo}; then
+        echo "Cloning ${repo} repository..."
+        GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=accept-new" git clone git@github.com:Jiali-Xing/${repo}.git
+    else
+        echo "${repo} already exists."
+    fi
+}
+
 # Clone the hotelApp repository
-REPO1="hotelApp"
-check_dir_exists ${REPO1}
-if [ $? -eq 0 ]; then
-    git clone git@github.com:Jiali-Xing/${REPO1}.git
-fi
+clone_repo "hotelApp"
 
 # Clone the hotelproto repository
-REPO2="hotelproto"
-check_dir_exists ${REPO2}
-if [ $? -eq 0 ]; then
-    git clone git@github.com:Jiali-Xing/${REPO2}.git
-fi
+clone_repo "hotelproto"
+
 
 # Download and untar ghz
 download_and_untar_ghz
