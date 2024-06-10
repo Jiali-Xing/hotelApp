@@ -57,25 +57,31 @@ func main() {
 	defer profileConn.Close()
 	profileClient := hotelpb.NewProfileServiceClient(profileConn)
 
-	// Test User Service
-	testRegisterUser(userClient)
-	testLogin(userClient)
+	if config.RunLocally {
+		// Test User Service
+		testRegisterUser(userClient)
+		testLogin(userClient)
 
-	// Test Frontend Service
-	testSearchHotels(frontendClient)
+		// Test Frontend Service
+		testSearchHotels(frontendClient)
+		testMakeReservation(frontendClient)
 
-	// Test Search Service
-	testStoreHotelLocation(searchClient)
+		// Test Search Service
+		testStoreHotelLocation(searchClient)
 
-	// Test Reservation Service
-	testCheckAvailability(reservationClient)
-	testMakeReservation(reservationClient)
+		// Test Reservation Service
+		testCheckAvailability(reservationClient)
 
-	// Test Rate Service
-	testGetRates(rateClient)
+		// Test Rate Service
+		testGetRates(rateClient)
 
-	// Test Profile Service
-	testGetProfiles(profileClient)
+		// Test Profile Service
+		testGetProfiles(profileClient)
+	} else {
+		//	only test search and reservation of the frontend service
+		testSearchHotels(frontendClient)
+		testMakeReservation(frontendClient)
+	}
 }
 
 func testRegisterUser(client hotelpb.UserServiceClient) {
@@ -117,7 +123,7 @@ func testSearchHotels(client hotelpb.FrontendServiceClient) {
 	req := &hotelpb.SearchHotelsRequest{
 		InDate:   "2024-06-01",
 		OutDate:  "2024-06-10",
-		Location: "Test City",
+		Location: "new-york-city-ny-0",
 	}
 
 	resp, err := client.SearchHotels(ctx, req)
@@ -162,19 +168,26 @@ func testCheckAvailability(client hotelpb.ReservationServiceClient) {
 	log.Printf("CheckAvailability response: %v", resp)
 }
 
-func testMakeReservation(client hotelpb.ReservationServiceClient) {
+func testMakeReservation(client hotelpb.FrontendServiceClient) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 
-	req := &hotelpb.MakeReservationRequest{
-		CustomerName: "testuser",
-		HotelId:      "H001",
-		InDate:       "2024-06-01",
-		OutDate:      "2024-06-10",
-		RoomNumber:   1,
+	req := &hotelpb.FrontendReservationRequest{
+		//string HotelId = 1;
+		//string InDate = 2;
+		//string OutDate = 3;
+		//int32 Rooms = 4;
+		//string Username = 5;
+		//string Password = 6;
+		HotelId:  "1",
+		InDate:   "2024-06-01",
+		OutDate:  "2024-06-10",
+		Rooms:    1,
+		Username: "user1",
+		Password: "password1",
 	}
 
-	resp, err := client.MakeReservation(ctx, req)
+	resp, err := client.FrontendReservation(ctx, req)
 	if err != nil {
 		log.Fatalf("Failed to make reservation: %v", err)
 	}
