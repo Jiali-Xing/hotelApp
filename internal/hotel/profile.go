@@ -35,9 +35,10 @@ func GetProfiles(ctx context.Context, hotelIds []string) []*hotelpb.HotelProfile
 	var profiles []*hotelpb.HotelProfile
 	if len(hotelIds) > 0 {
 		profiles = state.GetBulkStateDefault[*hotelpb.HotelProfile](ctx, hotelIds, &hotelpb.HotelProfile{})
+		config.DebugLog("Found profiles: %v for hotel ids: %v", profiles, hotelIds)
 	} else {
 		profiles = make([]*hotelpb.HotelProfile, len(hotelIds))
+		config.DebugLog("No profiles found for hotel ids: %v", hotelIds)
 	}
-	config.DebugLog("Found profiles: %v for hotel ids: %v", profiles, hotelIds)
 	return profiles
 }
