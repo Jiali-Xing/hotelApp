@@ -20,7 +20,8 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 50051
-        command: ["/bin/{service_name} -debug"]
+        command: ["/bin/{service_name}"]
+        args: ["-debug"]
         env:
         - name: SERVICE_NAME
           value: "{service_name}"

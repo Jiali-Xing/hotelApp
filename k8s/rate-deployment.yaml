@@ -20,7 +20,8 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 50051
-        command: ["/bin/rate -debug"]
+        command: ["/bin/rate"]
+        args: ["-debug"]
         env:
         - name: SERVICE_NAME
           value: "rate"
@@ -38,3 +39,14 @@ spec:
           value: "rate-service:50051"
         - name: PROFILE_SERVICE_ADDR
           value: "profile-service:50051"
+        - name: MSGRAPH_YAML
+          value: "/app/config/msgraph.yaml"
+        volumeMounts:
+          - name: config-volume
+            mountPath: /app/config/msgraph.yaml
+            subPath: msgraph.yaml
+      volumes:
+        - name: config-volume
+          configMap:
+            name: msgraph-config
+
