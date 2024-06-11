@@ -30,14 +30,14 @@ func main() {
 	hotelpb.RegisterSearchServiceServer(s, searchServer)
 
 	// Establish connections for downstream services
-	rateConn, err := grpc.Dial(config.RateAddr, grpc.WithInsecure())
+	rateConn, err := createGRPCConn(config.RateAddr, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect to rate gRPC server: %v", err)
 	}
 	defer rateConn.Close()
 	invoke.RegisterClient("rate", hotelpb.NewRateServiceClient(rateConn))
 
-	profileConn, err := grpc.Dial(config.ProfileAddr, grpc.WithInsecure())
+	profileConn, err := createGRPCConn(config.ProfileAddr, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect to profile gRPC server: %v", err)
 	}

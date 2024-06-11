@@ -14,12 +14,14 @@ type ProfileServer struct {
 }
 
 func (s *ProfileServer) StoreProfile(ctx context.Context, req *hotelpb.StoreProfileRequest) (*hotelpb.StoreProfileResponse, error) {
+	ctx = propagateMetadata(ctx, "profile")
 	hotelId := StoreProfile(ctx, req.Profile)
 	resp := &hotelpb.StoreProfileResponse{HotelId: hotelId}
 	return resp, nil
 }
 
 func (s *ProfileServer) GetProfiles(ctx context.Context, req *hotelpb.GetProfilesRequest) (*hotelpb.GetProfilesResponse, error) {
+	ctx = propagateMetadata(ctx, "profile")
 	profiles := GetProfiles(ctx, req.HotelIds)
 	resp := &hotelpb.GetProfilesResponse{Profiles: profiles}
 	return resp, nil

@@ -19,12 +19,14 @@ type UserServer struct {
 }
 
 func (s *UserServer) RegisterUser(ctx context.Context, req *hotelpb.RegisterUserRequest) (*hotelpb.RegisterUserResponse, error) {
+	ctx = propagateMetadata(ctx, "user")
 	ok := RegisterUser(ctx, req.Username, req.Password)
 	resp := &hotelpb.RegisterUserResponse{Ok: ok}
 	return resp, nil
 }
 
 func (s *UserServer) Login(ctx context.Context, req *hotelpb.LoginRequest) (*hotelpb.LoginResponse, error) {
+	ctx = propagateMetadata(ctx, "user")
 	token := Login(ctx, req.Username, req.Password)
 	resp := &hotelpb.LoginResponse{Token: token}
 	return resp, nil
