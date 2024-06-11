@@ -20,7 +20,7 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 50051
-        command: ["/bin/reservation"]
+        command: ["/bin/reservation -debug"]
         env:
         - name: SERVICE_NAME
           value: "reservation"
