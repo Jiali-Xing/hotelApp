@@ -20,7 +20,7 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 50051
-        command: ["/bin/frontend"]
+        command: ["/bin/frontend -debug"]
         env:
         - name: SERVICE_NAME
           value: "frontend"
