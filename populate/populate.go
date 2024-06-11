@@ -85,8 +85,8 @@ func populateHotels(conn *grpc.ClientConn) {
 		log.Fatalf("Failed to parse hotels file: %v", err)
 	}
 
-	// Add hotels to the service
-	for _, hotel := range hotels {
+	// Add only 2 hotels to the service
+	for _, hotel := range hotels[:1000] {
 		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 		defer cancel()
 
@@ -116,7 +116,7 @@ func populateUsers(conn *grpc.ClientConn) {
 		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 		defer cancel()
 
-		username := fmt.Sprintf("username%d", i)
+		username := fmt.Sprintf("user%d", i)
 		password := fmt.Sprintf("password%d", i)
 
 		req := &hotelpb.RegisterUserRequest{
