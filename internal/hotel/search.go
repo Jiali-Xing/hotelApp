@@ -2,6 +2,7 @@ package hotel
 
 import (
 	"context"
+	"github.com/Jiali-Xing/hotelApp/internal/config"
 	"log"
 
 	"github.com/Jiali-Xing/hotelApp/pkg/invoke"
@@ -29,7 +30,7 @@ func (s *SearchServer) StoreHotelLocation(ctx context.Context, req *hotelpb.Stor
 func Nearby(ctx context.Context, inDate string, outDate string, location string) []*hotelpb.Rate {
 	// Find the hotel ids in that location
 	hotelIds := getHotelIdsForLocation(ctx, location)
-
+	config.DebugLog("Found hotel ids: %v", hotelIds)
 	// Get the rates for these hotels
 	req := hotelpb.GetRatesRequest{HotelIds: hotelIds}
 	ratesRes, err := invoke.Invoke[*hotelpb.GetRatesResponse](ctx, "rate", "GetRates", &req)
@@ -37,6 +38,7 @@ func Nearby(ctx context.Context, inDate string, outDate string, location string)
 		log.Printf("Error invoking gRPC method: %v", err)
 		return []*hotelpb.Rate{}
 	}
+	config.DebugLog("Found rates: %v", ratesRes.Rates)
 	return ratesRes.Rates
 }
 

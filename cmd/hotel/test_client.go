@@ -11,6 +11,10 @@ import (
 	"google.golang.org/grpc"
 )
 
+var (
+	skipTest bool
+)
+
 func main() {
 	flag.Parse()
 
@@ -57,26 +61,34 @@ func main() {
 	defer profileConn.Close()
 	profileClient := hotelpb.NewProfileServiceClient(profileConn)
 
+	// Run tests
+	skipTest = true
+
 	if config.RunLocally {
-		// Test User Service
-		testRegisterUser(userClient)
-		testLogin(userClient)
+
+		// Debugging the store hotel request
 
 		// Test Frontend Service
 		testSearchHotels(frontendClient)
 		testMakeReservation(frontendClient)
 
-		// Test Search Service
-		testStoreHotelLocation(searchClient)
+		if !skipTest {
+			// Test User Service
+			testRegisterUser(userClient)
+			testLogin(userClient)
 
-		// Test Reservation Service
-		testCheckAvailability(reservationClient)
+			// Test Search Service
+			testStoreHotelLocation(searchClient)
 
-		// Test Rate Service
-		testGetRates(rateClient)
+			// Test Reservation Service
+			testCheckAvailability(reservationClient)
 
-		// Test Profile Service
-		testGetProfiles(profileClient)
+			// Test Rate Service
+			testGetRates(rateClient)
+
+			// Test Profile Service
+			testGetProfiles(profileClient)
+		}
 	} else {
 		//	only test search and reservation of the frontend service
 		testSearchHotels(frontendClient)
@@ -121,8 +133,8 @@ func testSearchHotels(client hotelpb.FrontendServiceClient) {
 	defer cancel()
 
 	req := &hotelpb.SearchHotelsRequest{
-		InDate:   "2024-06-01",
-		OutDate:  "2024-06-10",
+		InDate:   "2023-04-17",
+		OutDate:  "2023-04-19",
 		Location: "new-york-city-ny-0",
 	}
 
@@ -154,8 +166,8 @@ func testCheckAvailability(client hotelpb.ReservationServiceClient) {
 	defer cancel()
 
 	req := &hotelpb.CheckAvailabilityRequest{
-		CustomerName: "testuser",
-		HotelIds:     []string{"H001"},
+		CustomerName: "user1",
+		HotelIds:     []string{"1"},
 		InDate:       "2024-06-01",
 		OutDate:      "2024-06-10",
 		RoomNumber:   1,
@@ -173,15 +185,9 @@ func testMakeReservation(client hotelpb.FrontendServiceClient) {
 	defer cancel()
 
 	req := &hotelpb.FrontendReservationRequest{
-		//string HotelId = 1;
-		//string InDate = 2;
-		//string OutDate = 3;
-		//int32 Rooms = 4;
-		//string Username = 5;
-		//string Password = 6;
 		HotelId:  "1",
-		InDate:   "2024-06-01",
-		OutDate:  "2024-06-10",
+		InDate:   "2023-04-17",
+		OutDate:  "2023-04-19",
 		Rooms:    1,
 		Username: "user1",
 		Password: "password1",

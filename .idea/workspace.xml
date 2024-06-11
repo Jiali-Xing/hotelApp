@@ -5,21 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50ae7f95-7b4b-466b-b072-c41dd3e0d324" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/populate/entry.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/populate/go.mod" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/populate/go.sum" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/populate/populate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/populate/populate.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/populate/test_populate.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/hotel/test_client" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/hotel/test_client" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/hotel/test_client.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/hotel/test_client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup-cloudlab.sh" beforeDir="false" afterPath="$PROJECT_DIR$/setup-cloudlab.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/entry.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/go.mod" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/go.sum" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/populate.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_client" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_populate.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/hotel/frontend.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/hotel/frontend.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/hotel/profile.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/hotel/profile.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/hotel/reservation.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/hotel/reservation.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/hotel/search.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/hotel/search.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/state/state.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/state/state.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

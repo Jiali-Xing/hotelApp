@@ -134,6 +134,7 @@ func SetState(ctx context.Context, key string, value interface{}) {
 	if err != nil {
 		log.Panic(err)
 	}
+	config.DebugLog("Set value for key %s", key)
 }
 
 func SetBulkState(ctx context.Context, kvs map[string]interface{}) {

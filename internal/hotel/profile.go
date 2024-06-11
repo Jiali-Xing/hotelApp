@@ -2,6 +2,7 @@ package hotel
 
 import (
 	"context"
+	"github.com/Jiali-Xing/hotelApp/internal/config"
 
 	"github.com/Jiali-Xing/hotelApp/pkg/state"
 
@@ -37,5 +38,6 @@ func GetProfiles(ctx context.Context, hotelIds []string) []*hotelpb.HotelProfile
 	} else {
 		profiles = make([]*hotelpb.HotelProfile, len(hotelIds))
 	}
+	config.DebugLog("Found profiles: %v for hotel ids: %v", profiles, hotelIds)
 	return profiles
 }
