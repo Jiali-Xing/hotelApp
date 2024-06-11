@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"github.com/Jiali-Xing/hotelApp/internal/config"
 	"io/ioutil"
 	"log"
 	"math/rand"
@@ -47,13 +48,13 @@ func main() {
 
 func test_adduser_hotel() {
 	// Connect to the user and frontend services
-	userConn, err := createGRPCConn(userAddr, grpc.WithInsecure())
+	userConn, err := config.CreateGRPCConn(userAddr, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect to user gRPC server: %v", err)
 	}
 	defer userConn.Close()
 
-	frontendConn, err := createGRPCConn(frontendAddr, grpc.WithInsecure())
+	frontendConn, err := config.CreateGRPCConn(frontendAddr, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect to frontend gRPC server: %v", err)
 	}

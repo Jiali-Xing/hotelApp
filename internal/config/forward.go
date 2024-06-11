@@ -8,7 +8,7 @@ import (
 )
 
 // propagateMetadata extracts metadata from the incoming context and appends it to the outgoing context.
-func propagateMetadata(ctx context.Context, serviceName string) context.Context {
+func PropagateMetadata(ctx context.Context, serviceName string) context.Context {
 	headersIn, ok := metadata.FromIncomingContext(ctx)
 	if !ok {
 		log.Println("No incoming metadata found")

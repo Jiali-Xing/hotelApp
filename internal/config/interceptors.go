@@ -314,7 +314,7 @@ func InitializeBreakwaterd(bwConfig bw.BWParameters) {
 	}
 }
 
-func createGRPCConn(ctx context.Context, addr string) (*grpc.ClientConn, error) {
+func CreateGRPCConn(ctx context.Context, addr string) (*grpc.ClientConn, error) {
 	var opts []grpc.DialOption
 
 	opts = append(opts, grpc.WithInsecure(), grpc.WithBlock())

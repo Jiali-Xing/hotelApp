@@ -3,8 +3,8 @@ package hotel
 import (
 	"context"
 
+	"github.com/Jiali-Xing/hotelApp/internal/config" // Adjust the import path as necessary
 	"github.com/Jiali-Xing/hotelApp/pkg/state"
-
 	hotelpb "github.com/Jiali-Xing/hotelproto"
 )
 
@@ -13,14 +13,14 @@ type RateServer struct {
 }
 
 func (s *RateServer) StoreRate(ctx context.Context, req *hotelpb.StoreRateRequest) (*hotelpb.StoreRateResponse, error) {
-	ctx = propagateMetadata(ctx, "rate")
+	ctx = config.PropagateMetadata(ctx, "rate")
 	hotelId := StoreRate(ctx, req.Rate)
 	resp := &hotelpb.StoreRateResponse{HotelId: hotelId}
 	return resp, nil
 }
 
 func (s *RateServer) GetRates(ctx context.Context, req *hotelpb.GetRatesRequest) (*hotelpb.GetRatesResponse, error) {
-	ctx = propagateMetadata(ctx, "rate")
+	ctx = config.PropagateMetadata(ctx, "rate")
 	rates := GetRates(ctx, req.HotelIds)
 	resp := &hotelpb.GetRatesResponse{Rates: rates}
 	return resp, nil
