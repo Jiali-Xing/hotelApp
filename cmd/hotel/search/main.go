@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net"
 	"os"
@@ -29,15 +30,16 @@ func main() {
 	searchServer := &hotel.SearchServer{}
 	hotelpb.RegisterSearchServiceServer(s, searchServer)
 
+	ctx := context.Background()
 	// Establish connections for downstream services
-	rateConn, err := createGRPCConn(config.RateAddr, grpc.WithInsecure())
+	rateConn, err := config.CreateGRPCConn(ctx, config.RateAddr)
 	if err != nil {
 		log.Fatalf("Failed to connect to rate gRPC server: %v", err)
 	}
 	defer rateConn.Close()
 	invoke.RegisterClient("rate", hotelpb.NewRateServiceClient(rateConn))
 
-	profileConn, err := createGRPCConn(config.ProfileAddr, grpc.WithInsecure())
+	profileConn, err := config.CreateGRPCConn(ctx, config.ProfileAddr)
 	if err != nil {
 		log.Fatalf("Failed to connect to profile gRPC server: %v", err)
 	}

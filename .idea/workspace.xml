@@ -5,15 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50ae7f95-7b4b-466b-b072-c41dd3e0d324" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/internal/config/forward.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/config/interceptors.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/config/read_yaml.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/hotel/frontend/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/hotel/frontend/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/hotel/reservation/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/hotel/reservation/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/hotel/search/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/hotel/search/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/config/forward.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/config/forward.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/config/interceptors.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/config/interceptors.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/hotel/profile.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/hotel/profile.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/hotel/rate.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/hotel/rate.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/hotel/reservation.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/hotel/reservation.go" afterDir="false" />
