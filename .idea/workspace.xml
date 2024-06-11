@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50ae7f95-7b4b-466b-b072-c41dd3e0d324" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/msgraph.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/create-configmap.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/k8s/frontend-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/frontend-deployment.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/k8s/profile-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/profile-deployment.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/k8s/rate-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/rate-deployment.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/k8s/reservation-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/reservation-deployment.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/k8s/search-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/search-deployment.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/k8s/user-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/user-deployment.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/deploy_template.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/deploy_template.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
