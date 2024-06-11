@@ -47,13 +47,13 @@ func main() {
 
 func test_adduser_hotel() {
 	// Connect to the user and frontend services
-	userConn, err := grpc.Dial(userAddr, grpc.WithInsecure())
+	userConn, err := createGRPCConn(userAddr, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect to user gRPC server: %v", err)
 	}
 	defer userConn.Close()
 
-	frontendConn, err := grpc.Dial(frontendAddr, grpc.WithInsecure())
+	frontendConn, err := createGRPCConn(frontendAddr, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect to frontend gRPC server: %v", err)
 	}

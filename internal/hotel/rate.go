@@ -13,12 +13,14 @@ type RateServer struct {
 }
 
 func (s *RateServer) StoreRate(ctx context.Context, req *hotelpb.StoreRateRequest) (*hotelpb.StoreRateResponse, error) {
+	ctx = propagateMetadata(ctx, "rate")
 	hotelId := StoreRate(ctx, req.Rate)
 	resp := &hotelpb.StoreRateResponse{HotelId: hotelId}
 	return resp, nil
 }
 
 func (s *RateServer) GetRates(ctx context.Context, req *hotelpb.GetRatesRequest) (*hotelpb.GetRatesResponse, error) {
+	ctx = propagateMetadata(ctx, "rate")
 	rates := GetRates(ctx, req.HotelIds)
 	resp := &hotelpb.GetRatesResponse{Rates: rates}
 	return resp, nil

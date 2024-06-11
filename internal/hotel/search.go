@@ -16,12 +16,14 @@ type SearchServer struct {
 }
 
 func (s *SearchServer) Nearby(ctx context.Context, req *hotelpb.NearbyRequest) (*hotelpb.NearbyResponse, error) {
+	ctx = propagateMetadata(ctx, "search")
 	rates := Nearby(ctx, req.InDate, req.OutDate, req.Location)
 	resp := &hotelpb.NearbyResponse{Rates: rates}
 	return resp, nil
 }
 
 func (s *SearchServer) StoreHotelLocation(ctx context.Context, req *hotelpb.StoreHotelLocationRequest) (*hotelpb.StoreHotelLocationResponse, error) {
+	ctx = propagateMetadata(ctx, "search")
 	hotelId := StoreHotelLocation(ctx, req.HotelId, req.Location)
 	resp := &hotelpb.StoreHotelLocationResponse{HotelId: hotelId}
 	return resp, nil

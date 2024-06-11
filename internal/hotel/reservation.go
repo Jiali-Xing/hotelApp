@@ -14,18 +14,21 @@ type ReservationServer struct {
 }
 
 func (s *ReservationServer) CheckAvailability(ctx context.Context, req *hotelpb.CheckAvailabilityRequest) (*hotelpb.CheckAvailabilityResponse, error) {
+	ctx = propagateMetadata(ctx, "reservation")
 	hotelIds := CheckAvailability(ctx, req.CustomerName, req.HotelIds, req.InDate, req.OutDate, int(req.RoomNumber))
 	resp := &hotelpb.CheckAvailabilityResponse{HotelIds: hotelIds}
 	return resp, nil
 }
 
 func (s *ReservationServer) MakeReservation(ctx context.Context, req *hotelpb.MakeReservationRequest) (*hotelpb.MakeReservationResponse, error) {
+	ctx = propagateMetadata(ctx, "reservation")
 	success := MakeReservation(ctx, req.CustomerName, req.HotelId, req.InDate, req.OutDate, int(req.RoomNumber))
 	resp := &hotelpb.MakeReservationResponse{Success: success}
 	return resp, nil
 }
 
 func (s *ReservationServer) AddHotelAvailability(ctx context.Context, req *hotelpb.AddHotelAvailabilityRequest) (*hotelpb.AddHotelAvailabilityResponse, error) {
+	ctx = propagateMetadata(ctx, "reservation")
 	hotelId := AddHotelAvailability(ctx, req.HotelId, int(req.Capacity))
 	resp := &hotelpb.AddHotelAvailabilityResponse{HotelId: hotelId}
 	return resp, nil
