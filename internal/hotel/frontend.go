@@ -2,6 +2,7 @@ package hotel
 
 import (
 	"context"
+	"github.com/Jiali-Xing/hotelApp/internal/config"
 	"log"
 
 	"github.com/Jiali-Xing/hotelApp/pkg/invoke"
@@ -22,7 +23,7 @@ func SearchHotels(ctx context.Context, inDate string, outDate string, location s
 	for i, rate := range rates {
 		hotelIds[i] = rate.HotelId
 	}
-
+	config.DebugLog("Found hotel ids: %v for location: %s", hotelIds, location)
 	req2 := &hotelpb.CheckAvailabilityRequest{
 		CustomerName: "",
 		HotelIds:     hotelIds,
@@ -35,13 +36,14 @@ func SearchHotels(ctx context.Context, inDate string, outDate string, location s
 		log.Printf("Error invoking gRPC method: %v", err)
 		return nil
 	}
-
+	config.DebugLog("Found available hotel ids: %v", availableHotelIdsRes.HotelIds)
 	req3 := &hotelpb.GetProfilesRequest{HotelIds: availableHotelIdsRes.HotelIds}
 	profilesRes, err := invoke.Invoke[*hotelpb.GetProfilesResponse](ctx, "profile", "GetProfiles", req3)
 	if err != nil {
 		log.Printf("Error invoking gRPC method: %v", err)
 		return nil
 	}
+	config.DebugLog("Found profiles: %v", profilesRes.Profiles)
 	return profilesRes.Profiles
 }
 
@@ -52,14 +54,14 @@ func StoreHotel(ctx context.Context, hotelId string, name string, phone string, 
 		log.Printf("Error invoking gRPC method: %v", err)
 		return ""
 	}
-
+	config.DebugLog("Stored hotel location for hotel id: %s at location: %s", hotelId, location)
 	req2 := &hotelpb.StoreRateRequest{Rate: &hotelpb.Rate{HotelId: hotelId, Price: int32(rate)}}
 	_, err = invoke.Invoke[*hotelpb.StoreRateResponse](ctx, "rate", "StoreRate", req2)
 	if err != nil {
 		log.Printf("Error invoking gRPC method: %v", err)
 		return ""
 	}
-
+	config.DebugLog("Stored rate for hotel id: %s at rate: %d", hotelId, rate)
 	req3 := &hotelpb.AddHotelAvailabilityRequest{
 		HotelId:  hotelId,
 		Capacity: int32(capacity),
@@ -69,7 +71,7 @@ func StoreHotel(ctx context.Context, hotelId string, name string, phone string, 
 		log.Printf("Error invoking gRPC method: %v", err)
 		return ""
 	}
-
+	config.DebugLog("Added hotel availability for hotel id: %s with capacity: %d", hotelId, capacity)
 	hotelProfile := &hotelpb.HotelProfile{
 		HotelId: hotelId,
 		Name:    name,
@@ -82,6 +84,7 @@ func StoreHotel(ctx context.Context, hotelId string, name string, phone string, 
 		log.Printf("Error invoking gRPC method: %v", err)
 		return ""
 	}
+	config.DebugLog("Stored hotel profile for hotel id: %s as %v", hotelId, hotelProfile)
 	return hotelId
 }
 

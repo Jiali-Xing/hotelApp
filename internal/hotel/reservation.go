@@ -2,6 +2,7 @@ package hotel
 
 import (
 	"context"
+	"github.com/Jiali-Xing/hotelApp/internal/config"
 
 	"github.com/Jiali-Xing/hotelApp/pkg/state"
 
@@ -46,7 +47,7 @@ func checkAvailability(availability hotelpb.HotelAvailability, inDate string, ou
 			reservationsTheseDays++
 		}
 	}
-
+	config.DebugLog("Reservations these days: %d + #Rooms: %d <> Capacity: %d", reservationsTheseDays, numberOfRooms, capacity)
 	return reservationsTheseDays+numberOfRooms <= int(capacity)
 }
 
@@ -62,6 +63,7 @@ func CheckAvailability(ctx context.Context, customerName string, hotelIds []stri
 		if isAvailable {
 			availableHotelIds = append(availableHotelIds, hotelId)
 		}
+		config.DebugLog("Hotel %s is available: %v", hotelId, isAvailable)
 	}
 	return availableHotelIds
 }
@@ -87,11 +89,17 @@ func MakeReservation(ctx context.Context, customerName string, hotelId string, i
 		RoomNumber:   int32(numberOfRooms),
 	}
 	availability.Reservations = append(availability.Reservations, &newReservation)
+	config.DebugLog("Adding reservation: %v", newReservation)
 	state.SetState(ctx, hotelId, availability)
 	return true
 }
 
 func AddHotelAvailability(ctx context.Context, hotelId string, capacity int) string {
-	state.SetState(ctx, hotelId, hotelpb.HotelAvailability{Reservations: []*hotelpb.Reservation{}, Capacity: int32(capacity)})
+	availability := hotelpb.HotelAvailability{
+		Reservations: []*hotelpb.Reservation{},
+		Capacity:     int32(capacity),
+	}
+	state.SetState(ctx, hotelId, availability)
+	config.DebugLog("Added availability for hotel id: %s with capacity: %d", hotelId, capacity)
 	return hotelId
 }
