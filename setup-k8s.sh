@@ -37,4 +37,4 @@ echo "Kubernetes resources have been applied successfully."
 # run populate/port-forward.sh and populate/populate 
 # to populate the database and establish port forwarding
 ./populate/port-forward.sh
-./populate/populate 
+./populate/populate -hotels_file=/users/jiali/hotelApp/experiments/hotel/data/hotels.json
