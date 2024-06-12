@@ -5,12 +5,14 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+
 	//"github.com/Jiali-Xing/hotelApp/internal/config"
-	"google.golang.org/grpc/metadata"
 	"io/ioutil"
 	"log"
 	"math/rand"
 	"time"
+
+	"google.golang.org/grpc/metadata"
 
 	"google.golang.org/grpc"
 
@@ -28,7 +30,7 @@ var (
 func init() {
 	flag.StringVar(&frontendAddr, "frontend", "localhost:50052", "Address of the frontend service")
 	flag.StringVar(&userAddr, "user", "localhost:50053", "Address of the user service")
-	flag.StringVar(&hotelsFile, "hotels_file", "../experiments/hotel/data/hotels.json", "Path to the hotels file")
+	flag.StringVar(&hotelsFile, "hotels_file", "/users/jiali/hotelApp/experiments/hotel/data/hotels.json", "Path to the hotels file")
 	flag.IntVar(&numOfUsers, "num_of_users", 100, "Number of users to create")
 	flag.IntVar(&infoSize, "info_size", 1000, "Size of hotel info in bytes")
 	flag.Parse()
