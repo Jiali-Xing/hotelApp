@@ -1,8 +1,17 @@
 #!/bin/bash
 
-# Delete all deployments and services except those with 'redis' in the name
-kubectl delete deployment --selector app!=redis > /dev/null
-kubectl delete service --selector app!=redis > /dev/null
+# Get all deployments and services excluding those with 'redis' in the name
+deployments=$(kubectl get deployments -o custom-columns=NAME:.metadata.name --no-headers | grep -v 'redis')
+services=$(kubectl get services -o custom-columns=NAME:.metadata.name --no-headers | grep -v 'redis')
+
+# Delete the filtered deployments and services
+for deployment in $deployments; do
+  kubectl delete deployment $deployment
+done
+
+for service in $services; do
+  kubectl delete service $service
+done
 
 # Apply Kubernetes YAML files for services and Redis
 kubectl apply -f k8s/frontend-deployment.yaml
