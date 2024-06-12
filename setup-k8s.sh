@@ -1,7 +1,7 @@
 #!/bin/bash
 kubectl delete deployment --all > /dev/null && kubectl delete service --all > /dev/null 
 
-python ./scripts/gen-yaml.py
+python scripts/gen-yaml.py
 
 # Apply Kubernetes YAML files for services and Redis
 kubectl apply -f k8s/frontend-deployment.yaml
