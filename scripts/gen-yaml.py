@@ -23,7 +23,7 @@ with open("scripts/redis_deployment_template.yaml", "r") as template_file:
 # Generate the deployment and service YAML for each service
 for service in services:
     deployment_content = deploy_template.format(service_name=service)
-    deployment_filename = f"{service}-deployment.yaml"
+    deployment_filename = "{}-deployment.yaml".format(service)
     
     with open(os.path.join(output_dir, deployment_filename), "w") as f:
         f.write(deployment_content)
