@@ -1,5 +1,7 @@
 #!/bin/bash
 kubectl delete deployment --all > /dev/null && kubectl delete service --all > /dev/null 
+    
+kubectl create configmap msgraph-config --from-file=/users/jiali/service-app/services/protobuf-grpc/msgraph.yaml
 
 # python scripts/gen-yaml.py
 
