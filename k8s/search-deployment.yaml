@@ -21,7 +21,7 @@ spec:
         ports:
         - containerPort: 50051
         command: ["/bin/search"]
-        args: ["-debug"]
+        # args: ["-debug"]
         env:
         - name: SERVICE_NAME
           value: "search"
