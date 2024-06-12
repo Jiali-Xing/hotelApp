@@ -5,7 +5,8 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/Jiali-Xing/hotelApp/internal/config"
+	//"github.com/Jiali-Xing/hotelApp/internal/config"
+	"google.golang.org/grpc/metadata"
 	"io/ioutil"
 	"log"
 	"math/rand"
@@ -48,13 +49,13 @@ func main() {
 
 func test_adduser_hotel() {
 	// Connect to the user and frontend services
-	userConn, err := config.CreateGRPCConn(userAddr, grpc.WithInsecure())
+	userConn, err := grpc.Dial(userAddr, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect to user gRPC server: %v", err)
 	}
 	defer userConn.Close()
 
-	frontendConn, err := config.CreateGRPCConn(frontendAddr, grpc.WithInsecure())
+	frontendConn, err := grpc.Dial(frontendAddr, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect to frontend gRPC server: %v", err)
 	}
@@ -101,6 +102,9 @@ func populateHotels(conn *grpc.ClientConn) {
 			Info:     getRandomString(infoSize),
 		}
 
+		// add `tokens` and `request-id` and `method` and `u` and `b` to the outgoing context, but as an 1-element array
+		ctx = metadata.AppendToOutgoingContext(ctx, "tokens", "99999", "request-id", "12345", "method", "search-hotel", "u", "1", "b", "1", "timestamp", "12345", "name", "frontend", "method", "search-hotel")
+
 		resp, err := client.StoreHotel(ctx, req)
 		if err != nil {
 			log.Printf("Failed to store hotel: %v", err)
@@ -125,6 +129,7 @@ func populateUsers(conn *grpc.ClientConn) {
 			Password: password,
 		}
 
+		ctx = metadata.AppendToOutgoingContext(ctx, "tokens", "99999", "request-id", "12345", "method", "search-hotel", "u", "1", "b", "1", "timestamp", "12345", "name", "frontend", "method", "search-hotel")
 		_, err := client.RegisterUser(ctx, req)
 		if err != nil {
 			log.Printf("Failed to register user %s: %v", username, err)
