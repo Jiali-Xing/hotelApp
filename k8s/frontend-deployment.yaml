@@ -20,7 +20,9 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 50051
-        command: ["/bin/frontend"]
+        command: ["/bin/sh", "-c"]
+        args: ["/bin/frontend > /root/deathstar_frontend.output"]
+        # command: ["/bin/frontend"]
         # args: ["-debug"]
         env:
         - name: SERVICE_NAME

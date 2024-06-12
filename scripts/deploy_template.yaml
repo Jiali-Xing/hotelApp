@@ -20,7 +20,9 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 50051
-        command: ["/bin/{service_name}"]
+        command: ["/bin/sh", "-c"]
+        args: ["/bin/{service_name} > /root/deathstar_{service_name}.output"]
+        # command: ["/bin/{service_name}"]
         # args: ["-debug"]
         env:
         - name: SERVICE_NAME

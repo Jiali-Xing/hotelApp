@@ -20,7 +20,9 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 50051
-        command: ["/bin/reservation"]
+        command: ["/bin/sh", "-c"]
+        args: ["/bin/reservation > /root/deathstar_reservation.output"]
+        # command: ["/bin/reservation"]
         # args: ["-debug"]
         env:
         - name: SERVICE_NAME
