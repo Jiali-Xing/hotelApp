@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"flag"
+	"google.golang.org/grpc/metadata"
 	"log"
 	"time"
 
@@ -138,6 +139,7 @@ func testSearchHotels(client hotelpb.FrontendServiceClient) {
 		Location: "new-york-city-ny-0",
 	}
 
+	ctx = metadata.AppendToOutgoingContext(ctx, "tokens", "99999", "request-id", "12345", "method", "search-hotel", "u", "1", "b", "1", "timestamp", "12345", "name", "frontend", "method", "search-hotel")
 	resp, err := client.SearchHotels(ctx, req)
 	if err != nil {
 		log.Fatalf("Failed to search hotels: %v", err)
@@ -193,6 +195,7 @@ func testMakeReservation(client hotelpb.FrontendServiceClient) {
 		Password: "password1",
 	}
 
+	ctx = metadata.AppendToOutgoingContext(ctx, "tokens", "99999", "request-id", "12345", "method", "search-hotel", "u", "1", "b", "1", "timestamp", "12345", "name", "frontend", "method", "search-hotel")
 	resp, err := client.FrontendReservation(ctx, req)
 	if err != nil {
 		log.Fatalf("Failed to make reservation: %v", err)

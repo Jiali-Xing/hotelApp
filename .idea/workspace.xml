@@ -6,11 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="50ae7f95-7b4b-466b-b072-c41dd3e0d324" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/config/forward.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/config/forward.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/populate/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/populate/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/populate/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/populate/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/populate/populate" beforeDir="false" afterPath="$PROJECT_DIR$/populate/populate" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/populate/populate.go" beforeDir="false" afterPath="$PROJECT_DIR$/populate/populate.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/hotel/test_client" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/hotel/test_client" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/hotel/test_client.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/hotel/test_client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/config/interceptors.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/config/interceptors.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
