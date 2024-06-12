@@ -50,9 +50,12 @@ done
 PORT_FORWARD_PID=$!
 
 # Wait for port-forwarding to be ready (adjust sleep time as needed)
-sleep 15
+sleep 10
 
 ./populate/populate -hotels_file=/users/jiali/hotelApp/experiments/hotel/data/hotels.json
 
 # After populate script finishes, kill the port-forwarding process
 kill $PORT_FORWARD_PID
+
+# Exit the script
+exit 0
