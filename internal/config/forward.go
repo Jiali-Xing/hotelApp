@@ -19,7 +19,7 @@ func PropagateMetadata(ctx context.Context, serviceName string) context.Context 
 	if methods, found := headersIn["method"]; found && len(methods) > 0 {
 		method = methods[0]
 	}
-	log.Printf("headersIn: %s", headersIn)
+	DebugLog("headersIn: %s", headersIn)
 
 	// Append the request-id and timestamp of headersIn to the outgoing context
 	if tokens, ok := headersIn["tokens"]; ok && len(tokens) == 1 {
