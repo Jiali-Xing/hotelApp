@@ -55,7 +55,13 @@ sleep 10
 ./populate/populate -hotels_file=/users/jiali/hotelApp/experiments/hotel/data/hotels.json
 
 # After populate script finishes, kill the port-forwarding process
-kill $PORT_FORWARD_PID
+
+for port in {50051..50059}; do
+  pid=$(lsof -t -i :$port)
+  if [ -n "$pid" ]; then
+    kill -9 $pid
+  fi
+done
 
 # Exit the script
 exit 0
