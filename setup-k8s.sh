@@ -34,6 +34,9 @@ kubectl apply -f k8s/profile-redis-service.yaml
 
 echo "Kubernetes resources have been applied successfully."
 
+# wait for the pods to be ready
+kubectl wait --for=condition=ready pod --all --timeout=60s
+
 # run populate/port-forward.sh and populate/populate 
 # to populate the database and establish port forwarding
 ./populate/port-forward.sh
