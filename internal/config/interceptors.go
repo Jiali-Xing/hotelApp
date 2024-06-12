@@ -16,7 +16,7 @@ import (
 )
 
 var (
-	serviceName  = getEnv("SERVICE_NAME", "hotelApp")
+	serviceName  = getEnv("SERVICE_NAME", "Client")
 	intercept    string
 	serviceData  ServiceData
 	priceTable   *charon.PriceTable
