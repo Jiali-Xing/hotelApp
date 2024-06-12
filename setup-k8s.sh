@@ -47,8 +47,12 @@ done
 # run populate/port-forward.sh and populate/populate 
 # to populate the database and establish port forwarding
 ./populate/port-forward.sh &
+PORT_FORWARD_PID=$!
 
 # Wait for port-forwarding to be ready (adjust sleep time as needed)
-sleep 10
+sleep 15
 
 ./populate/populate -hotels_file=/users/jiali/hotelApp/experiments/hotel/data/hotels.json
+
+# After populate script finishes, kill the port-forwarding process
+kill $PORT_FORWARD_PID
