@@ -39,5 +39,5 @@ kubectl wait --for=condition=ready pod --all --timeout=60s
 
 # run populate/port-forward.sh and populate/populate 
 # to populate the database and establish port forwarding
-./populate/port-forward.sh
+./populate/port-forward.sh &&
 ./populate/populate -hotels_file=/users/jiali/hotelApp/experiments/hotel/data/hotels.json
