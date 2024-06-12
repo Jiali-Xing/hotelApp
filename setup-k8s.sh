@@ -33,3 +33,8 @@ kubectl apply -f k8s/profile-redis-deployment.yaml
 kubectl apply -f k8s/profile-redis-service.yaml
 
 echo "Kubernetes resources have been applied successfully."
+
+# run populate/port-forward.sh and populate/populate 
+# to populate the database and establish port forwarding
+./populate/port-forward.sh
+./populate/populate 
