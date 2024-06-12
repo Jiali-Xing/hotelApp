@@ -63,10 +63,10 @@ kubectl delete deployments --all --ignore-not-found
 kubectl delete configmaps --all --ignore-not-found
 
 # Run the setup-k8s.sh script
-if [ -f "./setup-k8s.sh" ]; then
-    ./setup-k8s.sh
+if [ -f "./setup-k8s-initial.sh" ]; then
+    ./setup-k8s-initial.sh
 else
-    echo "setup-k8s.sh not found."
+    echo "setup-k8s-initial.sh not found."
 fi
 
 EOF
