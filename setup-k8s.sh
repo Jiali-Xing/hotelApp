@@ -37,7 +37,18 @@ echo "Kubernetes resources have been applied successfully."
 # wait for the pods to be ready
 kubectl wait --for=condition=ready pod --all --timeout=60s
 
+for port in {50051..50059}; do
+  pid=$(lsof -t -i :$port)
+  if [ -n "$pid" ]; then
+    kill -9 $pid
+  fi
+done
+
 # run populate/port-forward.sh and populate/populate 
 # to populate the database and establish port forwarding
-./populate/port-forward.sh &&
+./populate/port-forward.sh &
+
+# Wait for port-forwarding to be ready (adjust sleep time as needed)
+sleep 10
+
 ./populate/populate -hotels_file=/users/jiali/hotelApp/experiments/hotel/data/hotels.json
