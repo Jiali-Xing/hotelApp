@@ -30,7 +30,11 @@ func PropagateMetadata(ctx context.Context, serviceName string) context.Context 
 
 	// Check and append user-specific metadata
 	if u, uok := headersIn["u"]; uok && len(u) == 1 {
-		outCtx = metadata.AppendToOutgoingContext(outCtx, "u", u[0], "b", headersIn["b"][0], "user-id", headersIn["user-id"][0])
+		outCtx = metadata.AppendToOutgoingContext(outCtx, "u", u[0], "b", headersIn["b"][0])
+	}
+
+	if userId, ok := headersIn["user-id"]; ok && len(userId) > 0 {
+		outCtx = metadata.AppendToOutgoingContext(outCtx, "user-id", userId[0])
 	}
 
 	// Append common metadata
