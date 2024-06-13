@@ -118,6 +118,7 @@ func init() {
 		switch config.Name {
 		case "INTERCEPT":
 			Intercept = config.Value
+			DebugLog("Reading config of interceptor %s", Intercept)
 		// charon parameters
 		case "PRICE_UPDATE_RATE":
 			priceUpdateRate, _ = time.ParseDuration(config.Value)
@@ -206,12 +207,13 @@ func init() {
 			"recordPrice":        charonTrackPrice,
 		}
 
+		DebugLog("Initializing Charon with options: %v", charonOptions)
 		PriceTable = charon.NewCharon(
 			serviceName,
 			nil, // Assuming no call graph is provided
 			charonOptions,
 		)
-		log.Printf("Charon Config: %v", charonOptions)
+		// log.Printf("Charon Config: %v", charonOptions)
 
 	case "breakwater":
 		bwConfig = bw.BWParameters{
@@ -227,8 +229,9 @@ func init() {
 			TrackCredits:     breakwaterTrackCredit,
 		}
 
+		DebugLog("Initializing Breakwater with config: %v", bwConfig)
 		Breakwater = bw.InitBreakwater(bwConfig)
-		log.Printf("Breakwater Config: %v", bwConfig)
+		// log.Printf("Breakwater Config: %v", bwConfig)
 
 	case "breakwaterd":
 		if serviceName == "frontend" {
@@ -246,8 +249,9 @@ func init() {
 				TrackCredits:     breakwaterTrackCredit,
 			}
 
+			DebugLog("Initializing Breakwater frontend of BreakwaterD with config: %v", bwConfig)
 			Breakwater = bw.InitBreakwater(bwConfig)
-			log.Printf("Breakwater Config: %v", bwConfig)
+			// log.Printf("Breakwater Config: %v", bwConfig)
 		} else {
 			bwConfig := bw.BWParameters{
 				Verbose:          Debug,
@@ -261,8 +265,10 @@ func init() {
 				RTT_MICROSECOND:  breakwaterdRTT.Microseconds(),
 				TrackCredits:     breakwaterTrackCredit,
 			}
+
+			DebugLog("Initializing BreakwaterD Backend with config: %v", bwConfig)
 			Breakwater = bw.InitBreakwater(bwConfig)
-			log.Printf("BreakwaterD Backend Config: %v", bwConfig)
+			// log.Printf("BreakwaterD Backend Config: %v", bwConfig)
 		}
 	case "dagor":
 		dagorParams := dagor.DagorParam{
@@ -284,8 +290,9 @@ func init() {
 			UseSyncMap:                   false,
 		}
 
+		DebugLog("Initializing Dagor with config: %v", dagorParams)
 		Dg = dagor.NewDagorNode(dagorParams)
-		log.Printf("Dagor Config: %v", dagorParams)
+		// log.Printf("Dagor Config: %v", dagorParams)
 
 	case "plain":
 		// No special initialization required for the plain interceptor
@@ -296,7 +303,7 @@ func init() {
 	if Intercept == "breakwaterd" {
 		// Initialize the Breakwater instances for each downstream service
 		InitializeBreakwaterd(bwConfig)
-		log.Printf("Initialized multiple instances of Breakwaters for downstream services of %s: %v", serviceName, breakwaterd)
+		DebugLog("Initialized multiple instances of Breakwaters for downstream services of %s: %v", serviceName, breakwaterd)
 	}
 
 }
@@ -307,6 +314,7 @@ func InitializeBreakwaterd(bwConfig bw.BWParameters) {
 	for _, downstream := range serviceData.Downstreams {
 		// Customize the Breakwater config per downstream if needed
 		// For example, you might have different SLOs or other parameters per downstream service
+		DebugLog("Initializing Breakwater for downstream service %s", downstream)
 		downstreamConfig := bwConfig
 		bwConfig.ServerSide = false
 		addr := getURL(downstream)
@@ -322,6 +330,7 @@ func CreateGRPCConn(ctx context.Context, addr string) (*grpc.ClientConn, error) 
 	// Append interceptor if it exists in the map and serverSideInterceptOnly is false
 	if !serverSideInterceptOnly {
 		// Apply the selected interceptor
+		DebugLog("[As a Client/Sender] Creating gRPC connection to %s with intercept %s", addr, Intercept)
 		switch Intercept {
 		case "charon":
 			opts = append(opts, grpc.WithUnaryInterceptor(PriceTable.UnaryInterceptorClient))
