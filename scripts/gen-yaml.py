@@ -7,7 +7,7 @@ services_using_redis = ["user", "search", "reservation", "rate", "profile"]
 
 # Define the base directory for the output
 output_dir = "k8s"
-os.makedirs(output_dir, exist_ok=True)
+# os.makedirs(output_dir, exist_ok=True)
 
 # Load the templates
 with open("scripts/deploy_template.yaml", "r") as template_file:
