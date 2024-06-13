@@ -28,6 +28,7 @@ func (s *SearchServer) Nearby(ctx context.Context, req *hotelpb.NearbyRequest) (
 
 func (s *SearchServer) StoreHotelLocation(ctx context.Context, req *hotelpb.StoreHotelLocationRequest) (*hotelpb.StoreHotelLocationResponse, error) {
 	ctx = config.PropagateMetadata(ctx, "search")
+	config.DebugLog("Storing hotel location for hotel id: %s at location: %s", req.HotelId, req.Location)
 	hotelId, err := StoreHotelLocation(ctx, req.HotelId, req.Location)
 	if err != nil {
 		return nil, err
@@ -38,10 +39,8 @@ func (s *SearchServer) StoreHotelLocation(ctx context.Context, req *hotelpb.Stor
 
 func Nearby(ctx context.Context, inDate string, outDate string, location string) ([]*hotelpb.Rate, error) {
 	// Find the hotel ids in that location
-	hotelIds, err := getHotelIdsForLocation(ctx, location)
-	if err != nil {
-		return nil, err
-	}
+	hotelIds := getHotelIdsForLocation(ctx, location)
+
 	config.DebugLog("Found hotel ids: %v", hotelIds)
 	// Get the rates for these hotels
 	req := hotelpb.GetRatesRequest{HotelIds: hotelIds}
@@ -55,10 +54,7 @@ func Nearby(ctx context.Context, inDate string, outDate string, location string)
 }
 
 func StoreHotelLocation(ctx context.Context, hotelId string, location string) (string, error) {
-	hotelIds, err := getHotelIdsForLocation(ctx, location)
-	if err != nil {
-		return "", err
-	}
+	hotelIds := getHotelIdsForLocation(ctx, location)
 	// Keep saved reviews bounded to 10 for consistent performance measurements
 	if len(hotelIds) >= 10 {
 		hotelIds = hotelIds[1:]
@@ -68,11 +64,11 @@ func StoreHotelLocation(ctx context.Context, hotelId string, location string) (s
 	return hotelId, nil
 }
 
-func getHotelIdsForLocation(ctx context.Context, location string) ([]string, error) {
+func getHotelIdsForLocation(ctx context.Context, location string) []string {
 	hotelIds, err := state.GetState[[]string](ctx, location)
 	// If err != nil then the key does not exist
 	if err != nil {
-		return []string{}, err
+		return []string{}
 	}
-	return hotelIds, nil
+	return hotelIds
 }

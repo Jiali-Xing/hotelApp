@@ -15,7 +15,7 @@ func SearchHotels(ctx context.Context, inDate string, outDate string, location s
 	req1 := &hotelpb.NearbyRequest{InDate: inDate, OutDate: outDate, Location: location}
 	hotelIdsRes, err := invoke.Invoke[*hotelpb.NearbyResponse](ctx, "search", "Nearby", req1)
 	if err != nil {
-		log.Printf("Error invoking gRPC method: %v", err)
+		log.Printf("Error searching hotels with inDate: %s, outDate: %s, location: %s: %v", inDate, outDate, location, err)
 		return nil, err
 	}
 	rates := hotelIdsRes.Rates
@@ -34,14 +34,14 @@ func SearchHotels(ctx context.Context, inDate string, outDate string, location s
 	}
 	availableHotelIdsRes, err := invoke.Invoke[*hotelpb.CheckAvailabilityResponse](ctx, "reservation", "CheckAvailability", req2)
 	if err != nil {
-		log.Printf("Error invoking gRPC method: %v", err)
+		log.Printf("Error checking availability of hotel ids: %v: %v", hotelIds, err)
 		return nil, err
 	}
 	config.DebugLog("Found available hotel ids: %v", availableHotelIdsRes.HotelIds)
 	req3 := &hotelpb.GetProfilesRequest{HotelIds: availableHotelIdsRes.HotelIds}
 	profilesRes, err := invoke.Invoke[*hotelpb.GetProfilesResponse](ctx, "profile", "GetProfiles", req3)
 	if err != nil {
-		log.Printf("Error invoking gRPC method: %v", err)
+		log.Printf("Error getting profiles for hotel ids: %v: %v", availableHotelIdsRes.HotelIds, err)
 		return nil, err
 	}
 	config.DebugLog("Found profiles: %v", profilesRes.Profiles)
