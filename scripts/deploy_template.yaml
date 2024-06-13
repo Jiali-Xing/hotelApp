@@ -21,9 +21,7 @@ spec:
         ports:
         - containerPort: 50051
         command: ["/bin/sh", "-c"]
-        args: ["/bin/{service_name} > /root/deathstar_{service_name}.output"]
-        # command: ["/bin/{service_name}"]
-        # args: ["-debug"]
+        {args}
         env:
         - name: SERVICE_NAME
           value: "{service_name}"

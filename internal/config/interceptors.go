@@ -16,14 +16,14 @@ import (
 )
 
 var (
-	serviceName  = getEnv("SERVICE_NAME", "Client")
-	intercept    string
-	serviceData  ServiceData
-	priceTable   *charon.PriceTable
-	breakwater   *bw.Breakwater
-	dg           *dagor.Dagor
-	breakwaterd  map[string]*bw.Breakwater
-	logLevel     string
+	serviceName = getEnv("SERVICE_NAME", "Client")
+	intercept   string
+	serviceData ServiceData
+	priceTable  *charon.PriceTable
+	breakwater  *bw.Breakwater
+	dg          *dagor.Dagor
+	breakwaterd map[string]*bw.Breakwater
+	// logLevel     string
 	serverConfig []Config
 	yamlFile     = getEnv("MSGRAPH_YAML", "msgraph.yaml")
 
@@ -195,7 +195,7 @@ func init() {
 			"pinpointQueuing":    true,
 			"pinpointThroughput": false,
 			"pinpointLatency":    false,
-			"debug":              logLevel == "debug",
+			"debug":              Debug,
 			"lazyResponse":       lazyUpdate,
 			"priceUpdateRate":    priceUpdateRate,
 			"guidePrice":         int64(-1),
@@ -215,7 +215,7 @@ func init() {
 
 	case "breakwater":
 		bwConfig = bw.BWParameters{
-			Verbose:          logLevel == "debug",
+			Verbose:          Debug,
 			SLO:              breakwaterSLO.Microseconds(),
 			ClientExpiration: breakwaterClientTimeout.Microseconds(),
 			InitialCredits:   breakwaterInitialCredit,
@@ -234,7 +234,7 @@ func init() {
 		if serviceName == "frontend" {
 			// apply the same configuration as the breakwater.
 			bwConfig = bw.BWParameters{
-				Verbose:          logLevel == "debug",
+				Verbose:          Debug,
 				SLO:              breakwaterSLO.Microseconds(),
 				ClientExpiration: breakwaterClientTimeout.Microseconds(),
 				InitialCredits:   breakwaterInitialCredit,
@@ -250,7 +250,7 @@ func init() {
 			log.Printf("Breakwater Config: %v", bwConfig)
 		} else {
 			bwConfig := bw.BWParameters{
-				Verbose:          logLevel == "debug",
+				Verbose:          Debug,
 				SLO:              breakwaterdSLO.Microseconds(),
 				ClientExpiration: breakwaterdClientTimeout.Microseconds(),
 				InitialCredits:   breakwaterdInitialCredit,
@@ -280,7 +280,7 @@ func init() {
 			Beta:                         dagorBeta,
 			Umax:                         dagorUmax,
 			Bmax:                         4,
-			Debug:                        logLevel == "debug",
+			Debug:                        Debug,
 			UseSyncMap:                   false,
 		}
 
