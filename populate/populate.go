@@ -64,8 +64,8 @@ func test_adduser_hotel() {
 	defer frontendConn.Close()
 
 	// Populate the services with data
-	populateHotels(frontendConn)
 	populateUsers(userConn)
+	populateHotels(frontendConn)
 }
 
 func populateHotels(conn *grpc.ClientConn) {
