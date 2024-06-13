@@ -1,7 +1,7 @@
 #!/bin/bash
 kubectl delete deployment --all > /dev/null && kubectl delete service --all > /dev/null 
     
-kubectl create configmap msgraph-config --from-file=/users/jiali/service-app/services/protobuf-grpc/msgraph.yaml
+kubectl create configmap msgraph-config --from-file=/users/jiali/hotelApp/msgraph.yaml
 
 # python scripts/gen-yaml.py
 
@@ -52,7 +52,7 @@ done
 PORT_FORWARD_PID=$!
 
 # Wait for port-forwarding to be ready (adjust sleep time as needed)
-sleep 20
+sleep 30
 
 ./populate/populate -hotels_file=/users/jiali/hotelApp/experiments/hotel/data/hotels.json
 
