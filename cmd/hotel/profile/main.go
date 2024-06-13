@@ -24,7 +24,7 @@ func main() {
 	switch config.Intercept {
 	case "charon":
 		grpcServer = grpc.NewServer(grpc.UnaryInterceptor(config.PriceTable.UnaryInterceptor))
-	case "breakwater", "breakwaterd":
+	case "breakwaterd":
 		grpcServer = grpc.NewServer(grpc.UnaryInterceptor(config.Breakwater.UnaryInterceptor))
 	case "dagor":
 		grpcServer = grpc.NewServer(grpc.UnaryInterceptor(config.Dg.UnaryInterceptorServer))

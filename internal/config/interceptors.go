@@ -335,7 +335,9 @@ func CreateGRPCConn(ctx context.Context, addr string) (*grpc.ClientConn, error) 
 		case "charon":
 			opts = append(opts, grpc.WithUnaryInterceptor(PriceTable.UnaryInterceptorClient))
 		case "breakwater":
-			opts = append(opts, grpc.WithUnaryInterceptor(Breakwater.UnaryInterceptorClient))
+			// this case should not be reached
+			DebugLog("Breakwater interceptor should not be used for client-side on service %s", serviceName)
+			// 	opts = append(opts, grpc.WithUnaryInterceptor(Breakwater.UnaryInterceptorClient))
 		case "breakwaterd":
 			opts = append(opts, grpc.WithUnaryInterceptor(breakwaterd[addr].UnaryInterceptorClient))
 		case "dagor":
