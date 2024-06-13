@@ -26,11 +26,11 @@ debug_info = os.getenv("DEBUG_INFO", "false").lower() == "true"
 # Generate the deployment and service YAML for each service
 for service in services:
     if debug_info:
-        Args = 'args: ["/bin/{service_name} -debug > /root/deathstar_{service_name}.output"]'
+        args = 'args: ["/bin/{} -debug > /root/deathstar_{}.output"]'.format(service, service)
     else:
-        Args = 'args: ["/bin/{service_name} > /root/deathstar_{service_name}.output"]'
+        args = 'args: ["/bin/{} > /root/deathstar_{}.output"]'.format(service, service)
     
-    deployment_content = deploy_template.format(service_name=service, args=Args)
+    deployment_content = deploy_template.format(service_name=service, args=args)
     deployment_filename = "{}-deployment.yaml".format(service)
     
     with open(os.path.join(output_dir, deployment_filename), "w") as f:
