@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/Jiali-Xing/hotelApp/internal/config"
+	"github.com/Jiali-Xing/plain"
 
 	"log"
 	"net"
@@ -96,18 +97,33 @@ func main() {
 	defer profileConn.Close()
 	invoke.RegisterClient("profile", hotelpb.NewProfileServiceClient(profileConn))
 
-	// Set up gRPC server
+	// Set up gRPC server with the appropriate interceptor
+	var grpcServer *grpc.Server
+	switch config.Intercept {
+	case "charon":
+		grpcServer = grpc.NewServer(grpc.UnaryInterceptor(config.PriceTable.UnaryInterceptor))
+	case "breakwater", "breakwaterd":
+		grpcServer = grpc.NewServer(grpc.UnaryInterceptor(config.Breakwater.UnaryInterceptor))
+	case "dagor":
+		grpcServer = grpc.NewServer(grpc.UnaryInterceptor(config.Dg.UnaryInterceptorServer))
+	case "plain":
+		grpcServer = grpc.NewServer(grpc.UnaryInterceptor(plain.UnaryInterceptor))
+	default:
+		grpcServer = grpc.NewServer()
+	}
+
+	// Register the frontend service
+	hotelServer := &server{}
+	hotelpb.RegisterFrontendServiceServer(grpcServer, hotelServer)
+
+	// Listen and serve
 	lis, err := net.Listen("tcp", ":"+port)
 	if err != nil {
 		log.Fatalf("Failed to listen: %v", err)
 	}
 
-	s := grpc.NewServer()
-	hotelServer := &server{}
-	hotelpb.RegisterFrontendServiceServer(s, hotelServer)
-
 	log.Println("gRPC server listening on port " + port)
-	if err := s.Serve(lis); err != nil {
+	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatalf("Failed to serve: %v", err)
 	}
 }

@@ -5,7 +5,9 @@ import (
 	"net"
 	"os"
 
+	"github.com/Jiali-Xing/hotelApp/internal/config"
 	"github.com/Jiali-Xing/hotelApp/internal/hotel"
+	"github.com/Jiali-Xing/plain"
 
 	hotelpb "github.com/Jiali-Xing/hotelproto"
 	"google.golang.org/grpc"
@@ -17,20 +19,34 @@ func main() {
 		port = "50056" // Default port if not specified
 	}
 	// Set up gRPC server
+
+	// Establish connections for downstream services if needed
+	// Set up gRPC server with the appropriate interceptor
+	var grpcServer *grpc.Server
+	switch config.Intercept {
+	case "charon":
+		grpcServer = grpc.NewServer(grpc.UnaryInterceptor(config.PriceTable.UnaryInterceptor))
+	case "breakwater", "breakwaterd":
+		grpcServer = grpc.NewServer(grpc.UnaryInterceptor(config.Breakwater.UnaryInterceptor))
+	case "dagor":
+		grpcServer = grpc.NewServer(grpc.UnaryInterceptor(config.Dg.UnaryInterceptorServer))
+	case "plain":
+		grpcServer = grpc.NewServer(grpc.UnaryInterceptor(plain.UnaryInterceptor))
+	default:
+		grpcServer = grpc.NewServer()
+	}
+
+	rateServer := &hotel.RateServer{}
+	hotelpb.RegisterRateServiceServer(grpcServer, rateServer)
+
+	// Listen and serve
 	lis, err := net.Listen("tcp", ":"+port)
 	if err != nil {
 		log.Fatalf("Failed to listen: %v", err)
 	}
 
-	s := grpc.NewServer()
-	rateServer := &hotel.RateServer{}
-	hotelpb.RegisterRateServiceServer(s, rateServer)
-
-	// Establish connections for downstream services if needed
-	// For instance, if RateServer needs to communicate with other services
-
 	log.Println("gRPC server listening on port " + port)
-	if err := s.Serve(lis); err != nil {
+	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatalf("Failed to serve: %v", err)
 	}
 }
