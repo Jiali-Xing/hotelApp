@@ -2,20 +2,21 @@ package hotel
 
 import (
 	"context"
-	"github.com/Jiali-Xing/hotelApp/internal/config"
 	"log"
+
+	"github.com/Jiali-Xing/hotelApp/internal/config"
 
 	"github.com/Jiali-Xing/hotelApp/pkg/invoke"
 
 	hotelpb "github.com/Jiali-Xing/hotelproto"
 )
 
-func SearchHotels(ctx context.Context, inDate string, outDate string, location string) []*hotelpb.HotelProfile {
+func SearchHotels(ctx context.Context, inDate string, outDate string, location string) ([]*hotelpb.HotelProfile, error) {
 	req1 := &hotelpb.NearbyRequest{InDate: inDate, OutDate: outDate, Location: location}
 	hotelIdsRes, err := invoke.Invoke[*hotelpb.NearbyResponse](ctx, "search", "Nearby", req1)
 	if err != nil {
 		log.Printf("Error invoking gRPC method: %v", err)
-		return nil
+		return nil, err
 	}
 	rates := hotelIdsRes.Rates
 
@@ -34,32 +35,32 @@ func SearchHotels(ctx context.Context, inDate string, outDate string, location s
 	availableHotelIdsRes, err := invoke.Invoke[*hotelpb.CheckAvailabilityResponse](ctx, "reservation", "CheckAvailability", req2)
 	if err != nil {
 		log.Printf("Error invoking gRPC method: %v", err)
-		return nil
+		return nil, err
 	}
 	config.DebugLog("Found available hotel ids: %v", availableHotelIdsRes.HotelIds)
 	req3 := &hotelpb.GetProfilesRequest{HotelIds: availableHotelIdsRes.HotelIds}
 	profilesRes, err := invoke.Invoke[*hotelpb.GetProfilesResponse](ctx, "profile", "GetProfiles", req3)
 	if err != nil {
 		log.Printf("Error invoking gRPC method: %v", err)
-		return nil
+		return nil, err
 	}
 	config.DebugLog("Found profiles: %v", profilesRes.Profiles)
-	return profilesRes.Profiles
+	return profilesRes.Profiles, nil
 }
 
-func StoreHotel(ctx context.Context, hotelId string, name string, phone string, location string, rate int, capacity int, info string) string {
+func StoreHotel(ctx context.Context, hotelId string, name string, phone string, location string, rate int, capacity int, info string) (string, error) {
 	req1 := &hotelpb.StoreHotelLocationRequest{Location: location, HotelId: hotelId}
 	_, err := invoke.Invoke[*hotelpb.StoreHotelLocationResponse](ctx, "search", "StoreHotelLocation", req1)
 	if err != nil {
 		log.Printf("Error invoking gRPC method: %v", err)
-		return ""
+		return "", err
 	}
 	config.DebugLog("Stored hotel location for hotel id: %s at location: %s", hotelId, location)
 	req2 := &hotelpb.StoreRateRequest{Rate: &hotelpb.Rate{HotelId: hotelId, Price: int32(rate)}}
 	_, err = invoke.Invoke[*hotelpb.StoreRateResponse](ctx, "rate", "StoreRate", req2)
 	if err != nil {
 		log.Printf("Error invoking gRPC method: %v", err)
-		return ""
+		return "", err
 	}
 	config.DebugLog("Stored rate for hotel id: %s at rate: %d", hotelId, rate)
 	req3 := &hotelpb.AddHotelAvailabilityRequest{
@@ -69,7 +70,7 @@ func StoreHotel(ctx context.Context, hotelId string, name string, phone string, 
 	_, err = invoke.Invoke[*hotelpb.AddHotelAvailabilityResponse](ctx, "reservation", "AddHotelAvailability", req3)
 	if err != nil {
 		log.Printf("Error invoking gRPC method: %v", err)
-		return ""
+		return "", err
 	}
 	config.DebugLog("Added hotel availability for hotel id: %s with capacity: %d", hotelId, capacity)
 	hotelProfile := &hotelpb.HotelProfile{
@@ -82,13 +83,13 @@ func StoreHotel(ctx context.Context, hotelId string, name string, phone string, 
 	_, err = invoke.Invoke[*hotelpb.StoreProfileResponse](ctx, "profile", "StoreProfile", req4)
 	if err != nil {
 		log.Printf("Error invoking gRPC method: %v", err)
-		return ""
+		return "", err
 	}
 	config.DebugLog("Stored hotel profile for hotel id: %s as %v", hotelId, hotelProfile)
-	return hotelId
+	return hotelId, nil
 }
 
-func FrontendReservation(ctx context.Context, hotelId string, inDate string, outDate string, rooms int, username string, password string) bool {
+func FrontendReservation(ctx context.Context, hotelId string, inDate string, outDate string, rooms int, username string, password string) (bool, error) {
 	req1 := &hotelpb.LoginRequest{
 		Username: username,
 		Password: password,
@@ -96,16 +97,16 @@ func FrontendReservation(ctx context.Context, hotelId string, inDate string, out
 	tokenRes, err := invoke.Invoke[*hotelpb.LoginResponse](ctx, "user", "Login", req1)
 	if err != nil {
 		log.Printf("Error invoking gRPC method: %v", err)
-		return false
+		return false, err
 	}
 
 	if tokenRes == nil {
 		log.Println("Received nil response from login gRPC call")
-		return false
+		return false, nil
 	}
 
 	if tokenRes.Token != "OK" {
-		return false
+		return false, nil
 	}
 
 	req2 := &hotelpb.MakeReservationRequest{
@@ -118,7 +119,7 @@ func FrontendReservation(ctx context.Context, hotelId string, inDate string, out
 	successRes, err := invoke.Invoke[*hotelpb.MakeReservationResponse](ctx, "reservation", "MakeReservation", req2)
 	if err != nil {
 		log.Printf("Error invoking gRPC method: %v", err)
-		return false
+		return false, nil
 	}
-	return successRes.Success
+	return successRes.Success, nil
 }

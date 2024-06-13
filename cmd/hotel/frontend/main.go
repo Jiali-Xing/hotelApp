@@ -2,13 +2,15 @@ package main
 
 import (
 	"context"
+
 	"github.com/Jiali-Xing/hotelApp/internal/config"
 
-	"github.com/Jiali-Xing/hotelApp/internal/hotel"
-	"github.com/Jiali-Xing/hotelApp/pkg/invoke"
 	"log"
 	"net"
 	"os"
+
+	"github.com/Jiali-Xing/hotelApp/internal/hotel"
+	"github.com/Jiali-Xing/hotelApp/pkg/invoke"
 
 	hotelpb "github.com/Jiali-Xing/hotelproto"
 	"google.golang.org/grpc"
@@ -20,21 +22,33 @@ type server struct {
 
 func (s *server) SearchHotels(ctx context.Context, req *hotelpb.SearchHotelsRequest) (*hotelpb.SearchHotelsResponse, error) {
 	ctx = config.PropagateMetadata(ctx, "frontend")
-	hotels := hotel.SearchHotels(ctx, req.InDate, req.OutDate, req.Location)
+	hotels, err := hotel.SearchHotels(ctx, req.InDate, req.OutDate, req.Location)
+	if err != nil {
+		log.Printf("Error searching hotels: %v", err)
+		return nil, err
+	}
 	resp := &hotelpb.SearchHotelsResponse{Profiles: hotels}
 	return resp, nil
 }
 
 func (s *server) StoreHotel(ctx context.Context, req *hotelpb.StoreHotelRequest) (*hotelpb.StoreHotelResponse, error) {
 	ctx = config.PropagateMetadata(ctx, "frontend")
-	hotelId := hotel.StoreHotel(ctx, req.HotelId, req.Name, req.Phone, req.Location, int(req.Rate), int(req.Capacity), req.Info)
+	hotelId, err := hotel.StoreHotel(ctx, req.HotelId, req.Name, req.Phone, req.Location, int(req.Rate), int(req.Capacity), req.Info)
+	if err != nil {
+		log.Printf("Error storing hotel: %v", err)
+		return nil, err
+	}
 	resp := &hotelpb.StoreHotelResponse{HotelId: hotelId}
 	return resp, nil
 }
 
 func (s *server) FrontendReservation(ctx context.Context, req *hotelpb.FrontendReservationRequest) (*hotelpb.FrontendReservationResponse, error) {
 	ctx = config.PropagateMetadata(ctx, "frontend")
-	success := hotel.FrontendReservation(ctx, req.HotelId, req.InDate, req.OutDate, int(req.Rooms), req.Username, req.Password)
+	success, err := hotel.FrontendReservation(ctx, req.HotelId, req.InDate, req.OutDate, int(req.Rooms), req.Username, req.Password)
+	if err != nil {
+		log.Printf("Error making reservation: %v", err)
+		return nil, err
+	}
 	resp := &hotelpb.FrontendReservationResponse{Success: success}
 	return resp, nil
 }

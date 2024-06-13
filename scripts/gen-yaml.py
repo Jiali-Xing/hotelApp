@@ -20,9 +20,17 @@ with open("scripts/redis_service_template.yaml", "r") as template_file:
 with open("scripts/redis_deployment_template.yaml", "r") as template_file:
     redis_deployment_template = template_file.read()
 
+# Check for DEBUG_INFO environment variable
+debug_info = os.getenv("DEBUG_INFO", "false").lower() == "true"
+
 # Generate the deployment and service YAML for each service
 for service in services:
-    deployment_content = deploy_template.format(service_name=service)
+    if debug_info:
+        Args = 'args: ["-debug"]'
+    else:
+        Args = 'args: ["/bin/{service_name} > /root/deathstar_{service_name}.output"]'
+    
+    deployment_content = deploy_template.format(service_name=service, args=Args)
     deployment_filename = "{}-deployment.yaml".format(service)
     
     with open(os.path.join(output_dir, deployment_filename), "w") as f:
@@ -33,21 +41,39 @@ for service in services:
         external_ip = "externalIPs:\n    - 1.2.4.114"
     else:
         external_ip = ""
+    
     service_content = service_template.format(service_name=service, external_ip=external_ip)
-    service_filename = f"{service}-service.yaml"
+    service_filename = "{}-service.yaml".format(service)
     with open(os.path.join(output_dir, service_filename), "w") as f:
         f.write(service_content)
 
     # Generate the redis service and deployment YAML if the service uses Redis
     if service in services_using_redis:
         redis_service_content = redis_service_template.format(service_name=service)
-        redis_service_filename = f"{service}-redis-service.yaml"
+        redis_service_filename = "{}-redis-service.yaml".format(service)
         with open(os.path.join(output_dir, redis_service_filename), "w") as f:
             f.write(redis_service_content)
         
         redis_deployment_content = redis_deployment_template.format(service_name=service)
-        redis_deployment_filename = f"{service}-redis-deployment.yaml"
+        redis_deployment_filename = "{}-redis-deployment.yaml".format(service)
         with open(os.path.join(output_dir, redis_deployment_filename), "w") as f:
             f.write(redis_deployment_content)
+
+    # service_content = service_template.format(service_name=service, external_ip=external_ip)
+    # service_filename = f"{service}-service.yaml"
+    # with open(os.path.join(output_dir, service_filename), "w") as f:
+    #     f.write(service_content)
+
+    # # Generate the redis service and deployment YAML if the service uses Redis
+    # if service in services_using_redis:
+    #     redis_service_content = redis_service_template.format(service_name=service)
+    #     redis_service_filename = f"{service}-redis-service.yaml"
+    #     with open(os.path.join(output_dir, redis_service_filename), "w") as f:
+    #         f.write(redis_service_content)
+        
+    #     redis_deployment_content = redis_deployment_template.format(service_name=service)
+    #     redis_deployment_filename = f"{service}-redis-deployment.yaml"
+    #     with open(os.path.join(output_dir, redis_deployment_filename), "w") as f:
+    #         f.write(redis_deployment_content)
 
 print("Kubernetes YAML files have been generated in the 'k8s' directory.")

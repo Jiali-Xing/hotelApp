@@ -31,7 +31,7 @@ func PropagateMetadata(ctx context.Context, serviceName string) context.Context 
 	}
 
 	headersOut, _ := metadata.FromOutgoingContext(ctx)
-	log.Printf("headersOut: %s", headersOut)
+	DebugLog("headersOut: %s", headersOut)
 
 	return ctx
 }
