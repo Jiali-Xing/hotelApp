@@ -21,15 +21,23 @@ func PropagateMetadata(ctx context.Context, serviceName string) context.Context 
 	}
 	DebugLog("headersIn: %s", headersIn)
 
-	// Append the request-id and timestamp of headersIn to the outgoing context
+	// Start with the context
+	outCtx := ctx
+	// Check and append tokens
 	if tokens, ok := headersIn["tokens"]; ok && len(tokens) == 1 {
-		ctx = metadata.AppendToOutgoingContext(ctx, "tokens", tokens[0], "request-id", headersIn["request-id"][0], "timestamp", headersIn["timestamp"][0], "method", method, "name", serviceName)
-	} else if u, uok := headersIn["u"]; uok && len(u) == 1 {
-		ctx = metadata.AppendToOutgoingContext(ctx, "u", u[0], "b", headersIn["b"][0], "request-id", headersIn["request-id"][0], "timestamp", headersIn["timestamp"][0], "method", method, "name", serviceName)
-	} else {
-		ctx = metadata.AppendToOutgoingContext(ctx, "request-id", headersIn["request-id"][0], "timestamp", headersIn["timestamp"][0], "method", method, "name", serviceName)
+		outCtx = metadata.AppendToOutgoingContext(outCtx, "tokens", tokens[0])
 	}
 
+	// Check and append user-specific metadata
+	if u, uok := headersIn["u"]; uok && len(u) == 1 {
+		outCtx = metadata.AppendToOutgoingContext(outCtx, "u", u[0], "b", headersIn["b"][0])
+	}
+
+	// Append common metadata
+	outCtx = metadata.AppendToOutgoingContext(outCtx, "request-id", headersIn["request-id"][0], "timestamp", headersIn["timestamp"][0], "method", method, "name", serviceName)
+
+	// Update the original context
+	ctx = outCtx
 	headersOut, _ := metadata.FromOutgoingContext(ctx)
 	DebugLog("headersOut: %s", headersOut)
 
