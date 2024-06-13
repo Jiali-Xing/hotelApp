@@ -1,7 +1,11 @@
 #!/bin/bash
 kubectl delete deployment --all > /dev/null && kubectl delete service --all > /dev/null && kubectl delete configmap --all > /dev/null
+
+sleep 5
+
 kubectl create configmap msgraph-config --from-file=/users/jiali/hotelApp/msgraph.yaml
 
+sleep 5
 # python scripts/gen-yaml.py
 
 # Apply Kubernetes YAML files for services and Redis
