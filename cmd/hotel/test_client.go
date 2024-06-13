@@ -3,9 +3,10 @@ package main
 import (
 	"context"
 	"flag"
-	"google.golang.org/grpc/metadata"
 	"log"
 	"time"
+
+	"google.golang.org/grpc/metadata"
 
 	"github.com/Jiali-Xing/hotelApp/internal/config"
 	hotelpb "github.com/Jiali-Xing/hotelproto"
@@ -195,7 +196,7 @@ func testMakeReservation(client hotelpb.FrontendServiceClient) {
 		Password: "password1",
 	}
 
-	ctx = metadata.AppendToOutgoingContext(ctx, "tokens", "99999", "request-id", "12345", "method", "search-hotel", "u", "1", "b", "1", "timestamp", "12345", "name", "frontend", "method", "search-hotel")
+	ctx = metadata.AppendToOutgoingContext(ctx, "tokens", "99999", "request-id", "12345", "method", "search-hotel", "u", "1", "b", "1", "timestamp", "12345", "name", "frontend", "method", "search-hotel", "id", "1", "demand", "3")
 	resp, err := client.FrontendReservation(ctx, req)
 	if err != nil {
 		log.Fatalf("Failed to make reservation: %v", err)
