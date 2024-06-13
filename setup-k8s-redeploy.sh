@@ -4,7 +4,7 @@
 deployments=$(kubectl get deployments -o custom-columns=NAME:.metadata.name --no-headers | grep -v 'redis')
 services=$(kubectl get services -o custom-columns=NAME:.metadata.name --no-headers | grep -v 'redis')
 
-./scripts/gen-yaml.py
+python ./scripts/gen-yaml.py
 
 # Delete the filtered deployments and services
 for deployment in $deployments; do
