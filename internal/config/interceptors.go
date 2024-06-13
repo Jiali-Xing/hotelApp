@@ -274,9 +274,9 @@ func init() {
 		dagorParams := dagor.DagorParam{
 			NodeName: serviceName,
 			BusinessMap: map[string]int{
-				"SearchHotels":        1,
-				"StoreHotel":          2,
-				"FrontendReservation": 3,
+				"search-hotel":  1,
+				"store-hotel":   2,
+				"reserve-hotel": 3,
 			},
 			EntryService:                 true,
 			IsEnduser:                    false,
