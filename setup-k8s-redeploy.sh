@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # inheren the environment variables DEBUG_INFO
 export DEBUG_INFO
 python ./scripts/gen-yaml.py

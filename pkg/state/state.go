@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
 	"os"
 	"sync"
 
@@ -48,13 +47,13 @@ func GetState[T interface{}](ctx context.Context, key string) (T, error) {
 		return value, errors.New("key not found")
 	} else if err != nil {
 		// Other Redis error
-		log.Panic(err)
+		return value, err
 	}
 
 	// Unmarshal the JSON-encoded value into the value of type T
 	err = json.Unmarshal([]byte(result), &value)
 	if err != nil {
-		log.Panic(err)
+		return value, err
 	}
 	config.DebugLog("Retrieved value for key %s", key)
 	return value, nil
@@ -67,7 +66,7 @@ func GetBulkState[T interface{}](ctx context.Context, keys []string) ([]T, error
 	// Retrieve multiple keys from Redis
 	items, err := rdb.MGet(ctx, keys...).Result()
 	if err != nil {
-		log.Panic(err)
+		return nil, err
 	}
 
 	values := make(map[string]*T)
@@ -78,7 +77,7 @@ func GetBulkState[T interface{}](ctx context.Context, keys []string) ([]T, error
 		}
 		err = json.Unmarshal([]byte(item.(string)), &value)
 		if err != nil {
-			log.Panic(err)
+			return nil, err
 		}
 		values[keys[i]] = &value
 	}
@@ -90,14 +89,14 @@ func GetBulkState[T interface{}](ctx context.Context, keys []string) ([]T, error
 	return returnValues, nil
 }
 
-func GetBulkStateDefault[T interface{}](ctx context.Context, keys []string, defVal T) []T {
+func GetBulkStateDefault[T interface{}](ctx context.Context, keys []string, defVal T) ([]T, error) {
 	// Initialize Redis client
 	initRedisClient()
 
 	// Retrieve multiple keys from Redis
 	items, err := rdb.MGet(ctx, keys...).Result()
 	if err != nil {
-		log.Panic(err)
+		return nil, err
 	}
 
 	values := make(map[string]*T)
@@ -108,7 +107,7 @@ func GetBulkStateDefault[T interface{}](ctx context.Context, keys []string, defV
 		} else {
 			err = json.Unmarshal([]byte(item.(string)), &value)
 			if err != nil {
-				log.Panic(err)
+				return nil, err
 			}
 		}
 		values[keys[i]] = &value
@@ -118,44 +117,43 @@ func GetBulkStateDefault[T interface{}](ctx context.Context, keys []string, defV
 	for _, key := range keys {
 		returnValues = append(returnValues, *values[key])
 	}
-	return returnValues
+	return returnValues, nil
 }
 
-func SetState(ctx context.Context, key string, value interface{}) {
+func SetState(ctx context.Context, key string, value interface{}) error {
 	initRedisClient()
 
 	valueBytes, err := json.Marshal(value)
 	if err != nil {
-		log.Panic(err)
+		return err
 	}
 
 	// Save state directly to Redis
 	err = rdb.Set(ctx, key, valueBytes, 0).Err()
 	if err != nil {
-		log.Panic(err)
+		return err
 	}
 	config.DebugLog("Set value for key %s", key)
+	return nil
 }
 
-func SetBulkState(ctx context.Context, kvs map[string]interface{}) {
+func SetBulkState(ctx context.Context, kvs map[string]interface{}) error {
 	// Initialize Redis client
-	rdb := redis.NewClient(&redis.Options{
-		Addr: "redis:6379", // Redis server address
-	})
+	initRedisClient()
 
 	pipe := rdb.Pipeline()
 
 	for k, v := range kvs {
 		valueBytes, err := json.Marshal(v)
 		if err != nil {
-			log.Panic(err)
+			return err
 		}
 		pipe.Set(ctx, k, valueBytes, 0)
 	}
 
 	_, err := pipe.Exec(ctx)
 	if err != nil {
-		log.Panic(err)
+		return err
 	}
-
+	return nil
 }
