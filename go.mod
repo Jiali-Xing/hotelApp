@@ -15,6 +15,7 @@ require (
 )
 
 require (
+	github.com/Jiali-Xing/socialproto v0.0.0-20240614070428-e68c1612eaea // indirect
 	github.com/bytedance/gopkg v0.0.0-20240531030433-5df24c0168e2 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
@@ -23,5 +24,5 @@ require (
 	golang.org/x/sys v0.21.0 // indirect
 	golang.org/x/text v0.16.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240610135401-a8a62080eff3 // indirect
-	google.golang.org/protobuf v1.34.1 // indirect
+	google.golang.org/protobuf v1.34.2 // indirect
 )
