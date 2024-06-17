@@ -6,7 +6,8 @@ sleep 5
 kubectl create configmap msgraph-config --from-file=/users/jiali/hotelApp/msgraph.yaml
 
 sleep 5
-# python scripts/gen-yaml.py
+export METHOD
+python scripts/gen-yaml.py
 
 # Apply Kubernetes YAML files for services and Redis
 kubectl apply -f k8s/frontend-deployment.yaml

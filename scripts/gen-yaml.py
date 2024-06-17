@@ -1,9 +1,16 @@
 import os
 
-# Define the services
-services = ["frontend", "user", "search", "reservation", "rate", "profile"]
-services_using_redis = ["user", "search", "reservation", "rate", "profile"]
+# Define the services for the hotel app
+hotel_services = ["frontend", "user", "search", "reservation", "rate", "profile"]
+hotel_services_using_redis = ["user", "search", "reservation", "rate", "profile"]
 
+# Define the services for the social network app
+social_services = ["composepost", "hometimeline", "usertimeline", "socialgraph", "poststorage"]
+social_services_using_redis = ["hometimeline", "usertimeline", "poststorage", "socialgraph"]  # Assuming these services use Redis for state management
+
+method = os.getenv("METHOD", "social")
+services = social_services if 'social' in method else hotel_services
+services_using_redis = social_services_using_redis if 'social' in method else hotel_services_using_redis
 
 # Define the base directory for the output
 output_dir = "k8s"

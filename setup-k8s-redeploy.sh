@@ -2,6 +2,7 @@
 
 # inheren the environment variables DEBUG_INFO
 export DEBUG_INFO
+export METHOD
 python ./scripts/gen-yaml.py
 
 # Get all deployments and services excluding those with 'redis' in the name
@@ -21,35 +22,61 @@ done
 
 sleep 5
 
-# Apply Kubernetes YAML files for services and Redis
-kubectl apply -f k8s/frontend-deployment.yaml
-kubectl apply -f k8s/frontend-service.yaml
+if [[ "$METHOD" == *"hotel"* ]]; then
+  # Apply Kubernetes YAML files for hotel services and Redis
+  kubectl apply -f k8s/frontend-deployment.yaml
+  kubectl apply -f k8s/frontend-service.yaml
 
-kubectl apply -f k8s/user-deployment.yaml
-kubectl apply -f k8s/user-service.yaml
-kubectl apply -f k8s/user-redis-deployment.yaml
-kubectl apply -f k8s/user-redis-service.yaml
+  kubectl apply -f k8s/user-deployment.yaml
+  kubectl apply -f k8s/user-service.yaml
+  kubectl apply -f k8s/user-redis-deployment.yaml
+  kubectl apply -f k8s/user-redis-service.yaml
 
-kubectl apply -f k8s/search-deployment.yaml
-kubectl apply -f k8s/search-service.yaml
-kubectl apply -f k8s/search-redis-deployment.yaml
-kubectl apply -f k8s/search-redis-service.yaml
+  kubectl apply -f k8s/search-deployment.yaml
+  kubectl apply -f k8s/search-service.yaml
+  kubectl apply -f k8s/search-redis-deployment.yaml
+  kubectl apply -f k8s/search-redis-service.yaml
 
-kubectl apply -f k8s/reservation-deployment.yaml
-kubectl apply -f k8s/reservation-service.yaml
-kubectl apply -f k8s/reservation-redis-deployment.yaml
-kubectl apply -f k8s/reservation-redis-service.yaml
+  kubectl apply -f k8s/reservation-deployment.yaml
+  kubectl apply -f k8s/reservation-service.yaml
+  kubectl apply -f k8s/reservation-redis-deployment.yaml
+  kubectl apply -f k8s/reservation-redis-service.yaml
 
-kubectl apply -f k8s/rate-deployment.yaml
-kubectl apply -f k8s/rate-service.yaml
-kubectl apply -f k8s/rate-redis-deployment.yaml
-kubectl apply -f k8s/rate-redis-service.yaml
+  kubectl apply -f k8s/rate-deployment.yaml
+  kubectl apply -f k8s/rate-service.yaml
+  kubectl apply -f k8s/rate-redis-deployment.yaml
+  kubectl apply -f k8s/rate-redis-service.yaml
 
-kubectl apply -f k8s/profile-deployment.yaml
-kubectl apply -f k8s/profile-service.yaml
-kubectl apply -f k8s/profile-redis-deployment.yaml
-kubectl apply -f k8s/profile-redis-service.yaml
+  kubectl apply -f k8s/profile-deployment.yaml
+  kubectl apply -f k8s/profile-service.yaml
+  kubectl apply -f k8s/profile-redis-deployment.yaml
+  kubectl apply -f k8s/profile-redis-service.yaml
 
+elif [[ "$METHOD" == *"social"* ]]; then
+  # Apply Kubernetes YAML files for social network services and Redis
+  kubectl apply -f k8s/composepost-deployment.yaml
+  kubectl apply -f k8s/composepost-service.yaml
+
+  kubectl apply -f k8s/hometimeline-deployment.yaml
+  kubectl apply -f k8s/hometimeline-service.yaml
+  kubectl apply -f k8s/hometimeline-redis-deployment.yaml
+  kubectl apply -f k8s/hometimeline-redis-service.yaml
+
+  kubectl apply -f k8s/usertimeline-deployment.yaml
+  kubectl apply -f k8s/usertimeline-service.yaml
+  kubectl apply -f k8s/usertimeline-redis-deployment.yaml
+  kubectl apply -f k8s/usertimeline-redis-service.yaml
+
+  kubectl apply -f k8s/socialgraph-deployment.yaml
+  kubectl apply -f k8s/socialgraph-service.yaml
+  kubectl apply -f k8s/socialgraph-redis-deployment.yaml
+  kubectl apply -f k8s/socialgraph-redis-service.yaml
+
+  kubectl apply -f k8s/poststorage-deployment.yaml
+  kubectl apply -f k8s/poststorage-service.yaml
+  kubectl apply -f k8s/poststorage-redis-deployment.yaml
+  kubectl apply -f k8s/poststorage-redis-service.yaml
+fi
 echo "Kubernetes resources have been applied successfully."
 
 # wait for the pods to be ready
