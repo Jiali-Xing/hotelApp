@@ -7,11 +7,11 @@ import (
 	socialpb "github.com/Jiali-Xing/socialproto"
 )
 
-type composePostServer struct {
+type ComposePostServer struct {
 	socialpb.UnimplementedComposePostServer
 }
 
-func (s *composePostServer) ComposePost(ctx context.Context, req *socialpb.ComposePostRequest) (*socialpb.ComposePostResponse, error) {
+func (s *ComposePostServer) ComposePost(ctx context.Context, req *socialpb.ComposePostRequest) (*socialpb.ComposePostResponse, error) {
 	// Invoke store_post method in poststorage service
 	req1 := &socialpb.StorePostRequest{
 		CreatorId: req.CreatorId,
@@ -29,19 +29,26 @@ func (s *composePostServer) ComposePost(ctx context.Context, req *socialpb.Compo
 		UserId:  req.CreatorId,
 		PostIds: []string{postId},
 	}
-	invoke.Invoke[string](ctx, "usertimeline", "WriteUserTimeline", req2)
+
+	_, err = invoke.Invoke[string](ctx, "usertimeline", "writeusertimeline", req2)
+	if err != nil {
+		return nil, err
+	}
 
 	// Write to home timeline
 	req3 := &socialpb.WriteHomeTimelineRequest{
 		UserId:  req.CreatorId,
 		PostIds: []string{postId},
 	}
-	invoke.Invoke[string](ctx, "hometimeline", "WriteHomeTimeline", req3)
+	_, err = invoke.Invoke[string](ctx, "hometimeline", "writehometimeline", req3)
+	if err != nil {
+		return nil, err
+	}
 
 	return &socialpb.ComposePostResponse{PostId: postId}, nil
 }
 
-func (s *composePostServer) ComposePostMulti(ctx context.Context, req *socialpb.ComposePostMultiRequest) (*socialpb.ComposePostMultiResponse, error) {
+func (s *ComposePostServer) ComposePostMulti(ctx context.Context, req *socialpb.ComposePostMultiRequest) (*socialpb.ComposePostMultiResponse, error) {
 	// Invoke store_post_multi method in poststorage service
 	req1 := &socialpb.StorePostMultiRequest{
 		CreatorId: req.CreatorId,
@@ -60,14 +67,20 @@ func (s *composePostServer) ComposePostMulti(ctx context.Context, req *socialpb.
 		UserId:  req.CreatorId,
 		PostIds: postIds,
 	}
-	invoke.Invoke[string](ctx, "usertimeline", "WriteUserTimeline", req2)
+	_, err = invoke.Invoke[string](ctx, "usertimeline", "WriteUserTimeline", req2)
+	if err != nil {
+		return nil, err
+	}
 
 	// Write to home timeline
 	req3 := &socialpb.WriteHomeTimelineRequest{
 		UserId:  req.CreatorId,
 		PostIds: postIds,
 	}
-	invoke.Invoke[string](ctx, "hometimeline", "WriteHomeTimeline", req3)
+	_, err = invoke.Invoke[string](ctx, "hometimeline", "WriteHomeTimeline", req3)
+	if err != nil {
+		return nil, err
+	}
 
 	return &socialpb.ComposePostMultiResponse{PostIds: postIds}, nil
 }

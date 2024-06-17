@@ -1,6 +1,9 @@
 package main
 
 import (
+	"context"
+	"github.com/Jiali-Xing/hotelApp/internal/social"
+	"github.com/Jiali-Xing/hotelApp/pkg/invoke"
 	"log"
 	"net"
 	"os"
@@ -11,11 +14,6 @@ import (
 	socialpb "github.com/Jiali-Xing/socialproto"
 	"google.golang.org/grpc"
 )
-
-// Define homeTimelineServer struct
-type homeTimelineServer struct {
-	socialpb.UnimplementedHomeTimelineServer
-}
 
 func main() {
 	port := os.Getenv("GRPC_PORT")
@@ -39,7 +37,23 @@ func main() {
 	}
 
 	// Register services
-	socialpb.RegisterHomeTimelineServer(grpcServer, &homeTimelineServer{})
+	socialpb.RegisterHomeTimelineServer(grpcServer, &social.HomeTimelineServer{})
+
+	ctx := context.Background()
+	// Establish connections for downstream services
+	postStorageConn, err := config.CreateGRPCConn(ctx, config.PostStorageAddr)
+	if err != nil {
+		log.Fatalf("Failed to connect to poststorage gRPC server: %v", err)
+	}
+	defer postStorageConn.Close()
+	invoke.RegisterClient("poststorage", socialpb.NewPostStorageClient(postStorageConn))
+
+	socialGraphConn, err := config.CreateGRPCConn(ctx, config.SocialGraphAddr)
+	if err != nil {
+		log.Fatalf("Failed to connect to socialgraph gRPC server: %v", err)
+	}
+	defer socialGraphConn.Close()
+	invoke.RegisterClient("socialgraph", socialpb.NewSocialGraphClient(socialGraphConn))
 
 	// Listen and serve
 	lis, err := net.Listen("tcp", ":"+port)

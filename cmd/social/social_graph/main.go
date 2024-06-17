@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/Jiali-Xing/hotelApp/internal/social"
 	"log"
 	"net"
 	"os"
@@ -12,10 +13,6 @@ import (
 )
 
 func main() {
-	type socialGraphServer struct {
-		socialpb.UnimplementedSocialGraphServer
-	}
-
 	port := os.Getenv("GRPC_PORT")
 	if port == "" {
 		port = "50051" // Default port if not specified
@@ -37,7 +34,7 @@ func main() {
 	}
 
 	// Register services
-	socialpb.RegisterSocialGraphServer(grpcServer, &socialGraphServer{})
+	socialpb.RegisterSocialGraphServer(grpcServer, &social.GraphServer{})
 
 	// Listen and serve
 	lis, err := net.Listen("tcp", ":"+port)

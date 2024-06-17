@@ -10,21 +10,21 @@ import (
 	socialpb "github.com/Jiali-Xing/socialproto"
 )
 
-type postStorageServer struct {
+type PostStorageServer struct {
 	socialpb.UnimplementedPostStorageServer
 }
 
-func (s *postStorageServer) StorePost(ctx context.Context, req *socialpb.StorePostRequest) (*socialpb.StorePostResponse, error) {
+func (s *PostStorageServer) StorePost(ctx context.Context, req *socialpb.StorePostRequest) (*socialpb.StorePostResponse, error) {
 	postId := s.storePost(ctx, req.CreatorId, req.Text)
 	return &socialpb.StorePostResponse{PostId: postId}, nil
 }
 
-func (s *postStorageServer) StorePostMulti(ctx context.Context, req *socialpb.StorePostMultiRequest) (*socialpb.StorePostMultiResponse, error) {
+func (s *PostStorageServer) StorePostMulti(ctx context.Context, req *socialpb.StorePostMultiRequest) (*socialpb.StorePostMultiResponse, error) {
 	postIds := s.storePostMulti(ctx, req.CreatorId, req.Text, int(req.Number))
 	return &socialpb.StorePostMultiResponse{PostIds: postIds}, nil
 }
 
-func (s *postStorageServer) ReadPost(ctx context.Context, req *socialpb.ReadPostRequest) (*socialpb.ReadPostResponse, error) {
+func (s *PostStorageServer) ReadPost(ctx context.Context, req *socialpb.ReadPostRequest) (*socialpb.ReadPostResponse, error) {
 	post, err := state.GetState[socialpb.Post](ctx, req.PostId)
 	if err != nil {
 		return nil, err
@@ -32,7 +32,7 @@ func (s *postStorageServer) ReadPost(ctx context.Context, req *socialpb.ReadPost
 	return &socialpb.ReadPostResponse{Post: &post}, nil
 }
 
-func (s *postStorageServer) ReadPosts(ctx context.Context, req *socialpb.ReadPostsRequest) (*socialpb.ReadPostsResponse, error) {
+func (s *PostStorageServer) ReadPosts(ctx context.Context, req *socialpb.ReadPostsRequest) (*socialpb.ReadPostsResponse, error) {
 	retPosts, err := state.GetBulkState[socialpb.Post](ctx, req.PostIds)
 	if err != nil {
 		return nil, err
@@ -44,12 +44,12 @@ func (s *postStorageServer) ReadPosts(ctx context.Context, req *socialpb.ReadPos
 	return &socialpb.ReadPostsResponse{Posts: posts}, nil
 }
 
-func (s *postStorageServer) storePost(ctx context.Context, creatorId string, text string) string {
+func (s *PostStorageServer) storePost(ctx context.Context, creatorId string, text string) string {
 	postIds := s.storePostMulti(ctx, creatorId, text, 1)
 	return postIds[0]
 }
 
-func (s *postStorageServer) storePostMulti(ctx context.Context, creatorId string, text string, number int) []string {
+func (s *PostStorageServer) storePostMulti(ctx context.Context, creatorId string, text string, number int) []string {
 	posts := make(map[string]interface{}, number)
 	postIds := make([]string, number)
 	for i := 0; i < number; i++ {

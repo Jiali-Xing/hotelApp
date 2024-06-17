@@ -1,20 +1,21 @@
 package main
 
 import (
+	"context"
+	"github.com/Jiali-Xing/hotelApp/pkg/invoke"
 	"log"
 	"net"
 	"os"
 
 	"github.com/Jiali-Xing/hotelApp/internal/config"
+	"github.com/Jiali-Xing/hotelApp/internal/social"
 	"github.com/Jiali-Xing/plain"
 	socialpb "github.com/Jiali-Xing/socialproto"
 	"google.golang.org/grpc"
 )
 
 func main() {
-	type userTimelineServer struct {
-		socialpb.UnimplementedUserTimelineServer
-	}
+
 	port := os.Getenv("GRPC_PORT")
 	if port == "" {
 		port = "50051" // Default port if not specified
@@ -36,7 +37,16 @@ func main() {
 	}
 
 	// Register services
-	socialpb.RegisterUserTimelineServer(grpcServer, &userTimelineServer{})
+	socialpb.RegisterUserTimelineServer(grpcServer, &social.UserTimelineServer{})
+
+	ctx := context.Background()
+	// Establish connections for downstream services
+	postStorageConn, err := config.CreateGRPCConn(ctx, config.PostStorageAddr)
+	if err != nil {
+		log.Fatalf("Failed to connect to poststorage gRPC server: %v", err)
+	}
+	defer postStorageConn.Close()
+	invoke.RegisterClient("poststorage", socialpb.NewPostStorageClient(postStorageConn))
 
 	// Listen and serve
 	lis, err := net.Listen("tcp", ":"+port)

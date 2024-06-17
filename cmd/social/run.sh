@@ -1,19 +1,19 @@
-#!/bin/bash -ex
+#!/bin/bash
 
-APP=$1
+# Run Compose Post service
+go run ./cmd/social/compose_post/main.go -local &
 
-if [ -z "$APP" ]; then
-  echo "Error: No app name provided"
-  exit 1
-fi
+# Run Home Timeline service
+go run ./cmd/social/home_timeline/main.go -local &
 
-# set app_port in ports, dapr_http_port = app_port + 500
-declare -A ports
-ports["post_storage"]="3000"
-ports["home_timeline"]="3001"
-ports["user_timeline"]="3002"
-ports["social_graph"]="3003"
-ports["compose_post"]="3004"
+# Run User Timeline service
+go run ./cmd/social/user_timeline/main.go -local &
 
-LOC=$(dirname $(realpath "$0"))
-dapr run --app-id "$APP" --app-port ${ports[$APP]} --dapr-http-port $((${ports[$APP]} + 500)) go run "$LOC"/"$APP"/main.go
+# Run Social Graph service
+go run ./cmd/social/social_graph/main.go -local &
+
+# Run Post Storage service
+go run ./cmd/social/post_storage/main.go -local &
+
+# Wait for all background processes to finish
+wait

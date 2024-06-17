@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/Jiali-Xing/hotelApp/internal/social"
 	"log"
 	"net"
 	"os"
@@ -12,10 +13,6 @@ import (
 )
 
 func main() {
-
-	type postStorageServer struct {
-		socialpb.UnimplementedPostStorageServer
-	}
 
 	port := os.Getenv("GRPC_PORT")
 	if port == "" {
@@ -38,7 +35,7 @@ func main() {
 	}
 
 	// Register services
-	socialpb.RegisterPostStorageServer(grpcServer, &postStorageServer{})
+	socialpb.RegisterPostStorageServer(grpcServer, &social.PostStorageServer{})
 
 	// Listen and serve
 	lis, err := net.Listen("tcp", ":"+port)

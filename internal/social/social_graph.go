@@ -7,36 +7,36 @@ import (
 	socialpb "github.com/Jiali-Xing/socialproto"
 )
 
-type socialGraphServer struct {
+type GraphServer struct {
 	socialpb.UnimplementedSocialGraphServer
 }
 
-func (s *socialGraphServer) InsertUser(ctx context.Context, req *socialpb.InsertUserRequest) (*socialpb.InsertUserResponse, error) {
+func (s *GraphServer) InsertUser(ctx context.Context, req *socialpb.InsertUserRequest) (*socialpb.InsertUserResponse, error) {
 	s.insertUser(ctx, req.UserId)
 	return &socialpb.InsertUserResponse{}, nil
 }
 
-func (s *socialGraphServer) GetFollowers(ctx context.Context, req *socialpb.GetFollowersRequest) (*socialpb.GetFollowersResponse, error) {
+func (s *GraphServer) GetFollowers(ctx context.Context, req *socialpb.GetFollowersRequest) (*socialpb.GetFollowersResponse, error) {
 	followers := s.getFollowers(ctx, req.UserId)
 	return &socialpb.GetFollowersResponse{Followers: followers}, nil
 }
 
-func (s *socialGraphServer) GetFollowees(ctx context.Context, req *socialpb.GetFolloweesRequest) (*socialpb.GetFolloweesResponse, error) {
+func (s *GraphServer) GetFollowees(ctx context.Context, req *socialpb.GetFolloweesRequest) (*socialpb.GetFolloweesResponse, error) {
 	followees := s.getFollowees(ctx, req.UserId)
 	return &socialpb.GetFolloweesResponse{Followees: followees}, nil
 }
 
-func (s *socialGraphServer) Follow(ctx context.Context, req *socialpb.FollowRequest) (*socialpb.FollowResponse, error) {
+func (s *GraphServer) Follow(ctx context.Context, req *socialpb.FollowRequest) (*socialpb.FollowResponse, error) {
 	s.follow(ctx, req.FollowerId, req.FolloweeId)
 	return &socialpb.FollowResponse{}, nil
 }
 
-func (s *socialGraphServer) FollowMany(ctx context.Context, req *socialpb.FollowManyRequest) (*socialpb.FollowManyResponse, error) {
+func (s *GraphServer) FollowMany(ctx context.Context, req *socialpb.FollowManyRequest) (*socialpb.FollowManyResponse, error) {
 	s.followMany(ctx, req.UserId, req.FollowerIds, req.FolloweeIds)
 	return &socialpb.FollowManyResponse{}, nil
 }
 
-func (s *socialGraphServer) getFollowers(ctx context.Context, userId string) []string {
+func (s *GraphServer) getFollowers(ctx context.Context, userId string) []string {
 	sg, err := state.GetState[SGVertex](ctx, userId)
 	if err != nil {
 		panic(err)
@@ -44,7 +44,7 @@ func (s *socialGraphServer) getFollowers(ctx context.Context, userId string) []s
 	return sg.Followers
 }
 
-func (s *socialGraphServer) getFollowees(ctx context.Context, userId string) []string {
+func (s *GraphServer) getFollowees(ctx context.Context, userId string) []string {
 	sg, err := state.GetState[SGVertex](ctx, userId)
 	if err != nil {
 		panic(err)
@@ -52,7 +52,7 @@ func (s *socialGraphServer) getFollowees(ctx context.Context, userId string) []s
 	return sg.Followees
 }
 
-func (s *socialGraphServer) follow(ctx context.Context, followerId string, followeeId string) {
+func (s *GraphServer) follow(ctx context.Context, followerId string, followeeId string) {
 	sg, err := state.GetState[SGVertex](ctx, followerId)
 	if err != nil {
 		sg = SGVertex{
@@ -82,7 +82,7 @@ func (s *socialGraphServer) follow(ctx context.Context, followerId string, follo
 	}
 }
 
-func (s *socialGraphServer) followMany(ctx context.Context, userId string, followerIds []string, followeeIds []string) {
+func (s *GraphServer) followMany(ctx context.Context, userId string, followerIds []string, followeeIds []string) {
 	sg := SGVertex{
 		UserId:    userId,
 		Followers: followerIds,
@@ -100,7 +100,7 @@ func (s *socialGraphServer) followMany(ctx context.Context, userId string, follo
 	}
 }
 
-func (s *socialGraphServer) insertUser(ctx context.Context, userId string) {
+func (s *GraphServer) insertUser(ctx context.Context, userId string) {
 	sg := SGVertex{
 		Followers: []string{},
 		Followees: []string{},
