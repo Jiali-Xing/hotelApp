@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-
 	"github.com/Jiali-Xing/hotelApp/internal/config"
 	"github.com/Jiali-Xing/plain"
 

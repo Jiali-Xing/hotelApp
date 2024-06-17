@@ -132,6 +132,65 @@ func Invoke[T any](ctx context.Context, app string, method string, input interfa
 		default:
 			return res, fmt.Errorf("unsupported method: %s", method)
 		}
+	case "socialgraph":
+		socialGraphClient, ok := client.(socialpb.SocialGraphClient)
+		if !ok {
+			return res, fmt.Errorf("invalid client type for service: %s", app)
+		}
+		switch method {
+		case "insertuser":
+			req, ok := input.(*socialpb.InsertUserRequest)
+			if !ok {
+				return res, fmt.Errorf("invalid input type for method: %s", method)
+			}
+			resp, err := socialGraphClient.InsertUser(ctx, req)
+			if err != nil {
+				return res, err
+			}
+			res = any(resp).(T)
+		case "getfollowers":
+			req, ok := input.(*socialpb.GetFollowersRequest)
+			if !ok {
+				return res, fmt.Errorf("invalid input type for method: %s", method)
+			}
+			resp, err := socialGraphClient.GetFollowers(ctx, req)
+			if err != nil {
+				return res, err
+			}
+			res = any(resp).(T)
+		case "getfollowees":
+			req, ok := input.(*socialpb.GetFolloweesRequest)
+			if !ok {
+				return res, fmt.Errorf("invalid input type for method: %s", method)
+			}
+			resp, err := socialGraphClient.GetFollowees(ctx, req)
+			if err != nil {
+				return res, err
+			}
+			res = any(resp).(T)
+		case "follow":
+			req, ok := input.(*socialpb.FollowRequest)
+			if !ok {
+				return res, fmt.Errorf("invalid input type for method: %s", method)
+			}
+			resp, err := socialGraphClient.Follow(ctx, req)
+			if err != nil {
+				return res, err
+			}
+			res = any(resp).(T)
+		case "followmany":
+			req, ok := input.(*socialpb.FollowManyRequest)
+			if !ok {
+				return res, fmt.Errorf("invalid input type for method: %s", method)
+			}
+			resp, err := socialGraphClient.FollowMany(ctx, req)
+			if err != nil {
+				return res, err
+			}
+			res = any(resp).(T)
+		default:
+			return res, fmt.Errorf("unsupported method: %s", method)
+		}
 	//	above is the for social network services
 	//	below is the for hotel services
 	case "user":

@@ -8,18 +8,18 @@ import (
 	socialpb "github.com/Jiali-Xing/socialproto"
 )
 
-type homeTimelineServer struct {
+type HomeTimelineServer struct {
 	socialpb.UnimplementedHomeTimelineServer
 }
 
-func (s *homeTimelineServer) ReadHomeTimeline(ctx context.Context, req *socialpb.ReadHomeTimelineRequest) (*socialpb.ReadHomeTimelineResponse, error) {
+func (s *HomeTimelineServer) ReadHomeTimeline(ctx context.Context, req *socialpb.ReadHomeTimelineRequest) (*socialpb.ReadHomeTimelineResponse, error) {
 	postIds, err := state.GetState[[]string](ctx, req.UserId)
 	if err != nil {
 		return &socialpb.ReadHomeTimelineResponse{Posts: []*socialpb.Post{}}, nil
 	}
 
 	postsReq := &socialpb.ReadPostsRequest{PostIds: postIds}
-	postsResp, err := invoke.Invoke[socialpb.ReadPostsResponse](ctx, "poststorage", "ro_read_posts", postsReq)
+	postsResp, err := invoke.Invoke[socialpb.ReadPostsResponse](ctx, "poststorage", "readposts", postsReq)
 	if err != nil {
 		return nil, err
 	}
@@ -27,9 +27,9 @@ func (s *homeTimelineServer) ReadHomeTimeline(ctx context.Context, req *socialpb
 	return &socialpb.ReadHomeTimelineResponse{Posts: postsResp.Posts}, nil
 }
 
-func (s *homeTimelineServer) WriteHomeTimeline(ctx context.Context, req *socialpb.WriteHomeTimelineRequest) (*socialpb.WriteHomeTimelineResponse, error) {
+func (s *HomeTimelineServer) WriteHomeTimeline(ctx context.Context, req *socialpb.WriteHomeTimelineRequest) (*socialpb.WriteHomeTimelineResponse, error) {
 	followersReq := &socialpb.GetFollowersRequest{UserId: req.UserId}
-	followersResp, err := invoke.Invoke[socialpb.GetFollowersResponse](ctx, "socialgraph", "ro_get_followers", followersReq)
+	followersResp, err := invoke.Invoke[socialpb.GetFollowersResponse](ctx, "socialgraph", "getfollowers", followersReq)
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,10 @@ func (s *homeTimelineServer) WriteHomeTimeline(ctx context.Context, req *socialp
 			postIds = postIds[1:]
 		}
 		postIds = append(postIds, req.PostIds...)
-		state.SetState(ctx, follower, postIds)
+		err = state.SetState(ctx, follower, postIds)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	return &socialpb.WriteHomeTimelineResponse{Success: true}, nil

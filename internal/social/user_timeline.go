@@ -2,23 +2,24 @@ package social
 
 import (
 	"context"
+
 	"github.com/Jiali-Xing/hotelApp/pkg/invoke"
 	"github.com/Jiali-Xing/hotelApp/pkg/state"
 	socialpb "github.com/Jiali-Xing/socialproto"
 )
 
-type userTimelineServer struct {
+type UserTimelineServer struct {
 	socialpb.UnimplementedUserTimelineServer
 }
 
-func (s *userTimelineServer) ReadUserTimeline(ctx context.Context, req *socialpb.ReadUserTimelineRequest) (*socialpb.ReadUserTimelineResponse, error) {
+func (s *UserTimelineServer) ReadUserTimeline(ctx context.Context, req *socialpb.ReadUserTimelineRequest) (*socialpb.ReadUserTimelineResponse, error) {
 	postIds, err := state.GetState[[]string](ctx, req.UserId)
 	if err != nil {
 		return &socialpb.ReadUserTimelineResponse{Posts: []*socialpb.Post{}}, nil
 	}
 
 	postsReq := &socialpb.ReadPostsRequest{PostIds: postIds}
-	postsResp, err := invoke.Invoke[socialpb.ReadPostsResponse](ctx, "poststorage", "ro_read_posts", postsReq)
+	postsResp, err := invoke.Invoke[socialpb.ReadPostsResponse](ctx, "poststorage", "readposts", postsReq)
 	if err != nil {
 		return nil, err
 	}
@@ -26,7 +27,7 @@ func (s *userTimelineServer) ReadUserTimeline(ctx context.Context, req *socialpb
 	return &socialpb.ReadUserTimelineResponse{Posts: postsResp.Posts}, nil
 }
 
-func (s *userTimelineServer) WriteUserTimeline(ctx context.Context, req *socialpb.WriteUserTimelineRequest) (*socialpb.WriteUserTimelineResponse, error) {
+func (s *UserTimelineServer) WriteUserTimeline(ctx context.Context, req *socialpb.WriteUserTimelineRequest) (*socialpb.WriteUserTimelineResponse, error) {
 	postIds, err := state.GetState[[]string](ctx, req.UserId)
 	if err != nil {
 		postIds = []string{}

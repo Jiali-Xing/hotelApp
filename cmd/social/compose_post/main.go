@@ -1,6 +1,8 @@
 package main
 
 import (
+	"context"
+	"github.com/Jiali-Xing/hotelApp/pkg/invoke"
 	"log"
 	"net"
 	"os"
@@ -8,16 +10,12 @@ import (
 	"github.com/Jiali-Xing/plain"
 
 	"github.com/Jiali-Xing/hotelApp/internal/config"
+	"github.com/Jiali-Xing/hotelApp/internal/social"
 	socialpb "github.com/Jiali-Xing/socialproto"
 	"google.golang.org/grpc"
 )
 
 func main() {
-
-	type composePostServer struct {
-		socialpb.UnimplementedComposePostServer
-	}
-
 	port := os.Getenv("GRPC_PORT")
 	if port == "" {
 		port = "50051" // Default port if not specified
@@ -39,7 +37,37 @@ func main() {
 	}
 
 	// Register services
-	socialpb.RegisterComposePostServer(grpcServer, &composePostServer{})
+	socialpb.RegisterComposePostServer(grpcServer, &social.ComposePostServer{})
+
+	ctx := context.Background()
+	// Establish connections for downstream services
+	userTimelineConn, err := config.CreateGRPCConn(ctx, config.UserTimelineAddr)
+	if err != nil {
+		log.Fatalf("Failed to connect to usertimeline gRPC server: %v", err)
+	}
+	defer userTimelineConn.Close()
+	invoke.RegisterClient("usertimeline", socialpb.NewUserTimelineClient(userTimelineConn))
+
+	homeTimelineConn, err := config.CreateGRPCConn(ctx, config.HomeTimelineAddr)
+	if err != nil {
+		log.Fatalf("Failed to connect to hometimeline gRPC server: %v", err)
+	}
+	defer homeTimelineConn.Close()
+	invoke.RegisterClient("hometimeline", socialpb.NewHomeTimelineClient(homeTimelineConn))
+
+	postStorageConn, err := config.CreateGRPCConn(ctx, config.PostStorageAddr)
+	if err != nil {
+		log.Fatalf("Failed to connect to poststorage gRPC server: %v", err)
+	}
+	defer postStorageConn.Close()
+	invoke.RegisterClient("poststorage", socialpb.NewPostStorageClient(postStorageConn))
+
+	socialGraphConn, err := config.CreateGRPCConn(ctx, config.SocialGraphAddr)
+	if err != nil {
+		log.Fatalf("Failed to connect to socialgraph gRPC server: %v", err)
+	}
+	defer socialGraphConn.Close()
+	invoke.RegisterClient("socialgraph", socialpb.NewSocialGraphClient(socialGraphConn))
 
 	// Listen and serve
 	lis, err := net.Listen("tcp", ":"+port)
