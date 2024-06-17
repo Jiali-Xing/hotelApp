@@ -5,23 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50ae7f95-7b4b-466b-b072-c41dd3e0d324" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/hotel/frontend/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/hotel/frontend/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/social/compose_post/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/social/compose_post/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/social/home_timeline/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/social/home_timeline/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/social/post_storage/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/social/post_storage/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/social/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/social/run.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/social/social_graph/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/social/social_graph/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/social/user_timeline/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/social/user_timeline/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/config/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/social/compose_post.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/social/compose_post.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/social/home_timeline.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/social/home_timeline.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/social/post_storage.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/social/post_storage.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/social/social_graph.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/social/social_graph.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/social/user_storage.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/social/user_timeline.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/social/user_timeline.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/invoke/invoke.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/invoke/invoke.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/gen-yaml.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/gen-yaml.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup-k8s-initial.sh" beforeDir="false" afterPath="$PROJECT_DIR$/setup-k8s-initial.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup-k8s-redeploy.sh" beforeDir="false" afterPath="$PROJECT_DIR$/setup-k8s-redeploy.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
