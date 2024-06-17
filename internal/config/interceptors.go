@@ -303,7 +303,7 @@ func init() {
 	if Intercept == "breakwaterd" {
 		// Initialize the Breakwater instances for each downstream service
 		InitializeBreakwaterd(bwConfig)
-		DebugLog("Initialized multiple instances of Breakwaters for downstream services of %s: %v", serviceName, breakwaterd)
+		DebugLog("[BreakwaterD] Initialized multiple instances of Breakwaters for downstream services of %s: %v", serviceName, breakwaterd)
 	}
 
 }
@@ -314,11 +314,11 @@ func InitializeBreakwaterd(bwConfig bw.BWParameters) {
 	for _, downstream := range serviceData.Downstreams {
 		// Customize the Breakwater config per downstream if needed
 		// For example, you might have different SLOs or other parameters per downstream service
-		DebugLog("Initializing Breakwater for downstream service %s", downstream)
 		downstreamConfig := bwConfig
 		bwConfig.ServerSide = false
 		addr := getURL(downstream)
 		breakwaterd[addr] = bw.InitBreakwater(downstreamConfig)
+		DebugLog("[BreakwaterD] Initializing Breakwater for downstream service %s", downstream)
 	}
 }
 
@@ -330,7 +330,7 @@ func CreateGRPCConn(ctx context.Context, addr string) (*grpc.ClientConn, error) 
 	// Append interceptor if it exists in the map and serverSideInterceptOnly is false
 	if !serverSideInterceptOnly {
 		// Apply the selected interceptor
-		DebugLog("[As a Client/Sender] Creating gRPC connection to %s with intercept %s", addr, Intercept)
+		DebugLog("[As a Client/Sender] Creating Interceptor %s for service %s", Intercept, serviceName)
 		switch Intercept {
 		case "charon":
 			opts = append(opts, grpc.WithUnaryInterceptor(PriceTable.UnaryInterceptorClient))

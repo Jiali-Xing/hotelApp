@@ -1,15 +1,12 @@
 package main
 
 import (
-	"context"
+	"github.com/Jiali-Xing/hotelApp/internal/config"
+	"github.com/Jiali-Xing/hotelApp/internal/hotel"
+	"github.com/Jiali-Xing/plain"
 	"log"
 	"net"
 	"os"
-
-	"github.com/Jiali-Xing/hotelApp/internal/config"
-	"github.com/Jiali-Xing/hotelApp/internal/hotel"
-	"github.com/Jiali-Xing/hotelApp/pkg/invoke"
-	"github.com/Jiali-Xing/plain"
 
 	hotelpb "github.com/Jiali-Xing/hotelproto"
 	"google.golang.org/grpc"
@@ -38,30 +35,6 @@ func main() {
 
 	reservationServer := &hotel.ReservationServer{}
 	hotelpb.RegisterReservationServiceServer(grpcServer, reservationServer)
-
-	ctx := context.Background()
-
-	// Establish connections for downstream services
-	searchConn, err := config.CreateGRPCConn(ctx, config.SearchAddr)
-	if err != nil {
-		log.Fatalf("Failed to connect to search gRPC server: %v", err)
-	}
-	defer searchConn.Close()
-	invoke.RegisterClient("search", hotelpb.NewSearchServiceClient(searchConn))
-
-	rateConn, err := config.CreateGRPCConn(ctx, config.RateAddr)
-	if err != nil {
-		log.Fatalf("Failed to connect to rate gRPC server: %v", err)
-	}
-	defer rateConn.Close()
-	invoke.RegisterClient("rate", hotelpb.NewRateServiceClient(rateConn))
-
-	profileConn, err := config.CreateGRPCConn(ctx, config.ProfileAddr)
-	if err != nil {
-		log.Fatalf("Failed to connect to profile gRPC server: %v", err)
-	}
-	defer profileConn.Close()
-	invoke.RegisterClient("profile", hotelpb.NewProfileServiceClient(profileConn))
 
 	// Listen and serve
 	lis, err := net.Listen("tcp", ":"+port)
