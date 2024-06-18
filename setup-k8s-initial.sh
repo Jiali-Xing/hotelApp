@@ -10,33 +10,62 @@ export METHOD
 python scripts/gen-yaml.py
 
 # Apply Kubernetes YAML files for services and Redis
-kubectl apply -f k8s/frontend-deployment.yaml
-kubectl apply -f k8s/frontend-service.yaml
 
-kubectl apply -f k8s/user-deployment.yaml
-kubectl apply -f k8s/user-service.yaml
-kubectl apply -f k8s/user-redis-deployment.yaml
-kubectl apply -f k8s/user-redis-service.yaml
+if [[ "$METHOD" == *"hotel"* ]]; then
+  # Apply Kubernetes YAML files for hotel services and Redis
+  kubectl apply -f k8s/frontend-deployment.yaml
+  kubectl apply -f k8s/frontend-service.yaml
 
-kubectl apply -f k8s/search-deployment.yaml
-kubectl apply -f k8s/search-service.yaml
-kubectl apply -f k8s/search-redis-deployment.yaml
-kubectl apply -f k8s/search-redis-service.yaml
+  kubectl apply -f k8s/user-deployment.yaml
+  kubectl apply -f k8s/user-service.yaml
+  kubectl apply -f k8s/user-redis-deployment.yaml
+  kubectl apply -f k8s/user-redis-service.yaml
 
-kubectl apply -f k8s/reservation-deployment.yaml
-kubectl apply -f k8s/reservation-service.yaml
-kubectl apply -f k8s/reservation-redis-deployment.yaml
-kubectl apply -f k8s/reservation-redis-service.yaml
+  kubectl apply -f k8s/search-deployment.yaml
+  kubectl apply -f k8s/search-service.yaml
+  kubectl apply -f k8s/search-redis-deployment.yaml
+  kubectl apply -f k8s/search-redis-service.yaml
 
-kubectl apply -f k8s/rate-deployment.yaml
-kubectl apply -f k8s/rate-service.yaml
-kubectl apply -f k8s/rate-redis-deployment.yaml
-kubectl apply -f k8s/rate-redis-service.yaml
+  kubectl apply -f k8s/reservation-deployment.yaml
+  kubectl apply -f k8s/reservation-service.yaml
+  kubectl apply -f k8s/reservation-redis-deployment.yaml
+  kubectl apply -f k8s/reservation-redis-service.yaml
 
-kubectl apply -f k8s/profile-deployment.yaml
-kubectl apply -f k8s/profile-service.yaml
-kubectl apply -f k8s/profile-redis-deployment.yaml
-kubectl apply -f k8s/profile-redis-service.yaml
+  kubectl apply -f k8s/rate-deployment.yaml
+  kubectl apply -f k8s/rate-service.yaml
+  kubectl apply -f k8s/rate-redis-deployment.yaml
+  kubectl apply -f k8s/rate-redis-service.yaml
+
+  kubectl apply -f k8s/profile-deployment.yaml
+  kubectl apply -f k8s/profile-service.yaml
+  kubectl apply -f k8s/profile-redis-deployment.yaml
+  kubectl apply -f k8s/profile-redis-service.yaml
+
+elif [[ "$METHOD" == *"social"* ]]; then
+  # Apply Kubernetes YAML files for social network services and Redis
+  kubectl apply -f k8s/composepost-deployment.yaml
+  kubectl apply -f k8s/composepost-service.yaml
+
+  kubectl apply -f k8s/hometimeline-deployment.yaml
+  kubectl apply -f k8s/hometimeline-service.yaml
+  kubectl apply -f k8s/hometimeline-redis-deployment.yaml
+  kubectl apply -f k8s/hometimeline-redis-service.yaml
+
+  kubectl apply -f k8s/usertimeline-deployment.yaml
+  kubectl apply -f k8s/usertimeline-service.yaml
+  kubectl apply -f k8s/usertimeline-redis-deployment.yaml
+  kubectl apply -f k8s/usertimeline-redis-service.yaml
+
+  kubectl apply -f k8s/socialgraph-deployment.yaml
+  kubectl apply -f k8s/socialgraph-service.yaml
+  kubectl apply -f k8s/socialgraph-redis-deployment.yaml
+  kubectl apply -f k8s/socialgraph-redis-service.yaml
+
+  kubectl apply -f k8s/poststorage-deployment.yaml
+  kubectl apply -f k8s/poststorage-service.yaml
+  kubectl apply -f k8s/poststorage-redis-deployment.yaml
+  kubectl apply -f k8s/poststorage-redis-service.yaml
+fi
 
 echo "Kubernetes resources have been applied successfully."
 
@@ -50,15 +79,36 @@ for port in {50051..50059}; do
   fi
 done
 
-# run populate/port-forward.sh and populate/populate 
-# to populate the database and establish port forwarding
-./populate/port-forward.sh &
-PORT_FORWARD_PID=$!
+if [[ $METHOD == *"hotel"* ]]; then
+  # Run hotel populate scripts
+  ./populate/port-forward.sh &
+  PORT_FORWARD_PID=$!
 
-# Wait for port-forwarding to be ready (adjust sleep time as needed)
-sleep 30
+  # Wait for port-forwarding to be ready (adjust sleep time as needed)
+  sleep 30
 
-./populate/populate -hotels_file=/users/jiali/hotelApp/experiments/hotel/data/hotels.json
+  ./populate/populate -hotels_file=/users/jiali/hotelApp/experiments/hotel/data/hotels.json
+
+elif [[ $METHOD == *"social"* ]]; then
+  # Run social populate scripts
+  ./social-populate/social-port-forward.sh &
+  PORT_FORWARD_PID=$!
+
+  # Wait for port-forwarding to be ready (adjust sleep time as needed)
+  sleep 30
+
+  ./social-populate/populate -compose_post=localhost:50062 -home_timeline=localhost:50059 -user_timeline=localhost:50058 -social_graph=localhost:50061
+fi
+
+# # run populate/port-forward.sh and populate/populate 
+# # to populate the database and establish port forwarding
+# ./populate/port-forward.sh &
+# PORT_FORWARD_PID=$!
+
+# # Wait for port-forwarding to be ready (adjust sleep time as needed)
+# sleep 30
+
+# ./populate/populate -hotels_file=/users/jiali/hotelApp/experiments/hotel/data/hotels.json
 
 # After populate script finishes, kill the port-forwarding process
 
