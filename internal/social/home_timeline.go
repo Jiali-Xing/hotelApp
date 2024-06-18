@@ -19,7 +19,7 @@ func (s *HomeTimelineServer) ReadHomeTimeline(ctx context.Context, req *socialpb
 	}
 
 	postsReq := &socialpb.ReadPostsRequest{PostIds: postIds}
-	postsResp, err := invoke.Invoke[socialpb.ReadPostsResponse](ctx, "poststorage", "readposts", postsReq)
+	postsResp, err := invoke.Invoke[*socialpb.ReadPostsResponse](ctx, "poststorage", "readposts", postsReq)
 	if err != nil {
 		return nil, err
 	}
@@ -29,7 +29,7 @@ func (s *HomeTimelineServer) ReadHomeTimeline(ctx context.Context, req *socialpb
 
 func (s *HomeTimelineServer) WriteHomeTimeline(ctx context.Context, req *socialpb.WriteHomeTimelineRequest) (*socialpb.WriteHomeTimelineResponse, error) {
 	followersReq := &socialpb.GetFollowersRequest{UserId: req.UserId}
-	followersResp, err := invoke.Invoke[socialpb.GetFollowersResponse](ctx, "socialgraph", "getfollowers", followersReq)
+	followersResp, err := invoke.Invoke[*socialpb.GetFollowersResponse](ctx, "socialgraph", "getfollowers", followersReq)
 	if err != nil {
 		return nil, err
 	}

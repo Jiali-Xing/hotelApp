@@ -77,10 +77,10 @@ func main() {
 func populateUsersAndFollows(conn *grpc.ClientConn) {
 	client := socialpb.NewSocialGraphClient(conn)
 
-	for i := 0; i < numOfUsers; i++ {
-		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-		defer cancel()
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
 
+	for i := 0; i < numOfUsers; i++ {
 		userId := fmt.Sprintf("user%d", i)
 
 		// Insert user
@@ -90,23 +90,23 @@ func populateUsersAndFollows(conn *grpc.ClientConn) {
 		} else {
 			log.Printf("Inserted user: %s", userId)
 		}
+	}
 
+	for i := 0; i < numOfUsers; i++ {
 		// Follow other users
-		followeeIds := make([]string, numOfFollowers)
-		for j := 0; j < numOfFollowers; j++ {
-			followeeId := fmt.Sprintf("user%d", (i+j+1)%numOfUsers)
-			followeeIds[j] = followeeId
-		}
+		userId := fmt.Sprintf("user%d", i)
+		if i+1 < numOfUsers {
+			followeeId := fmt.Sprintf("user%d", i+1)
+			_, err := client.Follow(ctx, &socialpb.FollowRequest{
+				FollowerId: userId,
+				FolloweeId: followeeId,
+			})
 
-		_, err = client.FollowMany(ctx, &socialpb.FollowManyRequest{
-			UserId:      userId,
-			FollowerIds: []string{userId},
-			FolloweeIds: followeeIds,
-		})
-		if err != nil {
-			log.Printf("Failed to follow many for user %s: %v", userId, err)
-		} else {
-			log.Printf("User %s followed: %v", userId, followeeIds)
+			if err != nil {
+				log.Printf("Failed to follow user %s to user %s: %v", userId, followeeId, err)
+			} else {
+				log.Printf("User %s followed user %s", userId, followeeId)
+			}
 		}
 	}
 }
