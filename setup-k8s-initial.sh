@@ -85,7 +85,7 @@ if [[ $METHOD == *"hotel"* ]]; then
   PORT_FORWARD_PID=$!
 
   # Wait for port-forwarding to be ready (adjust sleep time as needed)
-  sleep 30
+  sleep 10
 
   ./populate/populate -hotels_file=/users/jiali/hotelApp/experiments/hotel/data/hotels.json
 
@@ -95,7 +95,7 @@ elif [[ $METHOD == *"social"* ]]; then
   PORT_FORWARD_PID=$!
 
   # Wait for port-forwarding to be ready (adjust sleep time as needed)
-  sleep 30
+  sleep 10
 
   ./social-populate/populate -compose_post=localhost:50062 -home_timeline=localhost:50059 -user_timeline=localhost:50058 -social_graph=localhost:50061
 fi
