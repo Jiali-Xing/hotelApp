@@ -63,13 +63,6 @@ func main() {
 	defer postStorageConn.Close()
 	invoke.RegisterClient("poststorage", socialpb.NewPostStorageClient(postStorageConn))
 
-	socialGraphConn, err := config.CreateGRPCConn(ctx, config.SocialGraphAddr)
-	if err != nil {
-		log.Fatalf("Failed to connect to socialgraph gRPC server: %v", err)
-	}
-	defer socialGraphConn.Close()
-	invoke.RegisterClient("socialgraph", socialpb.NewSocialGraphClient(socialGraphConn))
-
 	// Listen and serve
 	lis, err := net.Listen("tcp", ":"+port)
 	if err != nil {
