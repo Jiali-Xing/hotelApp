@@ -95,17 +95,33 @@ func populateUsersAndFollows(conn *grpc.ClientConn) {
 	for i := 0; i < numOfUsers; i++ {
 		// Follow other users
 		userId := fmt.Sprintf("user%d", i)
-		if i+1 < numOfUsers {
-			followeeId := fmt.Sprintf("user%d", i+1)
-			_, err := client.Follow(ctx, &socialpb.FollowRequest{
-				FollowerId: userId,
-				FolloweeId: followeeId,
-			})
-
-			if err != nil {
-				log.Printf("Failed to follow user %s to user %s: %v", userId, followeeId, err)
-			} else {
-				log.Printf("User %s followed user %s", userId, followeeId)
+		// if i+1 < numOfUsers {
+		// each user follows the last numOfFollowers users
+		if i > numOfFollowers {
+			for j := 0; j < numOfFollowers; j++ {
+				followeeId := fmt.Sprintf("user%d", i-j)
+				_, err := client.Follow(ctx, &socialpb.FollowRequest{
+					FollowerId: userId,
+					FolloweeId: followeeId,
+				})
+				if err != nil {
+					log.Printf("Failed to follow user %s to user %s: %v", userId, followeeId, err)
+				} else {
+					log.Printf("User %s followed user %s", userId, followeeId)
+				}
+			}
+		} else {
+			for j := 0; j < i; j++ {
+				followeeId := fmt.Sprintf("user%d", i-j)
+				_, err := client.Follow(ctx, &socialpb.FollowRequest{
+					FollowerId: userId,
+					FolloweeId: followeeId,
+				})
+				if err != nil {
+					log.Printf("Failed to follow user %s to user %s: %v", userId, followeeId, err)
+				} else {
+					log.Printf("User %s followed user %s", userId, followeeId)
+				}
 			}
 		}
 	}
