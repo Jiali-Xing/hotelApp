@@ -1,5 +1,7 @@
 import os
 
+printScreen = True
+
 # Define the services for the hotel app
 hotel_services = ["frontend", "user", "search", "reservation", "rate", "profile"]
 hotel_services_using_redis = ["user", "search", "reservation", "rate", "profile"]
@@ -33,7 +35,9 @@ debug_info = os.getenv("DEBUG_INFO", "false").lower() == "true"
 
 # Generate the deployment and service YAML for each service
 for service in services:
-    if debug_info:
+    if printScreen:
+        args = 'args: ["/bin/{} -debug"]'.format(service)
+    elif debug_info:
         args = 'args: ["/bin/{} -debug > /root/deathstar_{}.output 2>&1"]'.format(service, service)
     else:
         args = 'args: ["/bin/{} > /root/deathstar_{}.output 2>&1"]'.format(service, service)

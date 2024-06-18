@@ -13,6 +13,7 @@ type ComposePostServer struct {
 }
 
 func (s *ComposePostServer) ComposePost(ctx context.Context, req *socialpb.ComposePostRequest) (*socialpb.ComposePostResponse, error) {
+	ctx = config.PropagateMetadata(ctx, "composepost")
 	// Invoke store_post method in poststorage service
 	req1 := &socialpb.StorePostRequest{
 		CreatorId: req.CreatorId,
@@ -58,6 +59,7 @@ func (s *ComposePostServer) ComposePost(ctx context.Context, req *socialpb.Compo
 }
 
 func (s *ComposePostServer) ComposePostMulti(ctx context.Context, req *socialpb.ComposePostMultiRequest) (*socialpb.ComposePostMultiResponse, error) {
+	ctx = config.PropagateMetadata(ctx, "composepost")
 	// Invoke store_post_multi method in poststorage service
 	req1 := &socialpb.StorePostMultiRequest{
 		CreatorId: req.CreatorId,

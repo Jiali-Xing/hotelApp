@@ -3,6 +3,7 @@ package social
 import (
 	"context"
 
+	"github.com/Jiali-Xing/hotelApp/internal/config"
 	"github.com/Jiali-Xing/hotelApp/pkg/invoke"
 	"github.com/Jiali-Xing/hotelApp/pkg/state"
 	socialpb "github.com/Jiali-Xing/socialproto"
@@ -13,6 +14,7 @@ type UserTimelineServer struct {
 }
 
 func (s *UserTimelineServer) ReadUserTimeline(ctx context.Context, req *socialpb.ReadUserTimelineRequest) (*socialpb.ReadUserTimelineResponse, error) {
+	ctx = config.PropagateMetadata(ctx, "usertimeline")
 	postIds, err := state.GetState[[]string](ctx, req.UserId)
 	if err != nil {
 		return &socialpb.ReadUserTimelineResponse{Posts: []*socialpb.Post{}}, nil
@@ -28,6 +30,7 @@ func (s *UserTimelineServer) ReadUserTimeline(ctx context.Context, req *socialpb
 }
 
 func (s *UserTimelineServer) WriteUserTimeline(ctx context.Context, req *socialpb.WriteUserTimelineRequest) (*socialpb.WriteUserTimelineResponse, error) {
+	ctx = config.PropagateMetadata(ctx, "usertimeline")
 	postIds, err := state.GetState[[]string](ctx, req.UserId)
 	if err != nil {
 		postIds = []string{}
