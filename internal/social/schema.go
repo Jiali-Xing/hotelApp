@@ -34,11 +34,11 @@ package social
 // 	//Urls         []Url         `json:"urls"`
 // }
 
-type SGVertex struct {
-	UserId    string   `json:"userId"`
-	Followers []string `json:"followers"`
-	Followees []string `json:"followed"`
-}
+// type SGVertex struct {
+// 	UserId    string   `json:"userId"`
+// 	Followers []string `json:"followers"`
+// 	Followees []string `json:"followed"`
+// }
 
 // // post_storage
 

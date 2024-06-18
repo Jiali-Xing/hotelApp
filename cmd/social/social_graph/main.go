@@ -1,10 +1,11 @@
 package main
 
 import (
-	"github.com/Jiali-Xing/hotelApp/internal/social"
 	"log"
 	"net"
 	"os"
+
+	"github.com/Jiali-Xing/hotelApp/internal/social"
 
 	"github.com/Jiali-Xing/hotelApp/internal/config"
 	"github.com/Jiali-Xing/plain"
@@ -15,7 +16,7 @@ import (
 func main() {
 	port := os.Getenv("GRPC_PORT")
 	if port == "" {
-		port = "50051" // Default port if not specified
+		port = "50061" // Default port if not specified
 	}
 
 	// Set up gRPC server with the appropriate interceptor
