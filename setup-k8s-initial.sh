@@ -41,7 +41,7 @@ if [[ "$METHOD" == *"hotel"* ]]; then
   kubectl apply -f k8s/profile-redis-deployment.yaml
   kubectl apply -f k8s/profile-redis-service.yaml
 
-elif [[ "$METHOD" == *"social"* ]]; then
+elif [ "$METHOD" = "compose" -o "$METHOD" = "home-timeline" -o "$METHOD" = "user-timeline" -o "$METHOD" = "all-methods-social" ]; then
   # Apply Kubernetes YAML files for social network services and Redis
   kubectl apply -f k8s/composepost-deployment.yaml
   kubectl apply -f k8s/composepost-service.yaml
@@ -89,7 +89,7 @@ if [[ $METHOD == *"hotel"* ]]; then
 
   ./populate/populate -hotels_file=/users/jiali/hotelApp/experiments/hotel/data/hotels.json
 
-elif [[ $METHOD == *"social"* ]]; then
+elif [ "$METHOD" = "compose" -o "$METHOD" = "home-timeline" -o "$METHOD" = "user-timeline" -o "$METHOD" = "all-methods-social" ]; then
   # Run social populate scripts
   ./social-populate/social-port-forward.sh &
   PORT_FORWARD_PID=$!
@@ -99,18 +99,6 @@ elif [[ $METHOD == *"social"* ]]; then
 
   ./social-populate/populate -compose_post=localhost:50062 -home_timeline=localhost:50059 -user_timeline=localhost:50058 -social_graph=localhost:50061
 fi
-
-# # run populate/port-forward.sh and populate/populate 
-# # to populate the database and establish port forwarding
-# ./populate/port-forward.sh &
-# PORT_FORWARD_PID=$!
-
-# # Wait for port-forwarding to be ready (adjust sleep time as needed)
-# sleep 30
-
-# ./populate/populate -hotels_file=/users/jiali/hotelApp/experiments/hotel/data/hotels.json
-
-# After populate script finishes, kill the port-forwarding process
 
 for port in {50051..50059}; do
   pid=$(lsof -t -i :$port)
