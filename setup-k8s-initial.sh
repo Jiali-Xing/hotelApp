@@ -6,6 +6,8 @@ sleep 5
 kubectl create configmap msgraph-config --from-file=/users/jiali/hotelApp/msgraph.yaml
 
 sleep 5
+# if method is not provided, default to compose
+METHOD=${1:-"compose"}
 export METHOD
 python scripts/gen-yaml.py
 
