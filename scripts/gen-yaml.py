@@ -1,6 +1,6 @@
 import os
 
-printScreen = True
+printScreen = False
 
 # Define the services for the hotel app
 hotel_services = ["frontend", "user", "search", "reservation", "rate", "profile"]
