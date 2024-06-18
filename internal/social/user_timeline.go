@@ -19,7 +19,7 @@ func (s *UserTimelineServer) ReadUserTimeline(ctx context.Context, req *socialpb
 	}
 
 	postsReq := &socialpb.ReadPostsRequest{PostIds: postIds}
-	postsResp, err := invoke.Invoke[socialpb.ReadPostsResponse](ctx, "poststorage", "readposts", postsReq)
+	postsResp, err := invoke.Invoke[*socialpb.ReadPostsResponse](ctx, "poststorage", "readposts", postsReq)
 	if err != nil {
 		return nil, err
 	}
