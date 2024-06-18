@@ -178,16 +178,6 @@ func Invoke[T any](ctx context.Context, app string, method string, input interfa
 				return res, err
 			}
 			res = any(resp).(T)
-		case "followmany":
-			req, ok := input.(*socialpb.FollowManyRequest)
-			if !ok {
-				return res, fmt.Errorf("invalid input type for method: %s", method)
-			}
-			resp, err := socialGraphClient.FollowMany(ctx, req)
-			if err != nil {
-				return res, err
-			}
-			res = any(resp).(T)
 		default:
 			return res, fmt.Errorf("unsupported method: %s", method)
 		}

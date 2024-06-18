@@ -93,13 +93,13 @@ if [[ $METHOD == *"hotel"* ]]; then
 
 elif [ "$METHOD" = "compose" -o "$METHOD" = "home-timeline" -o "$METHOD" = "user-timeline" -o "$METHOD" = "all-methods-social" ]; then
   # Run social populate scripts
-  ./social-populate/social-port-forward.sh &
-  PORT_FORWARD_PID=$!
+  # ./social-populate/social-port-forward.sh &
+  # PORT_FORWARD_PID=$!
 
   # Wait for port-forwarding to be ready (adjust sleep time as needed)
-  sleep 10
+  sleep 30
 
-  ./social-populate/populate.sh
+  ./social-populate/populate.sh > popu.output 2>&1 
 fi
 
 for port in {50051..50059}; do
