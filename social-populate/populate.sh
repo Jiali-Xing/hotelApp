@@ -24,6 +24,6 @@ echo "Social Graph IP: $social_graph_ip"
   -home_timeline="${home_timeline_ip}:50051" \
   -user_timeline="${user_timeline_ip}:50051" \
   -social_graph="${social_graph_ip}:50051" \
-  -num_of_users 3 \
-  -num_of_posts 1 \
-  -num_of_followers 1
+  -num_of_users 100 \
+  -num_of_posts 10 \
+  -num_of_followers 10
