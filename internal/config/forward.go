@@ -37,8 +37,12 @@ func PropagateMetadata(ctx context.Context, serviceName string) context.Context 
 		outCtx = metadata.AppendToOutgoingContext(outCtx, "user-id", userId[0])
 	}
 
+	if reqId, ok := headersIn["request-id"]; ok && len(reqId) > 0 {
+		outCtx = metadata.AppendToOutgoingContext(outCtx, "request-id", reqId[0], "timestamp", headersIn["timestamp"][0], "method", method, "name", serviceName)
+	}
+
 	// Append common metadata
-	outCtx = metadata.AppendToOutgoingContext(outCtx, "request-id", headersIn["request-id"][0], "timestamp", headersIn["timestamp"][0], "method", method, "name", serviceName)
+	// outCtx = metadata.AppendToOutgoingContext(outCtx, "request-id", headersIn["request-id"][0], "timestamp", headersIn["timestamp"][0], "method", method, "name", serviceName)
 
 	// Update the original context
 	ctx = outCtx
