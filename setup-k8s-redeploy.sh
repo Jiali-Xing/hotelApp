@@ -52,7 +52,7 @@ if [[ "$METHOD" == *"hotel"* ]]; then
   kubectl apply -f k8s/profile-redis-deployment.yaml
   kubectl apply -f k8s/profile-redis-service.yaml
 
-elif [[ "$METHOD" == *"social"* ]]; then
+elif [ "$METHOD" = "compose" -o "$METHOD" = "home-timeline" -o "$METHOD" = "user-timeline" -o "$METHOD" = "all-methods-social" ]; then
   # Apply Kubernetes YAML files for social network services and Redis
   kubectl apply -f k8s/composepost-deployment.yaml
   kubectl apply -f k8s/composepost-service.yaml

@@ -8,9 +8,10 @@ hotel_services_using_redis = ["user", "search", "reservation", "rate", "profile"
 social_services = ["composepost", "hometimeline", "usertimeline", "socialgraph", "poststorage"]
 social_services_using_redis = ["hometimeline", "usertimeline", "poststorage", "socialgraph"]  # Assuming these services use Redis for state management
 
+# if  [ "$METHOD" = "compose" -o "$METHOD" = "home-timeline" -o "$METHOD" = "user-timeline" -o "$METHOD" = "all-methods-social" ]; then
 method = os.getenv("METHOD", "social")
-services = social_services if 'social' in method else hotel_services
-services_using_redis = social_services_using_redis if 'social' in method else hotel_services_using_redis
+services = hotel_services if 'hotel' in method else social_services
+services_using_redis = hotel_services_using_redis if 'hotel' in method else social_services_using_redis
 
 # Define the base directory for the output
 output_dir = "k8s"
