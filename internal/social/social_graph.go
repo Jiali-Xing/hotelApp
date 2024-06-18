@@ -20,6 +20,7 @@ type SGVertex struct {
 
 // InsertUser inserts a user with an empty social graph
 func (s *GraphServer) InsertUser(ctx context.Context, req *socialpb.InsertUserRequest) (*socialpb.InsertUserResponse, error) {
+	ctx = config.PropagateMetadata(ctx, "socialgraph")
 	sg := SGVertex{
 		UserId:    req.UserId,
 		Followers: []string{},
@@ -36,6 +37,7 @@ func (s *GraphServer) InsertUser(ctx context.Context, req *socialpb.InsertUserRe
 
 // GetFollowers retrieves the list of followers for a given user
 func (s *GraphServer) GetFollowers(ctx context.Context, req *socialpb.GetFollowersRequest) (*socialpb.GetFollowersResponse, error) {
+	ctx = config.PropagateMetadata(ctx, "socialgraph")
 	sg, err := state.GetState[SGVertex](ctx, req.UserId)
 	if err != nil {
 		config.DebugLog("Error getting followers for user %s: %v", req.UserId, err)
@@ -47,6 +49,7 @@ func (s *GraphServer) GetFollowers(ctx context.Context, req *socialpb.GetFollowe
 
 // GetFollowees retrieves the list of followees for a given user
 func (s *GraphServer) GetFollowees(ctx context.Context, req *socialpb.GetFolloweesRequest) (*socialpb.GetFolloweesResponse, error) {
+	ctx = config.PropagateMetadata(ctx, "socialgraph")
 	sg, err := state.GetState[SGVertex](ctx, req.UserId)
 	if err != nil {
 		config.DebugLog("Error getting followees for user %s: %v", req.UserId, err)
@@ -58,6 +61,7 @@ func (s *GraphServer) GetFollowees(ctx context.Context, req *socialpb.GetFollowe
 
 // Follow allows a user to follow another user
 func (s *GraphServer) Follow(ctx context.Context, req *socialpb.FollowRequest) (*socialpb.FollowResponse, error) {
+	ctx = config.PropagateMetadata(ctx, "socialgraph")
 	err := s.follow(ctx, req.FollowerId, req.FolloweeId)
 	if err != nil {
 		config.DebugLog("Error following user %s to user %s: %v", req.FollowerId, req.FolloweeId, err)
@@ -69,6 +73,7 @@ func (s *GraphServer) Follow(ctx context.Context, req *socialpb.FollowRequest) (
 
 // follow is a helper function to handle the following logic
 func (s *GraphServer) follow(ctx context.Context, followerId string, followeeId string) error {
+	ctx = config.PropagateMetadata(ctx, "socialgraph")
 	// Retrieve the follower's state
 	sgFollower, err := state.GetState[SGVertex](ctx, followerId)
 	if err != nil {

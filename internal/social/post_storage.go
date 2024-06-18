@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/Jiali-Xing/hotelApp/internal/config"
 	"github.com/Jiali-Xing/hotelApp/pkg/state"
 	"github.com/lithammer/shortuuid"
 
@@ -15,16 +16,19 @@ type PostStorageServer struct {
 }
 
 func (s *PostStorageServer) StorePost(ctx context.Context, req *socialpb.StorePostRequest) (*socialpb.StorePostResponse, error) {
+	ctx = config.PropagateMetadata(ctx, "poststorage")
 	postId := s.storePost(ctx, req.CreatorId, req.Text)
 	return &socialpb.StorePostResponse{PostId: postId}, nil
 }
 
 func (s *PostStorageServer) StorePostMulti(ctx context.Context, req *socialpb.StorePostMultiRequest) (*socialpb.StorePostMultiResponse, error) {
+	ctx = config.PropagateMetadata(ctx, "poststorage")
 	postIds := s.storePostMulti(ctx, req.CreatorId, req.Text, int(req.Number))
 	return &socialpb.StorePostMultiResponse{PostIds: postIds}, nil
 }
 
 func (s *PostStorageServer) ReadPost(ctx context.Context, req *socialpb.ReadPostRequest) (*socialpb.ReadPostResponse, error) {
+	ctx = config.PropagateMetadata(ctx, "poststorage")
 	post, err := state.GetState[socialpb.Post](ctx, req.PostId)
 	if err != nil {
 		return nil, err
@@ -33,6 +37,7 @@ func (s *PostStorageServer) ReadPost(ctx context.Context, req *socialpb.ReadPost
 }
 
 func (s *PostStorageServer) ReadPosts(ctx context.Context, req *socialpb.ReadPostsRequest) (*socialpb.ReadPostsResponse, error) {
+	ctx = config.PropagateMetadata(ctx, "poststorage")
 	retPosts, err := state.GetBulkState[socialpb.Post](ctx, req.PostIds)
 	if err != nil {
 		return nil, err
@@ -45,11 +50,13 @@ func (s *PostStorageServer) ReadPosts(ctx context.Context, req *socialpb.ReadPos
 }
 
 func (s *PostStorageServer) storePost(ctx context.Context, creatorId string, text string) string {
+	ctx = config.PropagateMetadata(ctx, "poststorage")
 	postIds := s.storePostMulti(ctx, creatorId, text, 1)
 	return postIds[0]
 }
 
 func (s *PostStorageServer) storePostMulti(ctx context.Context, creatorId string, text string, number int) []string {
+	ctx = config.PropagateMetadata(ctx, "poststorage")
 	posts := make(map[string]interface{}, number)
 	postIds := make([]string, number)
 	for i := 0; i < number; i++ {
