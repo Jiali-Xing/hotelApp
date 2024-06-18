@@ -99,7 +99,7 @@ elif [ "$METHOD" = "compose" -o "$METHOD" = "home-timeline" -o "$METHOD" = "user
   # Wait for port-forwarding to be ready (adjust sleep time as needed)
   sleep 10
 
-  ./social-populate/populate -compose_post=localhost:50062 -home_timeline=localhost:50059 -user_timeline=localhost:50058 -social_graph=localhost:50061
+  ./social-populate/populate.sh
 fi
 
 for port in {50051..50059}; do
