@@ -2,6 +2,8 @@
 
 # inheren the environment variables DEBUG_INFO
 export DEBUG_INFO
+# if method is not provided, default to compose
+METHOD=${1:-"compose"}
 export METHOD
 python ./scripts/gen-yaml.py
 
