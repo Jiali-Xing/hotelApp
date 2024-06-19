@@ -1,9 +1,14 @@
 #!/bin/bash
-kubectl delete deployment --all > /dev/null && kubectl delete service --all > /dev/null && kubectl delete configmap --all > /dev/null
+kubectl delete deployment --all > /dev/null && kubectl delete service --all > /dev/null
+# kubectl delete deployment --all > /dev/null && kubectl delete service --all > /dev/null && kubectl delete configmap --all > /dev/null
 
 sleep 5
 
-kubectl create configmap msgraph-config --from-file=/users/jiali/hotelApp/msgraph.yaml
+# if configmap is not provided, create a new one
+if [ ! kubectl get configmap msgraph-config ]; then
+  kubectl create configmap msgraph-config --from-file=/users/jiali/hotelApp/msgraph.yaml
+fi
+# kubectl create configmap msgraph-config --from-file=/users/jiali/hotelApp/msgraph.yaml
 
 sleep 5
 # if method is not provided, default to compose
