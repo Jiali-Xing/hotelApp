@@ -84,6 +84,7 @@ echo "Kubernetes resources have been applied successfully."
 # wait for the pods to be ready
 kubectl wait --for=condition=ready pod --all --timeout=60s
 
+sleep 5
 # for port in {50051..50059}; do
 #   pid=$(lsof -t -i :$port)
 #   if [ -n "$pid" ]; then

@@ -6,10 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="50ae7f95-7b4b-466b-b072-c41dd3e0d324" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/gen-yaml.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/gen-yaml.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup-k8s-initial.sh" beforeDir="false" afterPath="$PROJECT_DIR$/setup-k8s-initial.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup-k8s-redeploy.sh" beforeDir="false" afterPath="$PROJECT_DIR$/setup-k8s-redeploy.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/social/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/social/run.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/social/home_timeline.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/social/home_timeline.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/social/user_timeline.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/social/user_timeline.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
