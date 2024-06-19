@@ -1,14 +1,15 @@
-#!/bin/bash
-kubectl delete deployment --all > /dev/null && kubectl delete service --all > /dev/null
-# kubectl delete deployment --all > /dev/null && kubectl delete service --all > /dev/null && kubectl delete configmap --all > /dev/null
+# !/bin/bash
+# kubectl delete deployment --all > /dev/null && kubectl delete service --all > /dev/null
+kubectl delete deployment --all > /dev/null && kubectl delete service --all > /dev/null && kubectl delete configmap --all > /dev/null
 
-sleep 5
+sleep 1
 
-# if configmap is not provided, create a new one
-if [ ! kubectl get configmap msgraph-config ]; then
-  kubectl create configmap msgraph-config --from-file=/users/jiali/hotelApp/msgraph.yaml
-fi
-# kubectl create configmap msgraph-config --from-file=/users/jiali/hotelApp/msgraph.yaml
+# # if configmap is not provided, create a new one
+# if [ ! kubectl get configmap msgraph-config ]; then
+#   kubectl create configmap msgraph-config --from-file=/users/jiali/hotelApp/msgraph.yaml
+# fi
+echo "Creating configmap msgraph-config that contains no interceptors"
+kubectl create configmap msgraph-config --from-file=/users/jiali/hotelApp/msgraph.yaml
 
 sleep 5
 # if method is not provided, default to compose
@@ -102,7 +103,7 @@ elif [ "$METHOD" = "compose" -o "$METHOD" = "home-timeline" -o "$METHOD" = "user
   # PORT_FORWARD_PID=$!
 
   # Wait for port-forwarding to be ready (adjust sleep time as needed)
-  sleep 50
+  sleep 55
 
   ./social-populate/populate.sh > popu.output 2>&1 
 fi
