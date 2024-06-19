@@ -97,7 +97,7 @@ elif [ "$METHOD" = "compose" -o "$METHOD" = "home-timeline" -o "$METHOD" = "user
   # PORT_FORWARD_PID=$!
 
   # Wait for port-forwarding to be ready (adjust sleep time as needed)
-  sleep 30
+  sleep 50
 
   ./social-populate/populate.sh > popu.output 2>&1 
 fi
