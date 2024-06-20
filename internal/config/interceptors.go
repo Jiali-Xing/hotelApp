@@ -25,10 +25,10 @@ var (
 	Dg           *dagor.Dagor
 	Breakwaterd  map[string]*bw.Breakwater
 	// logLevel     string
-	serverConfig []Config
-	yamlFile     = getEnv("MSGRAPH_YAML", "msgraph.yaml")
+	// serverConfig []Config
+	yamlFile = getEnv("MSGRAPH_YAML", "msgraph.yaml")
 
-	nodes []Node
+	// nodes []Node
 
 	priceUpdateRate  time.Duration
 	latencyThreshold time.Duration
@@ -87,13 +87,13 @@ func init() {
 	if !contains(nodeList, serviceName) {
 		log.Fatalf("Service %s is not in the nodeList", serviceName)
 	}
-	entryService := false
+	entryService = false
 	// if serviceName == "frontend", "composepost" or "usertimeline" or "hometimeline" then set entryService to true
-	if serviceName == "frontend" || serviceName == "composepost" {
+	if serviceName == "frontend" || serviceName == "composepost" || serviceName == "usertimeline" || serviceName == "hometimeline" {
 		entryService = true
 		DebugLog("Service %s is the entry service", serviceName)
 	}
-	nodes = GetNodes()
+	// nodes = GetNodes()
 
 	callGraph := GetCallGraph()
 	fmt.Println("Call Graph of the Service:")
