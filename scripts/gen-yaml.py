@@ -1,9 +1,19 @@
 import os
 
-# Define the services
-services = ["frontend", "user", "search", "reservation", "rate", "profile"]
-services_using_redis = ["user", "search", "reservation", "rate", "profile"]
+printScreen = False
 
+# Define the services for the hotel app
+hotel_services = ["frontend", "user", "search", "reservation", "rate", "profile"]
+hotel_services_using_redis = ["user", "search", "reservation", "rate", "profile"]
+
+# Define the services for the social network app
+social_services = ["composepost", "hometimeline", "usertimeline", "socialgraph", "poststorage"]
+social_services_using_redis = ["hometimeline", "usertimeline", "poststorage", "socialgraph"]  # Assuming these services use Redis for state management
+
+# if  [ "$METHOD" = "compose" -o "$METHOD" = "home-timeline" -o "$METHOD" = "user-timeline" -o "$METHOD" = "all-methods-social" ]; then
+method = os.getenv("METHOD", "social")
+services = hotel_services if 'hotel' in method else social_services
+services_using_redis = hotel_services_using_redis if 'hotel' in method else social_services_using_redis
 
 # Define the base directory for the output
 output_dir = "k8s"
@@ -25,10 +35,12 @@ debug_info = os.getenv("DEBUG_INFO", "false").lower() == "true"
 
 # Generate the deployment and service YAML for each service
 for service in services:
-    if debug_info:
-        args = 'args: ["/bin/{} -debug > /root/deathstar_{}.output 2>&1"]'.format(service, service)
+    if printScreen:
+        args = 'args: ["/bin/{} -debug"]'.format(service)
+    elif debug_info:
+        args = 'args: ["/bin/{} -debug 2>&1 | tee /root/deathstar_{}.output"]'.format(service, service)
     else:
-        args = 'args: ["/bin/{} > /root/deathstar_{}.output 2>&1"]'.format(service, service)
+        args = 'args: ["/bin/{} 2>&1 | tee /root/deathstar_{}.output"]'.format(service, service)
     
     deployment_content = deploy_template.format(service_name=service, args=args)
     deployment_filename = "{}-deployment.yaml".format(service)

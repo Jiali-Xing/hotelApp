@@ -2,11 +2,11 @@ package main
 
 import (
 	"context"
-	"github.com/Jiali-Xing/hotelApp/pkg/invoke"
 	"log"
 	"net"
 	"os"
-	"time"
+
+	"github.com/Jiali-Xing/hotelApp/pkg/invoke"
 
 	"github.com/Jiali-Xing/hotelApp/internal/config"
 	"github.com/Jiali-Xing/hotelApp/internal/hotel"
@@ -21,8 +21,6 @@ func main() {
 	if port == "" {
 		port = "50054" // Default port if not specified
 	}
-
-	time.Sleep(2 * time.Second) // Wait for other services to start
 
 	// Set up gRPC server with the appropriate interceptor
 	var grpcServer *grpc.Server
