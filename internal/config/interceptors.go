@@ -16,13 +16,14 @@ import (
 )
 
 var (
-	serviceName = getEnv("SERVICE_NAME", "Client")
-	Intercept   string
-	serviceData ServiceData
-	PriceTable  *charon.PriceTable
-	Breakwater  *bw.Breakwater
-	Dg          *dagor.Dagor
-	breakwaterd map[string]*bw.Breakwater
+	serviceName  = getEnv("SERVICE_NAME", "Client")
+	entryService bool
+	Intercept    string
+	serviceData  ServiceData
+	PriceTable   *charon.PriceTable
+	Breakwater   *bw.Breakwater
+	Dg           *dagor.Dagor
+	Breakwaterd  map[string]*bw.Breakwater
 	// logLevel     string
 	serverConfig []Config
 	yamlFile     = getEnv("MSGRAPH_YAML", "msgraph.yaml")
@@ -86,7 +87,12 @@ func init() {
 	if !contains(nodeList, serviceName) {
 		log.Fatalf("Service %s is not in the nodeList", serviceName)
 	}
-
+	entryService := false
+	// if serviceName == "frontend", "composepost" or "usertimeline" or "hometimeline" then set entryService to true
+	if serviceName == "frontend" || serviceName == "composepost" {
+		entryService = true
+		DebugLog("Service %s is the entry service", serviceName)
+	}
 	nodes = GetNodes()
 
 	callGraph := GetCallGraph()
@@ -234,7 +240,7 @@ func init() {
 		// log.Printf("Breakwater Config: %v", bwConfig)
 
 	case "breakwaterd":
-		if serviceName == "frontend" {
+		if entryService {
 			// apply the same configuration as the breakwater.
 			bwConfig = bw.BWParameters{
 				Verbose:          Debug,
@@ -278,7 +284,7 @@ func init() {
 				"store-hotel":   2,
 				"reserve-hotel": 3,
 			},
-			EntryService:                 true,
+			EntryService:                 entryService,
 			IsEnduser:                    false,
 			QueuingThresh:                dagorQueuingThresh,
 			AdmissionLevelUpdateInterval: dagorAdmissionLevelUpdateInterval,
@@ -303,14 +309,14 @@ func init() {
 	if Intercept == "breakwaterd" {
 		// Initialize the Breakwater instances for each downstream service
 		InitializeBreakwaterd(bwConfig)
-		DebugLog("Initialized multiple instances of Breakwaters for downstream services of %s: %v", serviceName, breakwaterd)
+		DebugLog("Initialized multiple instances of Breakwaters for downstream services of %s: %v", serviceName, Breakwaterd)
 	}
 
 }
 
 // InitializeBreakwaterd initializes Breakwater instances for each downstream service
 func InitializeBreakwaterd(bwConfig bw.BWParameters) {
-	breakwaterd = make(map[string]*bw.Breakwater)
+	Breakwaterd = make(map[string]*bw.Breakwater)
 	for _, downstream := range serviceData.Downstreams {
 		// Customize the Breakwater config per downstream if needed
 		// For example, you might have different SLOs or other parameters per downstream service
@@ -318,7 +324,7 @@ func InitializeBreakwaterd(bwConfig bw.BWParameters) {
 		downstreamConfig := bwConfig
 		bwConfig.ServerSide = false
 		addr := getURL(downstream)
-		breakwaterd[addr] = bw.InitBreakwater(downstreamConfig)
+		Breakwaterd[addr] = bw.InitBreakwater(downstreamConfig)
 	}
 }
 
@@ -339,7 +345,7 @@ func CreateGRPCConn(ctx context.Context, addr string) (*grpc.ClientConn, error) 
 			DebugLog("Breakwater interceptor should not be used for client-side on service %s", serviceName)
 			// 	opts = append(opts, grpc.WithUnaryInterceptor(Breakwater.UnaryInterceptorClient))
 		case "breakwaterd":
-			opts = append(opts, grpc.WithUnaryInterceptor(breakwaterd[addr].UnaryInterceptorClient))
+			opts = append(opts, grpc.WithUnaryInterceptor(Breakwaterd[addr].UnaryInterceptorClient))
 		case "dagor":
 			opts = append(opts, grpc.WithUnaryInterceptor(Dg.UnaryInterceptorClient))
 		case "plain":
