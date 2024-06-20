@@ -1,13 +1,12 @@
 package main
 
 import (
-	"log"
-	"net"
-	"os"
-
 	"github.com/Jiali-Xing/hotelApp/internal/config"
 	"github.com/Jiali-Xing/hotelApp/internal/hotel"
 	"github.com/Jiali-Xing/plain"
+	"log"
+	"net"
+	"os"
 
 	hotelpb "github.com/Jiali-Xing/hotelproto"
 	"google.golang.org/grpc"
