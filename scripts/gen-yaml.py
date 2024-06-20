@@ -38,9 +38,9 @@ for service in services:
     if printScreen:
         args = 'args: ["/bin/{} -debug"]'.format(service)
     elif debug_info:
-        args = 'args: ["/bin/{} -debug > /root/deathstar_{}.output 2>&1"]'.format(service, service)
+        args = 'args: ["/bin/{} -debug 2>&1 | tee /root/deathstar_{}.output"]'.format(service, service)
     else:
-        args = 'args: ["/bin/{} > /root/deathstar_{}.output 2>&1"]'.format(service, service)
+        args = 'args: ["/bin/{} 2>&1 | tee /root/deathstar_{}.output"]'.format(service, service)
     
     deployment_content = deploy_template.format(service_name=service, args=args)
     deployment_filename = "{}-deployment.yaml".format(service)
