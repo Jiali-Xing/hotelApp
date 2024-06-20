@@ -1,11 +1,10 @@
 package main
 
 import (
+	"github.com/Jiali-Xing/hotelApp/internal/hotel"
 	"log"
 	"net"
 	"os"
-
-	"github.com/Jiali-Xing/hotelApp/internal/hotel"
 
 	"github.com/Jiali-Xing/hotelApp/internal/config"
 	hotelpb "github.com/Jiali-Xing/hotelproto"

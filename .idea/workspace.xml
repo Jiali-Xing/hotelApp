@@ -6,9 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="50ae7f95-7b4b-466b-b072-c41dd3e0d324" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/cmd/social/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/social/run.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/social/home_timeline.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/social/home_timeline.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/social/user_timeline.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/social/user_timeline.go" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/cmd/hotel/frontend/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/hotel/frontend/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/hotel/profile/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/hotel/profile/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/hotel/rate/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/hotel/rate/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/hotel/reservation/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/hotel/reservation/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/hotel/search/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/hotel/search/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/hotel/user/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/hotel/user/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/config/interceptors.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/config/interceptors.go" afterDir="false" />
+>>>>>>> main
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,14 +62,22 @@
     &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.go.modules.automatic.dependencies.download&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+<<<<<<< HEAD
     &quot;git-widget-placeholder&quot;: &quot;social&quot;,
+=======
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+>>>>>>> main
     &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
     &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/ying&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+<<<<<<< HEAD
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+=======
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+>>>>>>> main
   }
 }</component>
   <component name="RunManager">

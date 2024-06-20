@@ -1,5 +1,5 @@
-github.com/Jiali-Xing/breakwater-grpc v0.0.0-20240606154311-b88c98e1662e h1:qqXQnC+Spt4H+c9Q93sGUjxdD10OTNj7YBtM3TsG/Rc=
-github.com/Jiali-Xing/breakwater-grpc v0.0.0-20240606154311-b88c98e1662e/go.mod h1:SUTpZJP1Z/4pgNXPURHzgXkElVpnPSVmLd84uMZiWEs=
+github.com/Jiali-Xing/breakwater-grpc v0.0.0-20240617024603-6d6e35f59170 h1:2oPsHdR2c++Nti5p7m2g1l/0Qha2UNH1+i3nFH3XHUE=
+github.com/Jiali-Xing/breakwater-grpc v0.0.0-20240617024603-6d6e35f59170/go.mod h1:SUTpZJP1Z/4pgNXPURHzgXkElVpnPSVmLd84uMZiWEs=
 github.com/Jiali-Xing/dagor-grpc v0.0.0-20240226064839-e391fcbc2980 h1:t4a85mK6toxy3VwTEIj54vKlR9z5/W0c78flsr1Er+c=
 github.com/Jiali-Xing/dagor-grpc v0.0.0-20240226064839-e391fcbc2980/go.mod h1:ZHJg0/OxqkrtVZaeA+5QgUB6rlbWdUPThRIo6J+aTqE=
 github.com/Jiali-Xing/hotelproto v0.0.0-20240609022535-ea9137c9f3e8 h1:kaM+p918qJtWTu9WOBZq9iHZ1F0XpGMneUSQ/rDr/fk=

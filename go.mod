@@ -3,7 +3,7 @@ module github.com/Jiali-Xing/hotelApp
 go 1.22.3
 
 require (
-	github.com/Jiali-Xing/breakwater-grpc v0.0.0-20240606154311-b88c98e1662e
+	github.com/Jiali-Xing/breakwater-grpc v0.0.0-20240617024603-6d6e35f59170
 	github.com/Jiali-Xing/dagor-grpc v0.0.0-20240226064839-e391fcbc2980
 	github.com/Jiali-Xing/hotelproto v0.0.0-20240609022535-ea9137c9f3e8
 	github.com/Jiali-Xing/plain v0.0.0-20231227034046-b79fd58cb753
