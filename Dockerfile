@@ -21,6 +21,13 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o bin/reservation ./cmd/hotel/reservation
 RUN CGO_ENABLED=0 GOOS=linux go build -o bin/rate ./cmd/hotel/rate
 RUN CGO_ENABLED=0 GOOS=linux go build -o bin/profile ./cmd/hotel/profile
 
+# Build all the social network service binaries
+RUN CGO_ENABLED=0 GOOS=linux go build -o bin/composepost ./cmd/social/compose_post
+RUN CGO_ENABLED=0 GOOS=linux go build -o bin/hometimeline ./cmd/social/home_timeline
+RUN CGO_ENABLED=0 GOOS=linux go build -o bin/usertimeline ./cmd/social/user_timeline
+RUN CGO_ENABLED=0 GOOS=linux go build -o bin/socialgraph ./cmd/social/social_graph
+RUN CGO_ENABLED=0 GOOS=linux go build -o bin/poststorage ./cmd/social/post_storage
+
 # Use a minimal base image to run the binaries
 FROM alpine:latest
 

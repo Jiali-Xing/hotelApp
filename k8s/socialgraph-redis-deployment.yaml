@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: socialgraph-redis
+  labels:
+    app: socialgraph-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: socialgraph-redis
+  template:
+    metadata:
+      labels:
+        app: socialgraph-redis
+    spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - socialgraph
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: redis
+        image: redis:latest
+        ports:
+        - containerPort: 6379

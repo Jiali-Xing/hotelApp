@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: usertimeline
+  labels:
+    app: usertimeline
+spec:
+  selector:
+    app: usertimeline
+  ports:
+  - protocol: TCP
+    port: 50051
+    targetPort: 50051
+  type: LoadBalancer
+  

@@ -8,6 +8,7 @@ import (
 	"github.com/Jiali-Xing/hotelApp/internal/config"
 
 	hotelpb "github.com/Jiali-Xing/hotelproto"
+	socialpb "github.com/Jiali-Xing/socialproto"
 )
 
 func Invoke[T any](ctx context.Context, app string, method string, input interface{}) (T, error) {
@@ -23,6 +24,165 @@ func Invoke[T any](ctx context.Context, app string, method string, input interfa
 	method = strings.ToLower(method)
 
 	switch app {
+
+	case "usertimeline":
+		userTimelineClient, ok := client.(socialpb.UserTimelineClient)
+		if !ok {
+			return res, fmt.Errorf("invalid client type for service: %s", app)
+		}
+		switch method {
+		case "readusertimeline":
+			req, ok := input.(*socialpb.ReadUserTimelineRequest)
+			if !ok {
+				return res, fmt.Errorf("invalid input type for method: %s", method)
+			}
+			resp, err := userTimelineClient.ReadUserTimeline(ctx, req)
+			if err != nil {
+				return res, err
+			}
+			res = any(resp).(T)
+		case "writeusertimeline":
+			req, ok := input.(*socialpb.WriteUserTimelineRequest)
+			if !ok {
+				return res, fmt.Errorf("invalid input type for method: %s", method)
+			}
+			resp, err := userTimelineClient.WriteUserTimeline(ctx, req)
+			if err != nil {
+				return res, err
+			}
+			res = any(resp).(T)
+		default:
+			return res, fmt.Errorf("unsupported method: %s", method)
+		}
+	case "hometimeline":
+		homeTimelineClient, ok := client.(socialpb.HomeTimelineClient)
+		if !ok {
+			return res, fmt.Errorf("invalid client type for service: %s", app)
+		}
+		switch method {
+		case "readhometimeline":
+			req, ok := input.(*socialpb.ReadHomeTimelineRequest)
+			if !ok {
+				return res, fmt.Errorf("invalid input type for method: %s", method)
+			}
+			resp, err := homeTimelineClient.ReadHomeTimeline(ctx, req)
+			if err != nil {
+				return res, err
+			}
+			res = any(resp).(T)
+		case "writehometimeline":
+			req, ok := input.(*socialpb.WriteHomeTimelineRequest)
+			if !ok {
+				return res, fmt.Errorf("invalid input type for method: %s", method)
+			}
+			resp, err := homeTimelineClient.WriteHomeTimeline(ctx, req)
+			if err != nil {
+				return res, err
+			}
+			res = any(resp).(T)
+		default:
+			return res, fmt.Errorf("unsupported method: %s", method)
+		}
+	case "poststorage":
+		postStorageClient, ok := client.(socialpb.PostStorageClient)
+		if !ok {
+			return res, fmt.Errorf("invalid client type for service: %s", app)
+		}
+		switch method {
+		case "storepost":
+			req, ok := input.(*socialpb.StorePostRequest)
+			if !ok {
+				return res, fmt.Errorf("invalid input type for method: %s", method)
+			}
+			resp, err := postStorageClient.StorePost(ctx, req)
+			if err != nil {
+				return res, err
+			}
+			res = any(resp).(T)
+		case "storepostmulti":
+			req, ok := input.(*socialpb.StorePostMultiRequest)
+			if !ok {
+				return res, fmt.Errorf("invalid input type for method: %s", method)
+			}
+			resp, err := postStorageClient.StorePostMulti(ctx, req)
+			if err != nil {
+				return res, err
+			}
+			res = any(resp).(T)
+		case "readpost":
+			req, ok := input.(*socialpb.ReadPostRequest)
+			if !ok {
+				return res, fmt.Errorf("invalid input type for method: %s", method)
+			}
+			resp, err := postStorageClient.ReadPost(ctx, req)
+			if err != nil {
+				return res, err
+			}
+			res = any(resp).(T)
+		case "readposts":
+			req, ok := input.(*socialpb.ReadPostsRequest)
+			if !ok {
+				return res, fmt.Errorf("invalid input type for method: %s", method)
+			}
+			resp, err := postStorageClient.ReadPosts(ctx, req)
+			if err != nil {
+				return res, err
+			}
+			res = any(resp).(T)
+		default:
+			return res, fmt.Errorf("unsupported method: %s", method)
+		}
+	case "socialgraph":
+		socialGraphClient, ok := client.(socialpb.SocialGraphClient)
+		if !ok {
+			return res, fmt.Errorf("invalid client type for service: %s", app)
+		}
+		switch method {
+		case "insertuser":
+			req, ok := input.(*socialpb.InsertUserRequest)
+			if !ok {
+				return res, fmt.Errorf("invalid input type for method: %s", method)
+			}
+			resp, err := socialGraphClient.InsertUser(ctx, req)
+			if err != nil {
+				return res, err
+			}
+			res = any(resp).(T)
+		case "getfollowers":
+			req, ok := input.(*socialpb.GetFollowersRequest)
+			if !ok {
+				return res, fmt.Errorf("invalid input type for method: %s", method)
+			}
+			resp, err := socialGraphClient.GetFollowers(ctx, req)
+			if err != nil {
+				return res, err
+			}
+			res = any(resp).(T)
+		case "getfollowees":
+			req, ok := input.(*socialpb.GetFolloweesRequest)
+			if !ok {
+				return res, fmt.Errorf("invalid input type for method: %s", method)
+			}
+			resp, err := socialGraphClient.GetFollowees(ctx, req)
+			if err != nil {
+				return res, err
+			}
+			res = any(resp).(T)
+		case "follow":
+			req, ok := input.(*socialpb.FollowRequest)
+			if !ok {
+				return res, fmt.Errorf("invalid input type for method: %s", method)
+			}
+			resp, err := socialGraphClient.Follow(ctx, req)
+			if err != nil {
+				return res, err
+			}
+			res = any(resp).(T)
+		default:
+			return res, fmt.Errorf("unsupported method: %s", method)
+		}
+	//	above is the for social network services
+	//	below is the for hotel services
 	case "user":
 		userClient, ok := client.(hotelpb.UserServiceClient)
 		if !ok {
