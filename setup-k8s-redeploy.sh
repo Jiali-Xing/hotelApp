@@ -22,7 +22,7 @@ for service in $services; do
   kubectl delete service $service
 done
 
-sleep 5
+sleep 15
 
 if [[ "$METHOD" == *"hotel"* ]]; then
   # Apply Kubernetes YAML files for hotel services and Redis
