@@ -259,7 +259,7 @@ func init() {
 			Breakwater = bw.InitBreakwater(bwConfig)
 			// log.Printf("Breakwater Config: %v", bwConfig)
 		} else {
-			bwConfig := bw.BWParameters{
+			bwConfig = bw.BWParameters{
 				Verbose:          Debug,
 				SLO:              breakwaterdSLO.Microseconds(),
 				ClientExpiration: breakwaterdClientTimeout.Microseconds(),
@@ -283,6 +283,9 @@ func init() {
 				"search-hotel":  1,
 				"store-hotel":   2,
 				"reserve-hotel": 3,
+				"compose":       1,
+				"home-timeline": 2,
+				"user-timeline": 3,
 			},
 			EntryService:                 entryService,
 			IsEnduser:                    false,
