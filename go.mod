@@ -7,7 +7,7 @@ require (
 	github.com/Jiali-Xing/dagor-grpc v0.0.0-20240226064839-e391fcbc2980
 	github.com/Jiali-Xing/hotelproto v0.0.0-20240609022535-ea9137c9f3e8
 	github.com/Jiali-Xing/plain v0.0.0-20231227034046-b79fd58cb753
-	github.com/Jiali-Xing/socialproto v0.0.0-20240621053814-eef54cfc14d6
+	github.com/Jiali-Xing/socialproto v0.0.0-20240621081102-966a8e827703
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/lithammer/shortuuid v3.0.0+incompatible
 	github.com/tgiannoukos/charon v0.0.0-20240604184815-cd63a2f0b6cd
