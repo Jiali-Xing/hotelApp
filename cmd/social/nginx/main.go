@@ -14,10 +14,6 @@ import (
 	"google.golang.org/grpc"
 )
 
-type server struct {
-	socialpb.UnimplementedNginxServiceServer
-}
-
 func main() {
 	port := os.Getenv("GRPC_PORT")
 	if port == "" {

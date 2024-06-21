@@ -26,7 +26,7 @@ SERVICE_NAME="socialgraph" REDIS_ADDR="localhost:6383" go run ./cmd/social/socia
 SERVICE_NAME="poststorage" REDIS_ADDR="localhost:6384" go run ./cmd/social/post_storage/main.go -local &
 
 # Run nginx service we coded
-SERVICE_NAME="nginx" go run ./cmd/social/nginx/main.go -local &
+SERVICE_NAME="nginx" go run ./cmd/social/nginx/main.go -local -debug &
 
 # Wait for all background processes to finish
 wait
