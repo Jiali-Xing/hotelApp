@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: tgiannoukos/redis-test-go:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 50051
+        command: ["/bin/sh", "-c"]
+        args: ["/bin/nginx 2>&1 | tee /root/deathstar_nginx.output"]
+        env:
+        - name: SERVICE_NAME
+          value: "nginx"
+        - name: REDIS_ADDR
+          value: "nginx-redis:6379"
+        - name: GRPC_PORT
+          value: "50051"
+        - name: USER_SERVICE_ADDR
+          value: "user-service:50051"
+        - name: SEARCH_SERVICE_ADDR
+          value: "search-service:50051"
+        - name: RESERVATION_SERVICE_ADDR
+          value: "reservation-service:50051"
+        - name: RATE_SERVICE_ADDR
+          value: "rate-service:50051"
+        - name: PROFILE_SERVICE_ADDR
+          value: "profile-service:50051"
+        - name: MSGRAPH_YAML
+          value: "/app/config/msgraph.yaml"
+        volumeMounts:
+          - name: config-volume
+            mountPath: /app/config/msgraph.yaml
+            subPath: msgraph.yaml
+      volumes:
+        - name: config-volume
+          configMap:
+            name: msgraph-config
+
