@@ -29,7 +29,6 @@ var (
 	yamlFile = getEnv("MSGRAPH_YAML", "msgraph.yaml")
 
 	// nodes []Node
-
 	priceUpdateRate  time.Duration
 	latencyThreshold time.Duration
 	priceStep        int64
@@ -88,8 +87,8 @@ func init() {
 		log.Fatalf("Service %s is not in the nodeList", serviceName)
 	}
 	entryService = false
-	// if serviceName == "frontend", "composepost" or "usertimeline" or "hometimeline" then set entryService to true
-	if serviceName == "frontend" || serviceName == "composepost" || serviceName == "usertimeline" || serviceName == "hometimeline" {
+	// if serviceName == "frontend", "nginx" then set entryService to true
+	if serviceName == "frontend" || serviceName == "nginx" {
 		entryService = true
 		DebugLog("Service %s is the entry service", serviceName)
 	}
