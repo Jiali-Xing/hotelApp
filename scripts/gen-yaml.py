@@ -7,7 +7,7 @@ hotel_services = ["frontend", "user", "search", "reservation", "rate", "profile"
 hotel_services_using_redis = ["user", "search", "reservation", "rate", "profile"]
 
 # Define the services for the social network app
-social_services = ["composepost", "hometimeline", "usertimeline", "socialgraph", "poststorage"]
+social_services = ["composepost", "hometimeline", "usertimeline", "socialgraph", "poststorage", "nginx"]
 social_services_using_redis = ["hometimeline", "usertimeline", "poststorage", "socialgraph"]  # Assuming these services use Redis for state management
 
 # if  [ "$METHOD" = "compose" -o "$METHOD" = "home-timeline" -o "$METHOD" = "user-timeline" -o "$METHOD" = "all-methods-social" ]; then
