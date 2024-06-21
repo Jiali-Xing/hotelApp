@@ -24,7 +24,25 @@ func Invoke[T any](ctx context.Context, app string, method string, input interfa
 	method = strings.ToLower(method)
 
 	switch app {
-
+	case "compose":
+		composeClient, ok := client.(socialpb.ComposePostClient)
+		if !ok {
+			return res, fmt.Errorf("invalid client type for service: %s", app)
+		}
+		switch method {
+		case "composepost":
+			req, ok := input.(*socialpb.ComposePostRequest)
+			if !ok {
+				return res, fmt.Errorf("invalid input type for method: %s", method)
+			}
+			resp, err := composeClient.ComposePost(ctx, req)
+			if err != nil {
+				return res, err
+			}
+			res = any(resp).(T)
+		default:
+			return res, fmt.Errorf("unsupported method: %s", method)
+		}
 	case "usertimeline":
 		userTimelineClient, ok := client.(socialpb.UserTimelineClient)
 		if !ok {

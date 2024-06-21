@@ -7,7 +7,7 @@ require (
 	github.com/Jiali-Xing/dagor-grpc v0.0.0-20240226064839-e391fcbc2980
 	github.com/Jiali-Xing/hotelproto v0.0.0-20240609022535-ea9137c9f3e8
 	github.com/Jiali-Xing/plain v0.0.0-20231227034046-b79fd58cb753
-	github.com/Jiali-Xing/socialproto v0.0.0-20240614070428-e68c1612eaea
+	github.com/Jiali-Xing/socialproto v0.0.0-20240621053814-eef54cfc14d6
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/lithammer/shortuuid v3.0.0+incompatible
 	github.com/tgiannoukos/charon v0.0.0-20240604184815-cd63a2f0b6cd
@@ -23,6 +23,6 @@ require (
 	golang.org/x/net v0.26.0 // indirect
 	golang.org/x/sys v0.21.0 // indirect
 	golang.org/x/text v0.16.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240610135401-a8a62080eff3 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240617180043-68d350f18fd4 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
 )
