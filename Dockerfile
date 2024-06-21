@@ -27,6 +27,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o bin/hometimeline ./cmd/social/home_time
 RUN CGO_ENABLED=0 GOOS=linux go build -o bin/usertimeline ./cmd/social/user_timeline
 RUN CGO_ENABLED=0 GOOS=linux go build -o bin/socialgraph ./cmd/social/social_graph
 RUN CGO_ENABLED=0 GOOS=linux go build -o bin/poststorage ./cmd/social/post_storage
+RUN CGO_ENABLED=0 GOOS=linux go build -o bin/nginx ./cmd/social/nginx
 
 # Use a minimal base image to run the binaries
 FROM alpine:latest
