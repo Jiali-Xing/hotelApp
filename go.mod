@@ -11,6 +11,7 @@ require (
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/lithammer/shortuuid v3.0.0+incompatible
 	github.com/tgiannoukos/charon v0.0.0-20240604184815-cd63a2f0b6cd
+	github.com/valyala/fastrand v1.1.0
 	google.golang.org/grpc v1.64.0
 	gopkg.in/yaml.v2 v2.4.0
 )
