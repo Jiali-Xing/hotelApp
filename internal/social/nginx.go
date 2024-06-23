@@ -4,11 +4,11 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"math/rand"
 
 	"github.com/Jiali-Xing/hotelApp/internal/config"
 	"github.com/Jiali-Xing/hotelApp/pkg/invoke"
 	socialpb "github.com/Jiali-Xing/socialproto"
+	"github.com/valyala/fastrand"
 )
 
 type NginxServer struct {
@@ -17,7 +17,7 @@ type NginxServer struct {
 
 // Helper function to generate a random username
 func generateRandomUsername(base string) string {
-	randomNum := rand.Intn(100)
+	randomNum := fastrand.Uint32n(100)
 	return base + fmt.Sprint(randomNum)
 }
 

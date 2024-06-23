@@ -6,8 +6,6 @@ github.com/Jiali-Xing/hotelproto v0.0.0-20240609022535-ea9137c9f3e8 h1:kaM+p918q
 github.com/Jiali-Xing/hotelproto v0.0.0-20240609022535-ea9137c9f3e8/go.mod h1:bg9XsUzP2sUVpCYUF1C1lerq0FHnojxQCpQQ+bOQHTY=
 github.com/Jiali-Xing/plain v0.0.0-20231227034046-b79fd58cb753 h1:nmRXE8JFRClfK+C5JphBhzMELUZsm+zNRZMlEjgdXhM=
 github.com/Jiali-Xing/plain v0.0.0-20231227034046-b79fd58cb753/go.mod h1:Zn5ZkJmbhoVVgYMaACaT4c8mByeJTolYzGZzKKNZ9vw=
-github.com/Jiali-Xing/socialproto v0.0.0-20240621053814-eef54cfc14d6 h1:XqTaSp6kZ9yr1sw8lNSkVVLZmvfuKFOuV1TTVIYdvHY=
-github.com/Jiali-Xing/socialproto v0.0.0-20240621053814-eef54cfc14d6/go.mod h1:M/tEHAEwZblysHvD7/IrdW9h257mXPLbwl4U9RHfyFs=
 github.com/Jiali-Xing/socialproto v0.0.0-20240621081102-966a8e827703 h1:nZ/lygdxY/MeNgN5XJE6l9poWmeEhrn8gkFmVQX1uTQ=
 github.com/Jiali-Xing/socialproto v0.0.0-20240621081102-966a8e827703/go.mod h1:M/tEHAEwZblysHvD7/IrdW9h257mXPLbwl4U9RHfyFs=
 github.com/bytedance/gopkg v0.0.0-20240531030433-5df24c0168e2 h1:e+WTWDw35RetW+Zuhcy4YPFmNPRh7yPG7lAaWJeUQl0=
@@ -38,6 +36,8 @@ github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/tgiannoukos/charon v0.0.0-20240604184815-cd63a2f0b6cd h1:GW5nDwUKmuYRo28Dli6Ous0bZOFrDsUpBecdDS4WlHQ=
 github.com/tgiannoukos/charon v0.0.0-20240604184815-cd63a2f0b6cd/go.mod h1:F2iC5VuZGwGGI7w+b79ZCf1C/ZNi+oZtmo1Odnil3WQ=
+github.com/valyala/fastrand v1.1.0 h1:f+5HkLW4rsgzdNoleUOB69hyT9IlD2ZQh9GyDMfb5G8=
+github.com/valyala/fastrand v1.1.0/go.mod h1:HWqCzkrkg6QXT8V2EXWvXCoow7vLwOFN002oeRzjapQ=
 golang.org/x/net v0.0.0-20221014081412-f15817d10f9b/go.mod h1:YDH+HFinaLZZlnHAfSS6ZXJJ9M9t4Dl22yv3iI2vPwk=
 golang.org/x/net v0.26.0 h1:soB7SVo0PWrY4vPW/+ay0jKDNScG2X9wFeYlXIvJsOQ=
 golang.org/x/net v0.26.0/go.mod h1:5YKkiSynbBIh3p6iOc/vibscux0x38BZDkn8sCUPxHE=

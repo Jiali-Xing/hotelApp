@@ -14,6 +14,7 @@ import (
 	"github.com/Jiali-Xing/hotelApp/pkg/invoke"
 	hotelpb "github.com/Jiali-Xing/hotelproto"
 	"github.com/Jiali-Xing/plain"
+	"github.com/valyala/fastrand"
 	"google.golang.org/grpc"
 )
 
@@ -22,9 +23,11 @@ type server struct {
 }
 
 // Helper function to generate a random username
-func generateRandomUsername(base string) string {
-	randomNum := rand.Intn(100)
-	return fmt.Sprintf("%s%d", base, randomNum)
+func generateRandomUserAndPassword() (string, string) {
+	randomNum := fastrand.Uint32n(100)
+	username := fmt.Sprintf("user%d", randomNum)
+	password := fmt.Sprintf("password%d", randomNum)
+	return username, password
 }
 
 // Helper function to generate a random hotel ID
@@ -69,8 +72,8 @@ func (s *server) StoreHotel(ctx context.Context, req *hotelpb.StoreHotelRequest)
 
 func (s *server) FrontendReservation(ctx context.Context, req *hotelpb.FrontendReservationRequest) (*hotelpb.FrontendReservationResponse, error) {
 	// Randomize the Username, Password, HotelId, InDate, and OutDate
-	req.Username = generateRandomUsername("user")
-	req.Password = fmt.Sprintf("password%d", rand.Intn(100))
+	// if username is user0, password is password0, if username is user99, password is password99, etc.
+	req.Username, req.Password = generateRandomUserAndPassword()
 	req.HotelId = generateRandomHotelID()
 	req.InDate, req.OutDate = generateRandomDates()
 
