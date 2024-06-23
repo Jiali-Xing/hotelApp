@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"math/rand"
 	"net"
 	"os"
 	"time"
@@ -32,14 +31,14 @@ func generateRandomUserAndPassword() (string, string) {
 
 // Helper function to generate a random hotel ID
 func generateRandomHotelID() string {
-	randomNum := rand.Intn(1000)
+	randomNum := fastrand.Uint32n(1000)
 	return fmt.Sprintf("%d", randomNum)
 }
 
 // Helper function to generate random dates within a specified range
 func generateRandomDates() (string, string) {
-	start := time.Now().AddDate(0, 0, rand.Intn(30))
-	end := start.AddDate(0, 0, rand.Intn(10)+1) // Ensure end date is after start date
+	start := time.Now().AddDate(0, 0, int(fastrand.Uint32n(30))) // Randomize start date
+	end := start.AddDate(0, 0, int(fastrand.Uint32n(30)))        // Randomize end date
 	inDate := start.Format("2006-01-02")
 	outDate := end.Format("2006-01-02")
 	return inDate, outDate
