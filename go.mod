@@ -10,7 +10,7 @@ require (
 	github.com/Jiali-Xing/socialproto v0.0.0-20240621081102-966a8e827703
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/lithammer/shortuuid v3.0.0+incompatible
-	github.com/tgiannoukos/charon v0.0.0-20240604184815-cd63a2f0b6cd
+	github.com/tgiannoukos/charon v0.0.0-20240701080606-31ca314177b1
 	github.com/valyala/fastrand v1.1.0
 	google.golang.org/grpc v1.64.0
 	gopkg.in/yaml.v2 v2.4.0
@@ -24,6 +24,6 @@ require (
 	golang.org/x/net v0.26.0 // indirect
 	golang.org/x/sys v0.21.0 // indirect
 	golang.org/x/text v0.16.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240617180043-68d350f18fd4 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240624140628-dc46fd24d27d // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
 )
