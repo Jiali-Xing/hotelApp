@@ -218,6 +218,8 @@ func init() {
 			serviceData.CallGraph,
 			charonOptions,
 		)
+
+		DebugLog("Charon call graph: %v", serviceData.CallGraph)
 		DebugLog("Charon Config: %v", charonOptions)
 
 	case "breakwater":

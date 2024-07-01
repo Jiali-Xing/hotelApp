@@ -38,6 +38,8 @@ github.com/tgiannoukos/charon v0.0.0-20240701080606-31ca314177b1 h1:1E1ybuXVYMip
 github.com/tgiannoukos/charon v0.0.0-20240701080606-31ca314177b1/go.mod h1:F2iC5VuZGwGGI7w+b79ZCf1C/ZNi+oZtmo1Odnil3WQ=
 github.com/tgiannoukos/charon v0.0.0-20240701095408-2eb9b3309a06 h1:jRF88NBvim8VECO/Ghhp2zEBikrYWxuKL9BQRb9ZypA=
 github.com/tgiannoukos/charon v0.0.0-20240701095408-2eb9b3309a06/go.mod h1:F2iC5VuZGwGGI7w+b79ZCf1C/ZNi+oZtmo1Odnil3WQ=
+github.com/tgiannoukos/charon v0.0.0-20240701215231-e19990b10a1e h1:gtwljlGbtxtV+Rd1Zrvkn1mrLZWThdSBPfb1DmiBE+M=
+github.com/tgiannoukos/charon v0.0.0-20240701215231-e19990b10a1e/go.mod h1:F2iC5VuZGwGGI7w+b79ZCf1C/ZNi+oZtmo1Odnil3WQ=
 github.com/valyala/fastrand v1.1.0 h1:f+5HkLW4rsgzdNoleUOB69hyT9IlD2ZQh9GyDMfb5G8=
 github.com/valyala/fastrand v1.1.0/go.mod h1:HWqCzkrkg6QXT8V2EXWvXCoow7vLwOFN002oeRzjapQ=
 golang.org/x/net v0.0.0-20221014081412-f15817d10f9b/go.mod h1:YDH+HFinaLZZlnHAfSS6ZXJJ9M9t4Dl22yv3iI2vPwk=
