@@ -10,7 +10,7 @@ require (
 	github.com/Jiali-Xing/socialproto v0.0.0-20240621081102-966a8e827703
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/lithammer/shortuuid v3.0.0+incompatible
-	github.com/tgiannoukos/charon v0.0.0-20240701095408-2eb9b3309a06
+	github.com/tgiannoukos/charon v0.0.0-20240701215231-e19990b10a1e
 	github.com/valyala/fastrand v1.1.0
 	google.golang.org/grpc v1.64.0
 	gopkg.in/yaml.v2 v2.4.0
