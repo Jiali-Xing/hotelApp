@@ -215,10 +215,10 @@ func init() {
 		DebugLog("Initializing Charon with options: %v", charonOptions)
 		PriceTable = charon.NewCharon(
 			serviceName,
-			nil, // Assuming no call graph is provided
+			serviceData.CallGraph,
 			charonOptions,
 		)
-		// log.Printf("Charon Config: %v", charonOptions)
+		DebugLog("Charon Config: %v", charonOptions)
 
 	case "breakwater":
 		bwConfig = bw.BWParameters{
