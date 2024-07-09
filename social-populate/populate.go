@@ -28,7 +28,7 @@ func init() {
 	flag.StringVar(&homeTimelineAddr, "home_timeline", "localhost:50059", "Address of the home timeline service")
 	flag.StringVar(&userTimelineAddr, "user_timeline", "localhost:50058", "Address of the user timeline service")
 	flag.StringVar(&socialGraphAddr, "social_graph", "localhost:50061", "Address of the social graph service")
-	flag.IntVar(&numOfUsers, "num_of_users", 100, "Number of users to create")
+	flag.IntVar(&numOfUsers, "num_of_users", 1000, "Number of users to create")
 	flag.IntVar(&numOfPosts, "num_of_posts", 10, "Number of posts to create per user")
 	flag.IntVar(&numOfFollowers, "num_of_followers", 10, "Number of followers per user")
 	flag.Parse()
