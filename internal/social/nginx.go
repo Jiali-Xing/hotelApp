@@ -17,7 +17,7 @@ type NginxServer struct {
 
 // Helper function to generate a random username
 func generateRandomUsername(base string) string {
-	randomNum := fastrand.Uint32n(100)
+	randomNum := fastrand.Uint32n(1000)
 	return base + fmt.Sprint(randomNum)
 }
 

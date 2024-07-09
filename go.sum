@@ -34,10 +34,6 @@ github.com/onsi/gomega v1.18.1/go.mod h1:0q+aL8jAiMXy9hbwj2mr5GziHiwhAIQpFmmtT5h
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
-github.com/tgiannoukos/charon v0.0.0-20240701080606-31ca314177b1 h1:1E1ybuXVYMipDirdKEGQJcKB6KFuFEmOrMhYfjPwyS8=
-github.com/tgiannoukos/charon v0.0.0-20240701080606-31ca314177b1/go.mod h1:F2iC5VuZGwGGI7w+b79ZCf1C/ZNi+oZtmo1Odnil3WQ=
-github.com/tgiannoukos/charon v0.0.0-20240701095408-2eb9b3309a06 h1:jRF88NBvim8VECO/Ghhp2zEBikrYWxuKL9BQRb9ZypA=
-github.com/tgiannoukos/charon v0.0.0-20240701095408-2eb9b3309a06/go.mod h1:F2iC5VuZGwGGI7w+b79ZCf1C/ZNi+oZtmo1Odnil3WQ=
 github.com/tgiannoukos/charon v0.0.0-20240701215231-e19990b10a1e h1:gtwljlGbtxtV+Rd1Zrvkn1mrLZWThdSBPfb1DmiBE+M=
 github.com/tgiannoukos/charon v0.0.0-20240701215231-e19990b10a1e/go.mod h1:F2iC5VuZGwGGI7w+b79ZCf1C/ZNi+oZtmo1Odnil3WQ=
 github.com/valyala/fastrand v1.1.0 h1:f+5HkLW4rsgzdNoleUOB69hyT9IlD2ZQh9GyDMfb5G8=

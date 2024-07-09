@@ -23,7 +23,7 @@ type server struct {
 
 // Helper function to generate a random username
 func generateRandomUserAndPassword() (string, string) {
-	randomNum := fastrand.Uint32n(100)
+	randomNum := fastrand.Uint32n(1000)
 	username := fmt.Sprintf("user%d", randomNum)
 	password := fmt.Sprintf("password%d", randomNum)
 	return username, password
