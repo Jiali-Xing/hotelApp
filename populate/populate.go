@@ -91,7 +91,7 @@ func populateHotels(conn *grpc.ClientConn) {
 
 	// Add only 2 hotels to the service
 	for _, hotel := range hotels[:1000] {
-		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 		defer cancel()
 
 		req := &hotelpb.StoreHotelRequest{
