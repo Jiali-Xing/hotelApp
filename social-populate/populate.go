@@ -77,7 +77,7 @@ func main() {
 func populateUsersAndFollows(conn *grpc.ClientConn) {
 	client := socialpb.NewSocialGraphClient(conn)
 
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
 
 	for i := 0; i < numOfUsers; i++ {
