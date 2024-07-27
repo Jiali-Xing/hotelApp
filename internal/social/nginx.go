@@ -2,13 +2,11 @@ package social
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/Jiali-Xing/hotelApp/internal/config"
 	"github.com/Jiali-Xing/hotelApp/pkg/invoke"
 	socialpb "github.com/Jiali-Xing/socialproto"
-	"github.com/valyala/fastrand"
 )
 
 type NginxServer struct {
@@ -16,14 +14,19 @@ type NginxServer struct {
 }
 
 // Helper function to generate a random username
-func generateRandomUsername(base string) string {
-	randomNum := fastrand.Uint32n(100)
-	return base + fmt.Sprint(randomNum)
-}
+// func generateRandomUsername(base string) string {
+// 	randomNum := fastrand.Uint32n(100)
+// 	return base + fmt.Sprint(randomNum)
+// }
 
 func (s *NginxServer) ComposePost(ctx context.Context, req *socialpb.ComposePostRequest) (*socialpb.ComposePostResponse, error) {
-	// Randomize the CreatorId
-	req.CreatorId = generateRandomUsername("user")
+	// Generate the CreatorId based on connection ID
+	username, _, err := config.GenerateUserAndPassword(ctx)
+	if err != nil {
+		log.Printf("Error generating username: %v", err)
+		return nil, err
+	}
+	req.CreatorId = username
 
 	ctx = config.PropagateMetadata(ctx, "nginx")
 	resp, err := invoke.Invoke[*socialpb.ComposePostResponse](ctx, "compose", "ComposePost", req)
@@ -35,8 +38,13 @@ func (s *NginxServer) ComposePost(ctx context.Context, req *socialpb.ComposePost
 }
 
 func (s *NginxServer) ReadUserTimeline(ctx context.Context, req *socialpb.ReadUserTimelineRequest) (*socialpb.ReadUserTimelineResponse, error) {
-	// Randomize the UserId
-	req.UserId = generateRandomUsername("user")
+	// Generate the UserId based on connection ID
+	username, _, err := config.GenerateUserAndPassword(ctx)
+	if err != nil {
+		log.Printf("Error generating username: %v", err)
+		return nil, err
+	}
+	req.UserId = username
 
 	ctx = config.PropagateMetadata(ctx, "nginx")
 	resp, err := invoke.Invoke[*socialpb.ReadUserTimelineResponse](ctx, "usertimeline", "ReadUserTimeline", req)
@@ -48,8 +56,13 @@ func (s *NginxServer) ReadUserTimeline(ctx context.Context, req *socialpb.ReadUs
 }
 
 func (s *NginxServer) ReadHomeTimeline(ctx context.Context, req *socialpb.ReadHomeTimelineRequest) (*socialpb.ReadHomeTimelineResponse, error) {
-	// Randomize the UserId
-	req.UserId = generateRandomUsername("user")
+	// Generate the UserId based on connection ID
+	username, _, err := config.GenerateUserAndPassword(ctx)
+	if err != nil {
+		log.Printf("Error generating username: %v", err)
+		return nil, err
+	}
+	req.UserId = username
 
 	ctx = config.PropagateMetadata(ctx, "nginx")
 	resp, err := invoke.Invoke[*socialpb.ReadHomeTimelineResponse](ctx, "hometimeline", "ReadHomeTimeline", req)
