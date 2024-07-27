@@ -22,12 +22,12 @@ type server struct {
 }
 
 // Helper function to generate a random username
-func generateRandomUserAndPassword() (string, string) {
-	randomNum := fastrand.Uint32n(100)
-	username := fmt.Sprintf("user%d", randomNum)
-	password := fmt.Sprintf("password%d", randomNum)
-	return username, password
-}
+// func generateRandomUserAndPassword() (string, string) {
+// 	randomNum := fastrand.Uint32n(100)
+// 	username := fmt.Sprintf("user%d", randomNum)
+// 	password := fmt.Sprintf("password%d", randomNum)
+// 	return username, password
+// }
 
 // Helper function to generate a random hotel ID
 func generateRandomHotelID() string {
@@ -72,7 +72,7 @@ func (s *server) StoreHotel(ctx context.Context, req *hotelpb.StoreHotelRequest)
 func (s *server) FrontendReservation(ctx context.Context, req *hotelpb.FrontendReservationRequest) (*hotelpb.FrontendReservationResponse, error) {
 	// Randomize the Username, Password, HotelId, InDate, and OutDate
 	// if username is user0, password is password0, if username is user99, password is password99, etc.
-	req.Username, req.Password = generateRandomUserAndPassword()
+	req.Username, req.Password = config.GenerateUserAndPassword(ctx)
 	req.HotelId = generateRandomHotelID()
 	req.InDate, req.OutDate = generateRandomDates()
 
