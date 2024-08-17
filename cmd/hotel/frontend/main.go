@@ -72,12 +72,16 @@ func (s *server) StoreHotel(ctx context.Context, req *hotelpb.StoreHotelRequest)
 func (s *server) FrontendReservation(ctx context.Context, req *hotelpb.FrontendReservationRequest) (*hotelpb.FrontendReservationResponse, error) {
 	// Randomize the Username, Password, HotelId, InDate, and OutDate
 	// if username is user0, password is password0, if username is user99, password is password99, etc.
-	req.Username, req.Password = config.GenerateUserAndPassword(ctx)
+	username, password, err := config.GenerateUserAndPassword(ctx)
+	if err != nil {
+		log.Printf("Error generating username and password: %v", err)
+		return nil, err
+	}
 	req.HotelId = generateRandomHotelID()
 	req.InDate, req.OutDate = generateRandomDates()
 
 	ctx = config.PropagateMetadata(ctx, "frontend")
-	success, err := hotel.FrontendReservation(ctx, req.HotelId, req.InDate, req.OutDate, int(req.Rooms), req.Username, req.Password)
+	success, err := hotel.FrontendReservation(ctx, req.HotelId, req.InDate, req.OutDate, int(req.Rooms), username, password)
 	if err != nil {
 		log.Printf("Error making reservation: %v", err)
 		return nil, err
