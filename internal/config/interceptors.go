@@ -11,6 +11,7 @@ import (
 	bw "github.com/Jiali-Xing/breakwater-grpc/breakwater"
 	dagor "github.com/Jiali-Xing/dagor-grpc/dagor"
 	"github.com/Jiali-Xing/plain"
+	"github.com/Jiali-Xing/topdown-grpc"
 	"github.com/tgiannoukos/charon"
 	"google.golang.org/grpc"
 )
@@ -23,6 +24,7 @@ var (
 	PriceTable   *charon.PriceTable
 	Breakwater   *bw.Breakwater
 	Dg           *dagor.Dagor
+	Topdown      *topdown.TopDownRL
 	Breakwaterd  map[string]*bw.Breakwater
 	// logLevel     string
 	// serverConfig []Config
@@ -303,7 +305,13 @@ func init() {
 		DebugLog("Initializing Dagor with config: %v", dagorParams)
 		Dg = dagor.NewDagorNode(dagorParams)
 		// log.Printf("Dagor Config: %v", dagorParams)
+	case "topdown":
+		sloMap := make(map[string]time.Duration)
+		// manually set SLOs for each service
+		sloMap["search-hotel"] = 60 * time.Millisecond
+		sloMap["reserve-hotel"] = 60 * time.Millisecond
 
+		Topdown = topdown.NewTopDownRL(10000, 1000, sloMap)
 	case "plain":
 		// No special initialization required for the plain interceptor
 	default:
@@ -352,6 +360,8 @@ func CreateGRPCConn(ctx context.Context, addr string) (*grpc.ClientConn, error) 
 			opts = append(opts, grpc.WithUnaryInterceptor(Breakwaterd[addr].UnaryInterceptorClient))
 		case "dagor":
 			opts = append(opts, grpc.WithUnaryInterceptor(Dg.UnaryInterceptorClient))
+		// case "topdown":
+		// opts = append(opts)
 		case "plain":
 			opts = append(opts, grpc.WithUnaryInterceptor(plain.UnaryInterceptorClient))
 		}
