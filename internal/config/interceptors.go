@@ -316,6 +316,7 @@ func init() {
 		DebugLog("Initializing TopDown with SLOs: %v, 10000 max token and 2000 token rate", sloMap)
 	case "plain":
 		// No special initialization required for the plain interceptor
+		DebugLog("Initializing Plain interceptor")
 	default:
 		// No interceptors or unknown interceptor type
 	}

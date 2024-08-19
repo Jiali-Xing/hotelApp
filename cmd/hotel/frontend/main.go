@@ -109,12 +109,11 @@ func main() {
 		grpcServer = grpc.NewServer(grpc.UnaryInterceptor(plain.UnaryInterceptor))
 	case "topdown":
 		grpcServer = grpc.NewServer(grpc.UnaryInterceptor(config.Topdown.UnaryInterceptor))
+		go config.Topdown.StartServer(8082)
+		config.DebugLog(fmt.Sprintf("Topdown gRPC RL agent server listening on port %d", 8082))
 	default:
 		grpcServer = grpc.NewServer()
 	}
-
-	go config.Topdown.StartServer(8082)
-	config.DebugLog(fmt.Sprintf("Topdown gRPC RL agent server listening on port %d", 8082))
 
 	// Register the frontend service
 	hotelServer := &server{}
