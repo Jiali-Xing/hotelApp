@@ -113,7 +113,8 @@ func main() {
 		grpcServer = grpc.NewServer()
 	}
 
-	go config.Topdown.StartServer(8080)
+	go config.Topdown.StartServer(8082)
+	config.DebugLog(fmt.Sprintf("Topdown gRPC RL agent server listening on port %d", 8082))
 
 	// Register the frontend service
 	hotelServer := &server{}

@@ -311,7 +311,9 @@ func init() {
 		sloMap["search-hotel"] = 60 * time.Millisecond
 		sloMap["reserve-hotel"] = 60 * time.Millisecond
 
-		Topdown = topdown.NewTopDownRL(10000, 1000, sloMap)
+		Topdown = topdown.NewTopDownRL(10000, 2000, sloMap)
+		Topdown.Debug = Debug
+		DebugLog("Initializing TopDown with SLOs: %v, 10000 max token and 2000 token rate", sloMap)
 	case "plain":
 		// No special initialization required for the plain interceptor
 	default:
