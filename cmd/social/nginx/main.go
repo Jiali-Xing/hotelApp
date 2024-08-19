@@ -37,6 +37,8 @@ func main() {
 		grpcServer = grpc.NewServer()
 	}
 
+	go config.Topdown.StartServer(8080)
+
 	// Register the nginx service
 	// nginxServer := &server{}
 	socialpb.RegisterNginxServiceServer(grpcServer, &social.NginxServer{})
