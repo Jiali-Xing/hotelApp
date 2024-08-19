@@ -309,7 +309,11 @@ func init() {
 		sloMap := make(map[string]time.Duration)
 		// manually set SLOs for each service
 		sloMap["search-hotel"] = 60 * time.Millisecond
+		sloMap["compose"] = 90 * time.Millisecond
+
 		sloMap["reserve-hotel"] = 60 * time.Millisecond
+		sloMap["user-timeline"] = 60 * time.Millisecond
+		sloMap["home-timeline"] = 60 * time.Millisecond
 
 		Topdown = topdown.NewTopDownRL(10000, 2000, sloMap, Debug)
 
