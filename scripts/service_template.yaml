@@ -11,5 +11,6 @@ spec:
   - protocol: TCP
     port: 50051
     targetPort: 50051
+  {additional_port}  # Placeholder for additional port if needed
   type: LoadBalancer
   {external_ip}

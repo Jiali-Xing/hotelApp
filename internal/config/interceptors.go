@@ -311,9 +311,9 @@ func init() {
 		sloMap["search-hotel"] = 60 * time.Millisecond
 		sloMap["compose"] = 90 * time.Millisecond
 
-		sloMap["reserve-hotel"] = 60 * time.Millisecond
-		sloMap["user-timeline"] = 60 * time.Millisecond
-		sloMap["home-timeline"] = 60 * time.Millisecond
+		sloMap["reserve-hotel"] = 10 * time.Millisecond
+		sloMap["user-timeline"] = 20 * time.Millisecond
+		sloMap["home-timeline"] = 20 * time.Millisecond
 
 		Topdown = topdown.NewTopDownRL(10000, 2000, sloMap, Debug)
 

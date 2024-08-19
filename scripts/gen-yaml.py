@@ -49,12 +49,21 @@ for service in services:
         f.write(deployment_content)
 
     # Generate the service YAML
-    if service == "frontend":
+    if service in ["nginx", "frontend"]:
         external_ip = "externalIPs:\n    - 1.2.4.114"
     else:
         external_ip = ""
+
+    # Conditionally add an additional port for nginx or frontend
+    if service in ["nginx", "frontend"]:
+        additional_port = """
+  - protocol: TCP
+    port: 8082
+    targetPort: 8082"""
+    else:
+        additional_port = ""
     
-    service_content = service_template.format(service_name=service, external_ip=external_ip)
+    service_content = service_template.format(service_name=service, external_ip=external_ip, additional_port=additional_port)
     service_filename = "{}-service.yaml".format(service)
     with open(os.path.join(output_dir, service_filename), "w") as f:
         f.write(service_content)
