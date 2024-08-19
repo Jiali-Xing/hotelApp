@@ -107,6 +107,8 @@ func main() {
 		grpcServer = grpc.NewServer(grpc.UnaryInterceptor(config.Dg.UnaryInterceptorServer))
 	case "plain":
 		grpcServer = grpc.NewServer(grpc.UnaryInterceptor(plain.UnaryInterceptor))
+	case "topdown":
+		grpcServer = grpc.NewServer(grpc.UnaryInterceptor(config.Topdown.UnaryInterceptor))
 	default:
 		grpcServer = grpc.NewServer()
 	}
