@@ -113,6 +113,8 @@ func main() {
 		grpcServer = grpc.NewServer()
 	}
 
+	go config.Topdown.StartServer(8080)
+
 	// Register the frontend service
 	hotelServer := &server{}
 	hotelpb.RegisterFrontendServiceServer(grpcServer, hotelServer)
