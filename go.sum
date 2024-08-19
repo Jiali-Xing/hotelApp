@@ -18,6 +18,8 @@ github.com/Jiali-Xing/topdown-grpc v0.0.0-20240819052015-55e8f5525c2f h1:X16mYye
 github.com/Jiali-Xing/topdown-grpc v0.0.0-20240819052015-55e8f5525c2f/go.mod h1:Wr5DvWvpvkD/l/mSF8yPj83AzQgdv3KvBr0T7yS/peQ=
 github.com/Jiali-Xing/topdown-grpc v0.0.0-20240819054940-cf6bfa4058b4 h1:mCYa1KlWvRVRP/nbGfohI2JtCAHwwc8K4m6KFOBbajs=
 github.com/Jiali-Xing/topdown-grpc v0.0.0-20240819054940-cf6bfa4058b4/go.mod h1:Wr5DvWvpvkD/l/mSF8yPj83AzQgdv3KvBr0T7yS/peQ=
+github.com/Jiali-Xing/topdown-grpc v0.0.0-20240819061352-60150561eb87 h1:sqaiL0LoGScD6kwhnxC1NUmu1luGEKM8GGIO3kJNVRY=
+github.com/Jiali-Xing/topdown-grpc v0.0.0-20240819061352-60150561eb87/go.mod h1:Wr5DvWvpvkD/l/mSF8yPj83AzQgdv3KvBr0T7yS/peQ=
 github.com/bytedance/gopkg v0.1.0 h1:aAxB7mm1qms4Wz4sp8e1AtKDOeFLtdqvGiUe7aonRJs=
 github.com/bytedance/gopkg v0.1.0/go.mod h1:FtQG3YbQG9L/91pbKSw787yBQPutC+457AvDW77fgUQ=
 github.com/cespare/xxhash/v2 v2.3.0 h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs=
