@@ -8,7 +8,7 @@ require (
 	github.com/Jiali-Xing/hotelproto v0.0.0-20240609022535-ea9137c9f3e8
 	github.com/Jiali-Xing/plain v0.0.0-20231227034046-b79fd58cb753
 	github.com/Jiali-Xing/socialproto v0.0.0-20240621081102-966a8e827703
-	github.com/Jiali-Xing/topdown-grpc v0.0.0-20240819061956-0e532cc8d8b8
+	github.com/Jiali-Xing/topdown-grpc v0.0.0-20240820044901-8d2ad290b0fa
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/lithammer/shortuuid v3.0.0+incompatible
 	github.com/tgiannoukos/charon v0.0.0-20240807192806-62ed09981b7f
