@@ -57,7 +57,8 @@ for service in services:
     # Conditionally add an additional port for nginx or frontend
     if service in ["nginx", "frontend"]:
         additional_port = """
-  - protocol: TCP
+  - name: http-alt  # Name for the additional port
+    protocol: TCP
     port: 8082
     targetPort: 8082"""
     else:
