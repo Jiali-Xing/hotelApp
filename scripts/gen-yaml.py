@@ -49,10 +49,11 @@ for service in services:
         f.write(deployment_content)
 
     # Generate the service YAML
-    if service in ["nginx", "frontend"]:
-        external_ip = "externalIPs:\n    - 1.2.4.114"
-    else:
-        external_ip = ""
+    # if service in ["nginx", "frontend"]:
+    #     external_ip = "externalIPs:\n    - 1.2.4.114"
+    # else:
+    #     external_ip = ""
+    external_ip = ""
 
     # Conditionally add an additional port for nginx or frontend
     if service in ["nginx", "frontend"]:
