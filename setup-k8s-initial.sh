@@ -96,7 +96,7 @@ if [[ $METHOD == *"hotel"* ]]; then
   PORT_FORWARD_PID=$!
 
   # Wait for port-forwarding to be ready (adjust sleep time as needed)
-  sleep 20
+  sleep 25
 
   ./populate/populate -hotels_file=/users/jiali/hotelApp/experiments/hotel/data/hotels.json -num_of_users=1000 > popu.output 2>&1
 
