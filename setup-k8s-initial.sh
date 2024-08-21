@@ -98,7 +98,12 @@ if [[ $METHOD == *"hotel"* ]]; then
   # Wait for port-forwarding to be ready (adjust sleep time as needed)
   sleep 25
 
-  ./populate/populate -hotels_file=/users/jiali/hotelApp/experiments/hotel/data/hotels.json -num_of_users=1000 > popu.output 2>&1
+  # query the frontend and user addresses from user input stdin
+  frontend_address=read -p "Enter the frontend address: "
+  user_address=read -p "Enter the user address: "
+
+  ./populate/populate --frontend=$frontend_address --user=$user_address --num_of_hotels=1000 --num_of_users=1000 --num_of_hotels_file=/users/jiali/hotelApp/experiments/hotel/data/hotels.json > popu.output 2>&1
+  # -hotels_file=/users/jiali/hotelApp/experiments/hotel/data/hotels.json -num_of_users=1000 > popu.output 2>&1
 
 elif [ "$METHOD" = "compose" -o "$METHOD" = "home-timeline" -o "$METHOD" = "user-timeline" -o "$METHOD" = "all-methods-social" ]; then
   # Run social populate scripts
