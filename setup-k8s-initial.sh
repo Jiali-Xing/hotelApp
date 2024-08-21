@@ -98,9 +98,37 @@ if [[ $METHOD == *"hotel"* ]]; then
   # Wait for port-forwarding to be ready (adjust sleep time as needed)
   # sleep 25
 
-  # Query the frontend and user addresses from user input
-  read -p "Enter the frontend address: " frontend_address
-  read -p "Enter the user address: " user_address
+  # # Query the frontend and user addresses from user input
+  # read -p "Enter the frontend address: " frontend_address
+  # read -p "Enter the user address: " user_address
+
+  # Get the names of all deployments
+  deployments=$(kubectl get deployments -o custom-columns=":metadata.name" --no-headers)
+  echo "Deployments: $deployments"
+
+  # Wait for all deployments to be ready
+  for deployment in $deployments; do
+    kubectl rollout status deployment/$deployment
+  done
+
+  # Query the frontend and user service addresses automatically from Kubernetes
+
+  # Replace these with your actual service names
+  frontend_service_name="frontend"
+  user_service_name="user"
+
+  # Get the Cluster IP and NodePort of the frontend service
+  frontend_ip=$(kubectl get service $frontend_service_name -o=jsonpath='{.spec.clusterIP}')
+  # frontend_nodeport=$(kubectl get service $frontend_service_name -o=jsonpath='{.spec.ports[0].nodePort}')
+  frontend_address="$frontend_ip:50051"
+
+  # Get the Cluster IP and NodePort of the user service
+  user_ip=$(kubectl get service $user_service_name -o=jsonpath='{.spec.clusterIP}')
+  # user_nodeport=$(kubectl get service $user_service_name -o=jsonpath='{.spec.ports[0].nodePort}')
+  user_address="$user_ip:50051"
+
+  echo "Frontend Address: $frontend_address"
+  echo "User Address: $user_address"
 
   ./populate/populate -frontend="$frontend_address" -user="$user_address" -num_of_users=1000 -hotels_file=/users/jiali/hotelApp/experiments/hotel/data/hotels.json > popu.output 2>&1
   # -hotels_file=/users/jiali/hotelApp/experiments/hotel/data/hotels.json -num_of_users=1000 > popu.output 2>&1
