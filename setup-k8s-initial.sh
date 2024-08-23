@@ -112,6 +112,7 @@ if [[ $METHOD == *"hotel"* ]]; then
   done
 
   # Query the frontend and user service addresses automatically from Kubernetes
+  sleep 25
 
   # Replace these with your actual service names
   frontend_service_name="frontend"
