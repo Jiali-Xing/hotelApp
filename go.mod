@@ -11,7 +11,7 @@ require (
 	github.com/Jiali-Xing/topdown-grpc v0.0.0-20240820044901-8d2ad290b0fa
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/lithammer/shortuuid v3.0.0+incompatible
-	github.com/tgiannoukos/charon v0.0.0-20240824030312-ad9a03fe71c8
+	github.com/tgiannoukos/charon v0.0.0-20240824230424-7b03ba05939b
 	github.com/valyala/fastrand v1.1.0
 	google.golang.org/grpc v1.65.0
 	gopkg.in/yaml.v2 v2.4.0
