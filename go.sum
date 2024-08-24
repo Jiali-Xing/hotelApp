@@ -38,6 +38,8 @@ github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/tgiannoukos/charon v0.0.0-20240824030312-ad9a03fe71c8 h1:7T4O9/vU8LKIjpaNnHQwsUj74ICWKsgo+3qxVkHhEeI=
 github.com/tgiannoukos/charon v0.0.0-20240824030312-ad9a03fe71c8/go.mod h1:j4qk7j5ah2qq3+dzNOx2WffsWewFGjT0d8HMUFnnIwU=
+github.com/tgiannoukos/charon v0.0.0-20240824230424-7b03ba05939b h1:o/QwTcWCVtWEOv3Q2++5AJKTKkPTVHd6LS+3a7Ms2/A=
+github.com/tgiannoukos/charon v0.0.0-20240824230424-7b03ba05939b/go.mod h1:j4qk7j5ah2qq3+dzNOx2WffsWewFGjT0d8HMUFnnIwU=
 github.com/valyala/fastrand v1.1.0 h1:f+5HkLW4rsgzdNoleUOB69hyT9IlD2ZQh9GyDMfb5G8=
 github.com/valyala/fastrand v1.1.0/go.mod h1:HWqCzkrkg6QXT8V2EXWvXCoow7vLwOFN002oeRzjapQ=
 golang.org/x/net v0.0.0-20221014081412-f15817d10f9b/go.mod h1:YDH+HFinaLZZlnHAfSS6ZXJJ9M9t4Dl22yv3iI2vPwk=
