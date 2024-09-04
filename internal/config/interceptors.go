@@ -308,14 +308,17 @@ func init() {
 	case "topdown":
 		sloMap := make(map[string]time.Duration)
 		// manually set SLOs for each service
-		sloMap["search-hotel"] = 60 * time.Millisecond
-		sloMap["compose"] = 90 * time.Millisecond
+		// for the hotel service, we set the SLOs for each endpoint
+		if serviceName == "frontend" {
+			sloMap["reserve-hotel"] = 10 * time.Millisecond
+			sloMap["search-hotel"] = 60 * time.Millisecond
+		} else if serviceName == "nginx" {
+			sloMap["compose"] = 90 * time.Millisecond
+			sloMap["user-timeline"] = 20 * time.Millisecond
+			sloMap["home-timeline"] = 20 * time.Millisecond
+		}
 
-		sloMap["reserve-hotel"] = 10 * time.Millisecond
-		sloMap["user-timeline"] = 20 * time.Millisecond
-		sloMap["home-timeline"] = 20 * time.Millisecond
-
-		Topdown = topdown.NewTopDownRL(10000, 2000, sloMap, Debug)
+		Topdown = topdown.NewTopDownRL(sloMap, 10000, 2000, Debug)
 
 		DebugLog("Initializing TopDown with SLOs: %v, 10000 max token and 2000 token rate", sloMap)
 	case "plain":
