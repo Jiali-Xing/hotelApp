@@ -318,7 +318,7 @@ func init() {
 			sloMap["home-timeline"] = 20 * time.Millisecond
 		}
 
-		Topdown = topdown.NewTopDownRL(sloMap, 10000, 2000, Debug)
+		Topdown = topdown.NewTopDownRL(10000, 2000, sloMap, Debug)
 
 		DebugLog("Initializing TopDown with SLOs: %v, 10000 max token and 2000 token rate", sloMap)
 	case "plain":

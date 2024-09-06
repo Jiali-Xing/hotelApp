@@ -8,7 +8,7 @@ require (
 	github.com/Jiali-Xing/hotelproto v0.0.0-20240609022535-ea9137c9f3e8
 	github.com/Jiali-Xing/plain v0.0.0-20231227034046-b79fd58cb753
 	github.com/Jiali-Xing/socialproto v0.0.0-20240621081102-966a8e827703
-	github.com/Jiali-Xing/topdown-grpc v0.0.0-20240905060535-b822621b004a
+	github.com/Jiali-Xing/topdown-grpc v0.0.0-20240906222810-e5c121fdaf81
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/lithammer/shortuuid v3.0.0+incompatible
 	github.com/tgiannoukos/charon v0.0.0-20240824230424-7b03ba05939b
@@ -22,7 +22,7 @@ require (
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/google/uuid v1.6.0 // indirect
-	golang.org/x/net v0.28.0 // indirect
+	golang.org/x/net v0.29.0 // indirect
 	golang.org/x/sys v0.25.0 // indirect
 	golang.org/x/text v0.18.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240903143218-8af14fe29dc1 // indirect
