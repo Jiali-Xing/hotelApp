@@ -10,6 +10,8 @@ github.com/Jiali-Xing/socialproto v0.0.0-20240621081102-966a8e827703 h1:nZ/lygdx
 github.com/Jiali-Xing/socialproto v0.0.0-20240621081102-966a8e827703/go.mod h1:M/tEHAEwZblysHvD7/IrdW9h257mXPLbwl4U9RHfyFs=
 github.com/Jiali-Xing/topdown-grpc v0.0.0-20240906222810-e5c121fdaf81 h1:5iXyf9xR94mzlUCHQd9XE2xVqeA/WSftMoEWst+OPzY=
 github.com/Jiali-Xing/topdown-grpc v0.0.0-20240906222810-e5c121fdaf81/go.mod h1:Wr5DvWvpvkD/l/mSF8yPj83AzQgdv3KvBr0T7yS/peQ=
+github.com/Jiali-Xing/topdown-grpc v0.0.0-20240907042720-7357dd55ad43 h1:IA4PsJF4DyuygkhVXpPdcE9eJfWm/QJ2LtqLplRHcdQ=
+github.com/Jiali-Xing/topdown-grpc v0.0.0-20240907042720-7357dd55ad43/go.mod h1:Wr5DvWvpvkD/l/mSF8yPj83AzQgdv3KvBr0T7yS/peQ=
 github.com/bytedance/gopkg v0.1.1 h1:3azzgSkiaw79u24a+w9arfH8OfnQQ4MHUt9lJFREEaE=
 github.com/bytedance/gopkg v0.1.1/go.mod h1:576VvJ+eJgyCzdjS+c4+77QF3p7ubbtiKARP3TxducM=
 github.com/cespare/xxhash/v2 v2.3.0 h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs=

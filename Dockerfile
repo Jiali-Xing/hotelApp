@@ -1,5 +1,5 @@
 # Use the official Golang image as a build stage
-FROM golang:latest as builder
+FROM golang:latest AS builder
 
 # Set the Current Working Directory inside the container
 WORKDIR /app
