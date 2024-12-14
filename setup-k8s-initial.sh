@@ -1,5 +1,16 @@
 # !/bin/bash
-# kubectl delete deployment --all > /dev/null && kubectl delete service --all > /dev/null
+# This script is used to setup the k8s cluster for the hotel app, either for hotel or social network
+# Jiali: 1. delete all deployments, services, and configmaps
+# Jiali: 2. create a new configmap msgraph-config that contains no interceptors
+# Jiali: 3. generate the yaml files for the services and redis
+# Jiali: 4. apply the yaml files for the services and redis
+# Jiali: 5. run the populate scripts for the hotel app or social network
+# Jiali: 6. delete all deployments, services, and configmaps
+
+# example: run `./setup-k8s-initial.sh` to setup the k8s cluster for the social network
+# default method is compose
+# example: run `./setup-k8s-initial.sh hotel` to setup the k8s cluster for the hotel app
+
 kubectl delete deployment --all > /dev/null && kubectl delete service --all > /dev/null && kubectl delete configmap --all > /dev/null
 
 sleep 1
