@@ -12,7 +12,7 @@ import (
 	dagor "github.com/Jiali-Xing/dagor-grpc/dagor"
 	"github.com/Jiali-Xing/plain"
 	"github.com/Jiali-Xing/topdown-grpc"
-	"github.com/tgiannoukos/charon"
+	"github.com/Jiali-Xing/rajomon"
 	"google.golang.org/grpc"
 )
 
@@ -21,7 +21,7 @@ var (
 	entryService bool
 	Intercept    string
 	serviceData  ServiceData
-	PriceTable   *charon.PriceTable
+	PriceTable   *rajomon.PriceTable
 	Breakwater   *bw.Breakwater
 	Dg           *dagor.Dagor
 	Topdown      *topdown.TopDownRL
@@ -215,7 +215,7 @@ func init() {
 		}
 
 		DebugLog("Initializing Charon with options: %v", charonOptions)
-		PriceTable = charon.NewCharon(
+		PriceTable = rajomon.NewRajomon(
 			serviceName,
 			serviceData.CallGraph,
 			charonOptions,
