@@ -21,7 +21,7 @@ func main() {
 	// Set up gRPC server with the appropriate interceptor
 	var grpcServer *grpc.Server
 	switch config.Intercept {
-	case "charon":
+	case "rajomon":
 		grpcServer = grpc.NewServer(grpc.UnaryInterceptor(config.PriceTable.UnaryInterceptor))
 	case "breakwaterd":
 		grpcServer = grpc.NewServer(grpc.UnaryInterceptor(config.Breakwater.UnaryInterceptor))
