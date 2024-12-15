@@ -7,11 +7,11 @@ require (
 	github.com/Jiali-Xing/dagor-grpc v0.0.0-20240226064839-e391fcbc2980
 	github.com/Jiali-Xing/hotelproto v0.0.0-20240609022535-ea9137c9f3e8
 	github.com/Jiali-Xing/plain v0.0.0-20231227034046-b79fd58cb753
+	github.com/Jiali-Xing/rajomon v0.0.0-20241215185722-68f8bdb8c226
 	github.com/Jiali-Xing/socialproto v0.0.0-20240621081102-966a8e827703
 	github.com/Jiali-Xing/topdown-grpc v0.0.0-20240907062027-e751413b2672
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/lithammer/shortuuid v3.0.0+incompatible
-	github.com/tgiannoukos/charon v0.0.0-20240824230424-7b03ba05939b
 	github.com/valyala/fastrand v1.1.0
 	google.golang.org/grpc v1.66.0
 	gopkg.in/yaml.v2 v2.4.0
