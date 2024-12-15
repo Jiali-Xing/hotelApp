@@ -38,7 +38,7 @@ var (
 	lazyUpdate       bool
 	rateLimiting     bool
 	loadShedding     bool
-	charonTrackPrice bool
+	rajomonTrackPrice bool
 
 	breakwaterSLO           time.Duration
 	breakwaterClientTimeout time.Duration
@@ -72,7 +72,7 @@ type ServiceData struct {
 	CallGraph    map[string][]string
 	Downstreams  []string
 	ServerConfig []Config
-	CharonConfig []Config
+	RajomonConfig []Config
 }
 
 func getEnv(key, fallback string) string {
@@ -108,9 +108,9 @@ func init() {
 	fmt.Println("Server Configurations:")
 	fmt.Println(serverConfigs[serviceName])
 
-	charonConfigs := GetCharonConfigs()
-	fmt.Println("Charon Configurations:")
-	fmt.Println(charonConfigs[serviceName])
+	rajomonConfigs := GetRajomonConfigs()
+	fmt.Println("Rajomon Configurations:")
+	fmt.Println(rajomonConfigs[serviceName])
 
 	// Initialize the global serviceData struct
 	serviceData = ServiceData{
@@ -118,15 +118,15 @@ func init() {
 		Downstreams: downstreams[serviceName],
 		// DownstreamURLs: downstreamURLs[serviceName],
 		ServerConfig: serverConfigs[serviceName],
-		CharonConfig: charonConfigs[serviceName],
+		RajomonConfig: rajomonConfigs[serviceName],
 	}
 
-	for _, config := range serviceData.CharonConfig {
+	for _, config := range serviceData.RajomonConfig {
 		switch config.Name {
 		case "INTERCEPT":
 			Intercept = config.Value
 			DebugLog("Reading config of interceptor %s", Intercept)
-		// charon parameters
+		// rajomon parameters
 		case "PRICE_UPDATE_RATE":
 			priceUpdateRate, _ = time.ParseDuration(config.Value)
 		case "LATENCY_THRESHOLD":
@@ -141,8 +141,8 @@ func init() {
 			rateLimiting, _ = strconv.ParseBool(config.Value)
 		case "LOAD_SHEDDING":
 			loadShedding, _ = strconv.ParseBool(config.Value)
-		case "CHARON_TRACK_PRICE":
-			charonTrackPrice, _ = strconv.ParseBool(config.Value)
+		case "RAJOMON_TRACK_PRICE":
+			rajomonTrackPrice, _ = strconv.ParseBool(config.Value)
 		// breakwater parameters
 		case "BREAKWATER_SLO":
 			breakwaterSLO, _ = time.ParseDuration(config.Value)
@@ -195,8 +195,8 @@ func init() {
 	bwConfig := bw.BWParametersDefault
 
 	switch Intercept {
-	case "charon":
-		charonOptions := map[string]interface{}{
+	case "rajomon":
+		rajomonOptions := map[string]interface{}{
 			"initprice":          int64(0),
 			"rateLimiting":       rateLimiting,
 			"loadShedding":       loadShedding,
@@ -211,18 +211,18 @@ func init() {
 			"latencyThreshold":   latencyThreshold,
 			"priceStep":          priceStep,
 			"priceAggregation":   "maximal",
-			"recordPrice":        charonTrackPrice,
+			"recordPrice":        rajomonTrackPrice,
 		}
 
-		DebugLog("Initializing Charon with options: %v", charonOptions)
+		DebugLog("Initializing Rajomon with options: %v", rajomonOptions)
 		PriceTable = rajomon.NewRajomon(
 			serviceName,
 			serviceData.CallGraph,
-			charonOptions,
+			rajomonOptions,
 		)
 
-		DebugLog("Charon call graph: %v", serviceData.CallGraph)
-		DebugLog("Charon Config: %v", charonOptions)
+		DebugLog("Rajomon call graph: %v", serviceData.CallGraph)
+		DebugLog("Rajomon Config: %v", rajomonOptions)
 
 	case "breakwater":
 		bwConfig = bw.BWParameters{
@@ -360,7 +360,7 @@ func CreateGRPCConn(ctx context.Context, addr string) (*grpc.ClientConn, error) 
 		// Apply the selected interceptor
 		DebugLog("[As a Client/Sender] Creating Interceptor %s for service %s", Intercept, serviceName)
 		switch Intercept {
-		case "charon":
+		case "rajomon":
 			opts = append(opts, grpc.WithUnaryInterceptor(PriceTable.UnaryInterceptorClient))
 		case "breakwater":
 			// this case should not be reached
