@@ -16,12 +16,12 @@ spec:
     spec:
       containers:
       - name: profile
-        image: tgiannoukos/redis-test-go:latest
+        image: xjiali/social-hotel:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 50051
         command: ["/bin/sh", "-c"]
-        args: ["/bin/profile -debug > /root/deathstar_profile.output"]
+        args: ["/bin/profile 2>&1 | tee /root/deathstar_profile.output"]
         env:
         - name: SERVICE_NAME
           value: "profile"

@@ -8,8 +8,10 @@ spec:
   selector:
     app: search
   ports:
-  - protocol: TCP
+  - name: http  # Name for the first port
+    protocol: TCP
     port: 50051
     targetPort: 50051
+    # Placeholder for additional port if needed
   type: LoadBalancer
   

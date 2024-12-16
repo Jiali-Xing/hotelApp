@@ -29,3 +29,4 @@ spec:
         image: redis:latest
         ports:
         - containerPort: 6379
+        command: ["redis-server", "--maxmemory", "1gb", "--maxmemory-policy", "allkeys-lru"]

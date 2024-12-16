@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: usertimeline
-        image: tgiannoukos/redis-test-go:latest
+        image: xjiali/social-hotel:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 50051
