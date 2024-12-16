@@ -8,9 +8,14 @@ spec:
   selector:
     app: frontend
   ports:
-  - protocol: TCP
+  - name: http  # Name for the first port
+    protocol: TCP
     port: 50051
     targetPort: 50051
+  
+  - name: http-alt  # Name for the additional port
+    protocol: TCP
+    port: 8082
+    targetPort: 8082  # Placeholder for additional port if needed
   type: LoadBalancer
-  externalIPs:
-    - 1.2.4.114
+  

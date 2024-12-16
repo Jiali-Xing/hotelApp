@@ -16,12 +16,12 @@ spec:
     spec:
       containers:
       - name: rate
-        image: tgiannoukos/redis-test-go:latest
+        image: xjiali/social-hotel:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 50051
         command: ["/bin/sh", "-c"]
-        args: ["/bin/rate -debug > /root/deathstar_rate.output"]
+        args: ["/bin/rate 2>&1 | tee /root/deathstar_rate.output"]
         env:
         - name: SERVICE_NAME
           value: "rate"

@@ -16,12 +16,12 @@ spec:
     spec:
       containers:
       - name: reservation
-        image: tgiannoukos/redis-test-go:latest
+        image: xjiali/social-hotel:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 50051
         command: ["/bin/sh", "-c"]
-        args: ["/bin/reservation -debug > /root/deathstar_reservation.output"]
+        args: ["/bin/reservation 2>&1 | tee /root/deathstar_reservation.output"]
         env:
         - name: SERVICE_NAME
           value: "reservation"
