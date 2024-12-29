@@ -11,8 +11,8 @@ import (
 	bw "github.com/Jiali-Xing/breakwater-grpc/breakwater"
 	dagor "github.com/Jiali-Xing/dagor-grpc/dagor"
 	"github.com/Jiali-Xing/plain"
-	"github.com/Jiali-Xing/topdown-grpc"
 	"github.com/Jiali-Xing/rajomon"
+	"github.com/Jiali-Xing/topdown-grpc"
 	"google.golang.org/grpc"
 )
 
@@ -31,14 +31,15 @@ var (
 	yamlFile = getEnv("MSGRAPH_YAML", "msgraph.yaml")
 
 	// nodes []Node
-	priceUpdateRate  time.Duration
-	latencyThreshold time.Duration
-	priceStep        int64
-	priceStrategy    string
-	lazyUpdate       bool
-	rateLimiting     bool
-	loadShedding     bool
+	priceUpdateRate   time.Duration
+	latencyThreshold  time.Duration
+	priceStep         int64
+	priceStrategy     string
+	lazyUpdate        bool
+	rateLimiting      bool
+	loadShedding      bool
 	rajomonTrackPrice bool
+	fastDrop          bool
 
 	breakwaterSLO           time.Duration
 	breakwaterClientTimeout time.Duration
@@ -69,9 +70,9 @@ var (
 )
 
 type ServiceData struct {
-	CallGraph    map[string][]string
-	Downstreams  []string
-	ServerConfig []Config
+	CallGraph     map[string][]string
+	Downstreams   []string
+	ServerConfig  []Config
 	RajomonConfig []Config
 }
 
@@ -117,7 +118,7 @@ func init() {
 		CallGraph:   callGraph[serviceName],
 		Downstreams: downstreams[serviceName],
 		// DownstreamURLs: downstreamURLs[serviceName],
-		ServerConfig: serverConfigs[serviceName],
+		ServerConfig:  serverConfigs[serviceName],
 		RajomonConfig: rajomonConfigs[serviceName],
 	}
 
@@ -143,6 +144,8 @@ func init() {
 			loadShedding, _ = strconv.ParseBool(config.Value)
 		case "RAJOMON_TRACK_PRICE":
 			rajomonTrackPrice, _ = strconv.ParseBool(config.Value)
+		case "FAST_DROP":
+			fastDrop, _ = strconv.ParseBool(config.Value)
 		// breakwater parameters
 		case "BREAKWATER_SLO":
 			breakwaterSLO, _ = time.ParseDuration(config.Value)
@@ -212,6 +215,7 @@ func init() {
 			"priceStep":          priceStep,
 			"priceAggregation":   "maximal",
 			"recordPrice":        rajomonTrackPrice,
+			"fastDrop":           fastDrop,
 		}
 
 		DebugLog("Initializing Rajomon with options: %v", rajomonOptions)
