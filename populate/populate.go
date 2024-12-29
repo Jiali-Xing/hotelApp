@@ -89,7 +89,7 @@ func populateHotels(conn *grpc.ClientConn) {
 		log.Fatalf("Failed to parse hotels file: %v", err)
 	}
 
-	// Add only 2 hotels to the service
+	// Add 1000 hotels to the frontend service
 	for _, hotel := range hotels[:1000] {
 		ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 		defer cancel()
