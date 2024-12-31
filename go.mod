@@ -7,7 +7,7 @@ require (
 	github.com/Jiali-Xing/dagor-grpc v0.0.0-20241012211944-ddbe9823e0c9
 	github.com/Jiali-Xing/hotelproto v0.0.0-20240609022535-ea9137c9f3e8
 	github.com/Jiali-Xing/plain v0.0.0-20231227034046-b79fd58cb753
-	github.com/Jiali-Xing/rajomon v0.0.0-20241229203543-95139a63a72c
+	github.com/Jiali-Xing/rajomon v0.0.0-20241231020251-7cb51e301063
 	github.com/Jiali-Xing/socialproto v0.0.0-20240621081102-966a8e827703
 	github.com/Jiali-Xing/topdown-grpc v0.0.0-20241013010456-81bb3a39e4f0
 	github.com/go-redis/redis/v8 v8.11.5
