@@ -288,8 +288,8 @@ func init() {
 			NodeName: serviceName,
 			BusinessMap: map[string]int{
 				"search-hotel":  1,
-				"store-hotel":   2,
-				"reserve-hotel": 3,
+				"reserve-hotel": 2,
+				"store-hotel":   3,
 				"compose":       1,
 				"home-timeline": 2,
 				"user-timeline": 3,

@@ -14,6 +14,7 @@ spec:
       labels:
         app: {service_name}
     spec:
+      nodeName: {node_name}  # Fixed node assignment
       containers:
       - name: {service_name}
         image: xjiali/social-hotel:latest
@@ -49,4 +50,3 @@ spec:
         - name: config-volume
           configMap:
             name: msgraph-config
-

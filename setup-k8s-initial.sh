@@ -94,6 +94,14 @@ echo "Kubernetes resources have been applied successfully."
 # wait for the pods to be ready
 kubectl wait --for=condition=ready pod --all --timeout=60s
 
+kubectl label nodes node-1 service=frontend
+kubectl label nodes node-2 service=user
+kubectl label nodes node-3 service=search
+kubectl label nodes node-4 service=reservation
+kubectl label nodes node-5 service=rate
+kubectl label nodes node-6 service=profile
+
+
 for port in {50051..50059}; do
   pid=$(lsof -t -i :$port)
   if [ -n "$pid" ]; then

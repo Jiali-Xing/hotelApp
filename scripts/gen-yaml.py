@@ -10,6 +10,8 @@ hotel_services_using_redis = ["user", "search", "reservation", "rate", "profile"
 social_services = ["composepost", "hometimeline", "usertimeline", "socialgraph", "poststorage", "nginx"]
 social_services_using_redis = ["hometimeline", "usertimeline", "poststorage", "socialgraph"]  # Assuming these services use Redis for state management
 
+node_list = ["node-1", "node-2", "node-3", "node-4", "node-5", "node-6"]
+
 # if  [ "$METHOD" = "compose" -o "$METHOD" = "home-timeline" -o "$METHOD" = "user-timeline" -o "$METHOD" = "all-methods-social" ]; then
 method = os.getenv("METHOD", "social")
 services = hotel_services if 'hotel' in method else social_services
@@ -17,7 +19,6 @@ services_using_redis = hotel_services_using_redis if 'hotel' in method else soci
 
 # Define the base directory for the output
 output_dir = "k8s"
-# os.makedirs(output_dir, exist_ok=True)
 
 # Load the templates
 with open("scripts/deploy_template.yaml", "r") as template_file:
@@ -34,7 +35,11 @@ with open("scripts/redis_deployment_template.yaml", "r") as template_file:
 debug_info = os.getenv("DEBUG_INFO", "false").lower() == "true"
 
 # Generate the deployment and service YAML for each service
-for service in services:
+for index, service in enumerate(services):
+    # Assign node in order, wrapping around if necessary
+    node_index = index % len(node_list)
+    node_name = node_list[node_index]
+
     if printScreen:
         args = 'args: ["/bin/{} -debug"]'.format(service)
     elif debug_info:
@@ -42,17 +47,12 @@ for service in services:
     else:
         args = 'args: ["/bin/{} 2>&1 | tee /root/deathstar_{}.output"]'.format(service, service)
     
-    deployment_content = deploy_template.format(service_name=service, args=args)
+    deployment_content = deploy_template.format(service_name=service, args=args, node_name=node_name)
     deployment_filename = "{}-deployment.yaml".format(service)
     
     with open(os.path.join(output_dir, deployment_filename), "w") as f:
         f.write(deployment_content)
 
-    # Generate the service YAML
-    # if service in ["nginx", "frontend"]:
-    #     external_ip = "externalIPs:\n    - 1.2.4.114"
-    # else:
-    #     external_ip = ""
     external_ip = ""
 
     # Conditionally add an additional port for nginx or frontend
@@ -77,26 +77,9 @@ for service in services:
         with open(os.path.join(output_dir, redis_service_filename), "w") as f:
             f.write(redis_service_content)
         
-        redis_deployment_content = redis_deployment_template.format(service_name=service)
+        redis_deployment_content = redis_deployment_template.format(service_name=service, node_name=node_name)
         redis_deployment_filename = "{}-redis-deployment.yaml".format(service)
         with open(os.path.join(output_dir, redis_deployment_filename), "w") as f:
             f.write(redis_deployment_content)
-
-    # service_content = service_template.format(service_name=service, external_ip=external_ip)
-    # service_filename = f"{service}-service.yaml"
-    # with open(os.path.join(output_dir, service_filename), "w") as f:
-    #     f.write(service_content)
-
-    # # Generate the redis service and deployment YAML if the service uses Redis
-    # if service in services_using_redis:
-    #     redis_service_content = redis_service_template.format(service_name=service)
-    #     redis_service_filename = f"{service}-redis-service.yaml"
-    #     with open(os.path.join(output_dir, redis_service_filename), "w") as f:
-    #         f.write(redis_service_content)
-        
-    #     redis_deployment_content = redis_deployment_template.format(service_name=service)
-    #     redis_deployment_filename = f"{service}-redis-deployment.yaml"
-    #     with open(os.path.join(output_dir, redis_deployment_filename), "w") as f:
-    #         f.write(redis_deployment_content)
 
 print("Kubernetes YAML files have been generated in the 'k8s' directory.")

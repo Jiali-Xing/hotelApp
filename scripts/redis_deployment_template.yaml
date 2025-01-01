@@ -14,6 +14,7 @@ spec:
       labels:
         app: {service_name}-redis
     spec:
+      nodeName: {node_name}  # Fixed node assignment
       affinity:
         podAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
