@@ -1,26 +1,50 @@
 import json
+import sys
 
-# read the hotels data from hotels.json
-with open('hotels.json', 'r') as f:
-    hotels_json = f.read()
+def print_first_1000_cities(json_file_path):
+    try:
+        with open(json_file_path, 'r') as file:
+            hotels = json.load(file)
+    except FileNotFoundError:
+        print(f"Error: File '{json_file_path}' not found.")
+        sys.exit(1)
+    except json.JSONDecodeError as e:
+        print(f"Error: Failed to parse JSON file. {e}")
+        sys.exit(1)
+    
+    # Ensure the data is a list
+    if not isinstance(hotels, list):
+        print("Error: JSON data is not an array of hotel objects.")
+        sys.exit(1)
+    
+    # Determine the number of hotels to process
+    num_hotels = min(1000, len(hotels))
+    print(f"Printing cities of the first {num_hotels} hotels:")
+    
+    # create a set to store the unique cities
+    cities = set()
 
-# Parse the JSON data
-hotels_data = json.loads(hotels_json)
+    for i in range(num_hotels):
+        hotel = hotels[i]
+        try:
+            city = hotel['address']['city']
+            # print(f"Hotel ID {hotel['id']}: {city}")
+            cities.add(city)
+        except KeyError as e:
+            print(f"Hotel ID {hotel.get('id', 'Unknown')}: Missing field {e}")
+        except TypeError:
+            print(f"Hotel ID {hotel.get('id', 'Unknown')}: 'address' field is not a valid object")
+    
+    print(f"Total number of unique cities: {len(cities)}")
+    print("Cities:")
+    for city in cities:
+        print(city)
 
-# Extract the first 100 cities
-# cities = set()
-# for hotel in hotels_data:
-#     city = hotel['address']['city']
-#     cities.add(city)
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python print_hotel_cities.py <path_to_hotels.json>")
+        sys.exit(1)
+    
+    json_file = sys.argv[1]
+    print_first_1000_cities(json_file)
 
-# Extract the first 100 cities
-i = 0
-cities = []
-while len(cities) < 100:
-    city = hotels_data[i]['address']['city']
-    if city not in cities:
-        cities.append(city)
-    i += 1
-
-# Print the cities separated by " 
-print('"{}"'.format('", "'.join(cities)))

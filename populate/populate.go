@@ -17,6 +17,10 @@ import (
 	"google.golang.org/grpc"
 
 	hotelpb "github.com/Jiali-Xing/hotelproto"
+	"github.com/bytedance/gopkg/lang/fastrand"
+
+	// fastRand
+	"github.com/valyala/fastrand"
 )
 
 var (
@@ -99,8 +103,9 @@ func populateHotels(conn *grpc.ClientConn) {
 			Name:     hotel.Name,
 			Phone:    hotel.PhoneNumber,
 			Location: hotel.Address.City,
-			Rate:     100,
-			Capacity: 50,
+			// rate is int32
+			Rate:     int32(fastrand.Uint32n(50, 500)),
+			Capacity: int32(fastrand.Uint32n(30, 300)),
 			Info:     getRandomString(infoSize),
 		}
 
