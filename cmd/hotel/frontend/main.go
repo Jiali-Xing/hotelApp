@@ -31,7 +31,7 @@ type server struct {
 
 // Helper function to generate a random hotel ID
 func generateRandomHotelID() string {
-	randomNum := fastrand.Uint32n(1000)
+	randomNum := fastrand.Uint32n(1000) + 1
 	return fmt.Sprintf("%d", randomNum)
 }
 
@@ -44,9 +44,18 @@ func generateRandomDates() (string, string) {
 	return inDate, outDate
 }
 
+func generateRandomCity() string {
+	// return a random city from the list houston-tx-0 new-york-city-ny-0 los-angeles-ca-0 chicago-il-0
+	cities := []string{"houston-tx-0", "new-york-city-ny-0", "los-angeles-ca-0", "chicago-il-0"}
+	randomNum := fastrand.Uint32n(4)
+	return cities[randomNum]
+}
+
 func (s *server) SearchHotels(ctx context.Context, req *hotelpb.SearchHotelsRequest) (*hotelpb.SearchHotelsResponse, error) {
 	// Randomize InDate and OutDate
 	req.InDate, req.OutDate = generateRandomDates()
+	// Randomize Location
+	req.Location = generateRandomCity()
 
 	ctx = config.PropagateMetadata(ctx, "frontend")
 	hotels, err := hotel.SearchHotels(ctx, req.InDate, req.OutDate, req.Location)
