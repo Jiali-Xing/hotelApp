@@ -17,7 +17,6 @@ import (
 	"google.golang.org/grpc"
 
 	hotelpb "github.com/Jiali-Xing/hotelproto"
-	"github.com/bytedance/gopkg/lang/fastrand"
 
 	// fastRand
 	"github.com/valyala/fastrand"
