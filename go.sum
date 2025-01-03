@@ -30,6 +30,8 @@ github.com/Jiali-Xing/rajomon v0.0.0-20241231020251-7cb51e301063 h1:OS4jMO2eHjFM
 github.com/Jiali-Xing/rajomon v0.0.0-20241231020251-7cb51e301063/go.mod h1:+nVz/g+ACcRrhxMMPucePQ6IPXtKdJ56tkXqYIK+l+I=
 github.com/Jiali-Xing/rajomon v0.0.0-20250101001600-933d4e11ecc7 h1:ZL28nHbyELvplpz0cZPy5EqF3uG470+Yyf6Mv0IhGUo=
 github.com/Jiali-Xing/rajomon v0.0.0-20250101001600-933d4e11ecc7/go.mod h1:+nVz/g+ACcRrhxMMPucePQ6IPXtKdJ56tkXqYIK+l+I=
+github.com/Jiali-Xing/rajomon v0.0.0-20250103031846-36769a5569cc h1:EaGTrRtBWeYfP5vkKm1qMpiECNQrns5RijKmo1tPhE0=
+github.com/Jiali-Xing/rajomon v0.0.0-20250103031846-36769a5569cc/go.mod h1:+nVz/g+ACcRrhxMMPucePQ6IPXtKdJ56tkXqYIK+l+I=
 github.com/Jiali-Xing/socialproto v0.0.0-20240621081102-966a8e827703 h1:nZ/lygdxY/MeNgN5XJE6l9poWmeEhrn8gkFmVQX1uTQ=
 github.com/Jiali-Xing/socialproto v0.0.0-20240621081102-966a8e827703/go.mod h1:M/tEHAEwZblysHvD7/IrdW9h257mXPLbwl4U9RHfyFs=
 github.com/Jiali-Xing/topdown-grpc v0.0.0-20240907062027-e751413b2672 h1:jTPRSlJ17J8KZAUreh223akZNIFfyKvwcruvRDLVWRE=
