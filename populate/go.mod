@@ -4,6 +4,7 @@ go 1.22.3
 
 require (
 	github.com/Jiali-Xing/hotelproto v0.0.0-20240609022535-ea9137c9f3e8
+	github.com/valyala/fastrand v1.1.0
 	google.golang.org/grpc v1.64.0
 )
 
