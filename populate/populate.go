@@ -71,6 +71,11 @@ func test_adduser_hotel() {
 	populateHotels(frontendConn)
 }
 
+// Helper function to generate a random number in a specific range
+func randomInRange(min, max int32) int32 {
+	return min + int32(fastrand.Uint32n(uint32(max-min+1)))
+}
+
 func populateHotels(conn *grpc.ClientConn) {
 	client := hotelpb.NewFrontendServiceClient(conn)
 
@@ -102,9 +107,8 @@ func populateHotels(conn *grpc.ClientConn) {
 			Name:     hotel.Name,
 			Phone:    hotel.PhoneNumber,
 			Location: hotel.Address.City,
-			// rate is int32
-			Rate:     int32(fastrand.Uint32n(50, 500)),
-			Capacity: int32(fastrand.Uint32n(30, 300)),
+			Rate:     randomInRange(50, 500),
+			Capacity: randomInRange(40, 60),
 			Info:     getRandomString(infoSize),
 		}
 
