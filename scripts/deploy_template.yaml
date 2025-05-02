@@ -42,6 +42,10 @@ spec:
           value: "profile-service:50051"
         - name: MSGRAPH_YAML
           value: "/app/config/msgraph.yaml"
+        - name: HOST_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
         volumeMounts:
           - name: config-volume
             mountPath: /app/config/msgraph.yaml

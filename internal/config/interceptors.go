@@ -37,6 +37,7 @@ var (
 	priceStrategy     string
 	lazyUpdate        bool
 	rateLimiting      bool
+	postPrice         bool
 	loadShedding      bool
 	rajomonTrackPrice bool
 	fastDrop          bool
@@ -136,6 +137,8 @@ func init() {
 			priceStep, _ = strconv.ParseInt(config.Value, 10, 64)
 		case "PRICE_STRATEGY":
 			priceStrategy = config.Value
+		case "POST_PRICE":
+			postPrice, _ = strconv.ParseBool(config.Value)
 		case "LAZY_UPDATE":
 			lazyUpdate, _ = strconv.ParseBool(config.Value)
 		case "RATE_LIMITING":
@@ -201,6 +204,7 @@ func init() {
 	case "rajomon":
 		rajomonOptions := map[string]interface{}{
 			"initprice":          int64(0),
+			"postPrice":          postPrice,
 			"rateLimiting":       rateLimiting,
 			"loadShedding":       loadShedding,
 			"pinpointQueuing":    true,
