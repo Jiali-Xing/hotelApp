@@ -2,11 +2,11 @@ package social
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/Jiali-Xing/hotelApp/internal/config"
 	"github.com/Jiali-Xing/hotelApp/pkg/state"
-	"github.com/lithammer/shortuuid"
 
 	socialpb "github.com/Jiali-Xing/socialproto"
 )
@@ -60,7 +60,8 @@ func (s *PostStorageServer) storePostMulti(ctx context.Context, creatorId string
 	posts := make(map[string]interface{}, number)
 	postIds := make([]string, number)
 	for i := 0; i < number; i++ {
-		postId := shortuuid.New()
+		// postId is creatorId + text, use this as a unique identifier
+		postId := fmt.Sprintf("%s_%s", creatorId, text)
 		timestamp := time.Now().Unix()
 		posts[postId] = socialpb.Post{
 			PostId:    postId,
