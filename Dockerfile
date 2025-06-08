@@ -1,11 +1,28 @@
+# syntax = docker/dockerfile:1.4
+
 # Use the official Golang image as a build stage
 FROM golang:latest AS builder
 
 # Set the Current Working Directory inside the container
 WORKDIR /app
 
+# Tell Go that github.com/pennsail/* is private
+ENV GOPRIVATE=github.com/pennsail/*
+
 # Copy the go.mod and go.sum files
 COPY go.mod go.sum ./
+
+# Install git (you may already have it) and set up the https→ssh rewrite
+RUN apt-get update && apt-get install -y git \
+ && git config --global url."git@github.com:".insteadOf "https://github.com/"
+
+# 3) Make sure SSH knows GitHub’s host key
+RUN mkdir -p /root/.ssh \
+  && ssh-keyscan github.com >> /root/.ssh/known_hosts
+
+# Use SSH mount for private modules
+RUN --mount=type=ssh \
+    go mod download
 
 # Download all dependencies. Dependencies will be cached if the go.mod and go.sum files are not changed
 RUN go mod download

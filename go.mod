@@ -11,7 +11,7 @@ require (
 	github.com/Jiali-Xing/topdown-grpc v0.0.0-20241013010456-81bb3a39e4f0
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/lithammer/shortuuid v3.0.0+incompatible
-	github.com/pennsail/rajomon v0.0.0-20250514052645-eb660d50d58d
+	github.com/pennsail/hachimon v0.0.0-20250524062017-e5e195c2e0e2
 	github.com/valyala/fastrand v1.1.0
 	google.golang.org/grpc v1.71.1
 	gopkg.in/yaml.v2 v2.4.0
@@ -30,4 +30,4 @@ require (
 	google.golang.org/protobuf v1.36.6 // indirect
 )
 
-// replace google.golang.org/genproto/googleapis/api => google.golang.org/genproto
+replace github.com/pennsail/rajomon => github.com/pennsail/hachimon v0.0.0-20250519015043-a6594f31a171

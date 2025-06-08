@@ -12,7 +12,7 @@ import (
 	dagor "github.com/Jiali-Xing/dagor-grpc/dagor"
 	"github.com/Jiali-Xing/plain"
 	"github.com/Jiali-Xing/topdown-grpc"
-	"github.com/pennsail/rajomon"
+	rajomon "github.com/pennsail/hachimon"
 	"google.golang.org/grpc"
 )
 
@@ -34,10 +34,12 @@ var (
 	priceUpdateRate   time.Duration
 	latencyThreshold  time.Duration
 	priceStep         int64
+	priceDecreaseStep int64
 	priceStrategy     string
 	lazyUpdate        bool
 	rateLimiting      bool
 	postPrice         bool
+	dvfsFirst         bool
 	postDelay         bool
 	loadShedding      bool
 	rajomonTrackPrice bool
@@ -136,12 +138,16 @@ func init() {
 			latencyThreshold, _ = time.ParseDuration(config.Value)
 		case "PRICE_STEP":
 			priceStep, _ = strconv.ParseInt(config.Value, 10, 64)
+		case "PRICE_DECREASE_STEP":
+			priceDecreaseStep, _ = strconv.ParseInt(config.Value, 10, 64)
 		case "PRICE_STRATEGY":
 			priceStrategy = config.Value
 		case "POST_DELAY":
 			postDelay, _ = strconv.ParseBool(config.Value)
 		case "POST_PRICE":
 			postPrice, _ = strconv.ParseBool(config.Value)
+		case "DVFS_FIRST":
+			dvfsFirst, _ = strconv.ParseBool(config.Value)
 		case "LAZY_UPDATE":
 			lazyUpdate, _ = strconv.ParseBool(config.Value)
 		case "RATE_LIMITING":
@@ -209,6 +215,7 @@ func init() {
 			"initprice":          int64(0),
 			"postPrice":          postPrice,
 			"postDelay":          postDelay,
+			"dvfsFirst":          dvfsFirst,
 			"rateLimiting":       rateLimiting,
 			"loadShedding":       loadShedding,
 			"pinpointQueuing":    true,
@@ -221,6 +228,7 @@ func init() {
 			"priceStrategy":      priceStrategy,
 			"latencyThreshold":   latencyThreshold,
 			"priceStep":          priceStep,
+			"priceDecreaseStep":  priceDecreaseStep,
 			"priceAggregation":   "maximal",
 			"recordPrice":        rajomonTrackPrice,
 			"fastDrop":           fastDrop,
