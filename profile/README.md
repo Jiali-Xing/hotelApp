@@ -45,9 +45,8 @@ In your **ghz** folder (`cmd/ghz`):
   --proto post_storage.proto \
   --call socialproto.PostStorage.StorePostMulti \
   --data '{"creator_id":"{{.RequestNumber}}","text":"{{.RequestNumber}}","number":10}' \
-  --concurrency 100 \
-  --total 99999 \
-  --output results/StorePostMulti.json \
+  --concurrency 100 --output='results/StorePostMulti' \
+  --total 99999  \
   localhost:50060
 ```
 
@@ -63,9 +62,8 @@ In your **ghz** folder (`cmd/ghz`):
   --proto post_storage.proto \
   --call socialproto.PostStorage.ReadPosts \
   --data '{"post_ids":["{{.RequestNumber}}_{{.RequestNumber}}"]}' \
-  --concurrency 100 \
+  --concurrency 100 --output='results/ReadPosts' \
   --total 99999 \
-  --output results/ReadPosts.json \
   localhost:50060
 ```
 
