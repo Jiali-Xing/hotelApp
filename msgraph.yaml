@@ -305,7 +305,7 @@ nodes:
 - URL: nginx:50051
   rajomon:
   - name: INTERCEPT
-    value: topdown
+    value: plain
   - name: PRICE_UPDATE_RATE
     value: 10ms
   - name: TOKEN_UPDATE_RATE
@@ -641,7 +641,7 @@ nodes:
 - URL: frontend:50051
   rajomon:
   - name: INTERCEPT
-    value: topdown
+    value: plain
   - name: PRICE_UPDATE_RATE
     value: 10ms
   - name: TOKEN_UPDATE_RATE

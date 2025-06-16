@@ -167,3 +167,62 @@ docker rm -f redis-poststorage redis-socialgraph
 * Hammer it with **ghz** using deterministic templating
 * Sweep concurrency, batch sizes, and total RPS
 * Collect and store per‐request latency & throughput data for downstream modeling or power‐profiling.
+
+---
+## Profile the Backend Service in Docker
+
+To profile the backend service in Docker, you can use the following steps:
+
+0. Create a Docker network:
+```bash
+docker network create char-net
+```
+1. Setup the redis container:
+```bash
+docker run -d \                                
+  --network char-net \     
+  --name redis-poststorage \
+  -p 6384:6379 \
+  redis:latest
+```
+2. Setup the poststorage service in Docker:
+```bash
+docker run -d \
+  --network char-net \
+  --name poststorage \
+  -v "$(pwd)/msgraph.yaml:/app/msgraph.yaml:ro" --entrypoint /bin/poststorage \
+  -e REDIS_ADDR="redis-poststorage:6379" \
+  -e MSGRAPH_YAML="/app/msgraph.yaml" \
+  -p 50060:50060 \
+  xjiali/social-hotel:char
+```
+3. Run ghz to profile the service as previously:
+```bash
+ # Store a batch of 10 posts                    
+./ghz \
+  --insecure \
+  --proto post_storage.proto \
+  --call socialproto.PostStorage.StorePostMulti \
+  --data '{"creator_id":"{{.RequestNumber}}","text":"{{.RequestNumber}}","number":10}' \
+  --concurrency 100 \
+  --total 99999 \
+  localhost:50060 \
+  --output results/StorePostMulti.json
+
+# Read them back
+./ghz \
+  --insecure \
+  --proto post_storage.proto \
+  --call socialproto.PostStorage.ReadPosts \
+  --data '{"post_ids":["{{.RequestNumber}}_{{.RequestNumber}}"]}' \
+  --concurrency 100 \
+  --total 99999 \
+  localhost:50060 \
+  --output results/ReadPosts.json
+```
+4. Cleanup:
+```bash
+docker rm -f poststorage redis-poststorage
+docker network rm char-net
+```
+This will allow you to profile the backend service running in Docker, ensuring that it can be easily set up and torn down without affecting your local environment.
