@@ -167,7 +167,7 @@ docker rm -f redis-poststorage redis-socialgraph
 * Collect and store per‐request latency & throughput data for downstream modeling or power‐profiling.
 
 ---
-## Profile the Backend Service in Docker
+## 4. Profile the Backend Service in Docker
 
 To profile the backend service in Docker, you can use the following steps:
 
@@ -205,7 +205,7 @@ docker run -d \
   --concurrency 100 \
   --total 99999 \
   localhost:50060 \
-  --output results/StorePostMulti.json
+  --output results/StorePostMulti.docker
 
 # Read them back
 ./ghz \
@@ -216,7 +216,7 @@ docker run -d \
   --concurrency 100 \
   --total 99999 \
   localhost:50060 \
-  --output results/ReadPosts.json
+  --output results/ReadPosts.docker
 ```
 4. Cleanup:
 ```bash
