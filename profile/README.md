@@ -196,7 +196,10 @@ docker run -d \
 ```
 3. Run ghz to profile the service as previously:
 ```bash
- # Store a batch of 10 posts                    
+# Ensure you are in the profile directory
+cd profile/
+
+# Store a batch of 10 posts                    
 ./ghz \
   --insecure \
   --proto post_storage.proto \
