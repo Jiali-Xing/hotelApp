@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  selector:
+    app: nginx
+  ports:
+  - name: http  # Name for the first port
+    protocol: TCP
+    port: 50051
+    targetPort: 50051
+  
+  - name: http-alt  # Name for the additional port
+    protocol: TCP
+    port: 8082
+    targetPort: 8082  # Placeholder for additional port if needed
+  type: LoadBalancer
+  

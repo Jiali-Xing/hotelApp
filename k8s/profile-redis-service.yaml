@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: profile-redis
+  labels:
+    app: profile-redis
+spec:
+  selector:
+    app: profile-redis
+  ports:
+    - protocol: TCP
+      port: 6379
+      targetPort: 6379
